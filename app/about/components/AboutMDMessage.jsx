@@ -2,14 +2,7 @@ import Image from "next/image";
 
 export default function AboutMDMessage() {
   return (
-    <section
-      id="message"
-      className="py-16 md:py-24 border-y border-gray-100 scroll-mt-24"
-      style={{
-        background:
-          "radial-gradient(120% 140% at 85% 30%, rgba(147,181,255,0.35) 0%, rgba(219,234,254,0.6) 45%, rgba(255,255,255,1) 85%)",
-      }}
-    >
+    <section id="message" className="bg-gradient-to-r from-blue-50 to-blue-100/50 py-16 md:py-24 border-y border-gray-100 scroll-mt-24">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left: Message Text */}
@@ -26,25 +19,16 @@ export default function AboutMDMessage() {
             <div className="mt-8 text-gray-900 font-medium text-[15px] leading-relaxed">
               Thank you<br />
               Mohammed Shahidul Islam<br />
-              Managing Director,SA Thread & Accessories Ltd.
+              Managing Director SA Thread & Accessories Ltd.
             </div>
           </div>
-          {/* Right: illustration graphic, no card/badge — edges feathered so the illustration's blue backdrop melts into the page instead of showing as a hard box */}
+          {/* Right: illustration graphic, no card/badge — plain image on the gradient background */}
           <div className="flex-1 w-full lg:max-w-[42%] flex justify-center lg:justify-end">
-            <div
-              className="relative w-full max-w-[420px] aspect-square"
-              style={{
-                WebkitMaskImage:
-                  "radial-gradient(ellipse 78% 78% at center, black 62%, transparent 100%)",
-                maskImage:
-                  "radial-gradient(ellipse 78% 78% at center, black 62%, transparent 100%)",
-              }}
-            >
+            <div className="relative w-full max-w-[420px] aspect-square">
               <Image
                 src="/mdmessage.png"
                 alt="Team collaborating around a table"
                 fill
-                sizes="(max-width: 1024px) 100vw, 420px"
                 className="object-contain"
               />
             </div>
