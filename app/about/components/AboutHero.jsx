@@ -1,16 +1,12 @@
 import Image from "next/image";
-
-const NAV_LINKS = [
-  { label: "About", active: true },
-  { label: "Board of Director", active: false },
-  { label: "Achievement", active: false },
-  { label: "Team", active: false },
-  { label: "Client", active: false },
-];
+import AboutNav from "./AboutNav";
 
 export default function AboutHero() {
   return (
-    <section className="relative overflow-hidden min-h-[420px] lg:min-h-[460px]">
+    <section
+      id="about"
+      className="relative overflow-hidden min-h-[420px] lg:min-h-[460px] scroll-mt-24"
+    >
       {/* Background image — full bleed across the whole section */}
       <div className="absolute inset-0">
         <Image
@@ -27,24 +23,7 @@ export default function AboutHero() {
       </div>
 
       {/* Floating pill navbar */}
-      <nav className="relative z-10 flex justify-center pt-6">
-        <ul className="flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md shadow-sm px-2 py-2">
-          {NAV_LINKS.map((link) => (
-            <li key={link.label}>
-              <a
-                href="#"
-                className={`block rounded-full px-5 py-2 text-[13px] font-medium border transition-colors ${
-                  link.active
-                    ? "border-primary text-primary bg-white"
-                    : "border-gray-200 text-gray-700 hover:border-primary hover:text-primary bg-white/60"
-                }`}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <AboutNav />
 
       {/* Text content */}
       <div className="relative z-10 px-6 md:px-12 lg:px-16 xl:px-24 pt-14 md:pt-16 pb-16 max-w-2xl">

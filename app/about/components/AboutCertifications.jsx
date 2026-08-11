@@ -2,7 +2,10 @@ import { certifications } from "../data";
 
 export default function AboutCertifications() {
   return (
-    <section className="py-20 bg-gradient-to-b from-white via-[#FAF9F6] to-white relative overflow-hidden">
+    <section
+      id="achievements"
+      className="py-20 bg-gradient-to-b from-white via-[#FAF9F6] to-white relative overflow-hidden scroll-mt-24"
+    >
       {/* subtle decorative background accents */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#B8863B]/[0.03] rounded-full blur-3xl pointer-events-none" />
 

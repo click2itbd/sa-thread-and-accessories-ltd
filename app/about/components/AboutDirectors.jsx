@@ -3,7 +3,7 @@ import { directors } from "../data";
 
 export default function AboutDirectors() {
   return (
-    <section className="py-16 bg-gray-100">
+    <section id="directors" className="py-16 bg-gray-100 scroll-mt-24">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
           {/* Title Column */}

@@ -3,7 +3,10 @@ import { stats } from "../data";
 
 export default function AboutWhoWeAre() {
   return (
-    <section className="relative overflow-hidden min-h-[420px] flex items-center">
+    <section
+      id="who-we-are"
+      className="relative overflow-hidden min-h-[420px] flex items-center scroll-mt-24"
+    >
       {/* Background photo — spans the FULL section, including behind the text */}
       <div className="absolute inset-0">
         <Image
