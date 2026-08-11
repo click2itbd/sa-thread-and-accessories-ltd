@@ -1,4 +1,5 @@
-import { certifications } from "../data";
+import { Trophy } from "lucide-react";
+import { achievements, certifications } from "../data";
 
 export default function AboutCertifications() {
   return (
@@ -10,21 +11,54 @@ export default function AboutCertifications() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#B8863B]/[0.03] rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 relative">
-        <div className="flex justify-center">
-          <div className="max-w-2xl text-center">
-            <p className="text-primary text-[12px] font-bold uppercase tracking-[3px] mb-3 flex items-center justify-center gap-2">
-              <span className="w-6 h-[1.5px] bg-primary/60" />
-              Trust &amp; Compliance
-              <span className="w-6 h-[1.5px] bg-primary/60" />
+        <p className="text-primary text-[12px] font-bold uppercase tracking-[3px] mb-10">
+          Achievements &amp; Milestones
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* ── Achievements ─────────────────────────────────────────── */}
+          <div>
+            <h3 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-4 leading-tight tracking-tight">
+              Recognized for Our Excellence
+            </h3>
+            <p className="text-gray-500 text-[14px] mb-8 leading-relaxed max-w-md">
+              Two decades of certified quality, steady growth and long-term
+              partnerships with the country&apos;s leading garment factories.
             </p>
+
+            <ul className="space-y-3">
+              {achievements.map((item) => (
+                <li
+                  key={item.title}
+                  className="flex items-center gap-4 rounded-xl border border-gray-200 bg-white px-5 py-4 transition-shadow hover:shadow-sm"
+                >
+                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/[0.07]">
+                    <Trophy className="w-5 h-5 text-primary" />
+                  </span>
+                  <span>
+                    <span className="block text-[14px] font-bold text-gray-900 leading-tight">
+                      {item.title}
+                    </span>
+                    <span className="block text-[12px] text-gray-500 mt-0.5">
+                      {item.meta}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── Certifications ───────────────────────────────────────── */}
+          <div>
             <h3 className="text-[28px] md:text-[34px] font-bold text-gray-900 mb-4 leading-tight tracking-tight">
               Certified Quality You Can Trust
             </h3>
-            <p className="text-gray-500 text-[14px] mb-14 leading-relaxed max-w-md mx-auto">
-              We comply with international standards to ensure premium quality and customer satisfaction.
+            <p className="text-gray-500 text-[14px] mb-10 leading-relaxed max-w-md">
+              We comply with international standards to ensure premium quality
+              and customer satisfaction.
             </p>
 
-            <div className="flex flex-wrap items-start justify-center gap-x-16 gap-y-12 sm:gap-x-24">
+            <div className="flex flex-wrap items-start gap-x-16 gap-y-12">
               {certifications.map((cert, i) => (
                 <div key={i} className="group flex flex-col items-center w-[160px]">
                   <div className="relative w-[152px] h-[152px] mb-5">
