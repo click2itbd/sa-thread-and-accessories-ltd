@@ -259,8 +259,8 @@ export const SECTION_HEADINGS = {
 
 // ─── Home Hero CTAs ────────────────────────────────────────────────────────────
 export const HOME_CTA = {
-  products: "REQUEST SAMPLE",
-  contact: "Explore Products",
+  products: "OUR PRODUCTS",
+  contact: "CONTACT US",
 };
 
 // ─── Products Page Content ────────────────────────────────────────────────────

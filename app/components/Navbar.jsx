@@ -48,7 +48,7 @@ export default function Navbar() {
             </div>
             {/* Company Text */}
             <div className="flex flex-col leading-none">
-              <span className="text-lg md:text-xl font-extrabold text-green tracking-tight leading-tight">
+              <span className="text-lg md:text-xl font-extrabold text-primary tracking-tight leading-tight">
                 {SITE_CONFIG.name}
               </span>
               <span className="text-[8px] md:text-[9px] font-semibold text-gray-400 tracking-widest uppercase">

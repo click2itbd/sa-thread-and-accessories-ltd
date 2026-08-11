@@ -13,7 +13,7 @@ const AUTO_SLIDE_INTERVAL = 4000; // 4 seconds
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  
+
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % HOME_HERO_SLIDES.length);
   }, []);
@@ -27,7 +27,7 @@ export default function Home() {
   // Auto slide effect
   useEffect(() => {
     if (isPaused) return;
-    
+
     const interval = setInterval(() => {
       nextSlide();
     }, AUTO_SLIDE_INTERVAL);
@@ -71,8 +71,14 @@ export default function Home() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                      <Button>{HOME_CTA.products}</Button>
-                      <Button>{HOME_CTA.contact}</Button>
+                      <Button href="/products" variant="primary"  className="cursor-pointer">
+                        {HOME_CTA.products}
+                        <ChevronRight className="w-4 h-4 ml-2" strokeWidth={3}/>
+                      </Button>
+                      <Button href="/contact" variant="outline" className="border border-primary text-primary cursor-pointer">
+                        {HOME_CTA.contact}
+                        <ChevronRight className="w-4 h-4 ml-2 text-primary" strokeWidth={3}/>
+                      </Button>
                     </div>
                   </div>
 
@@ -134,6 +140,6 @@ export default function Home() {
          </section>
       </div>
     </main>
-    
+
   );
 }

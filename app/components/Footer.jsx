@@ -39,7 +39,7 @@ export default function Footer() {
                 </div>
                 {/* Company Text */}
                 <div className="flex flex-col leading-none">
-                  <span className="text-[18px] font-extrabold text-gray-900 tracking-tight leading-tight">
+                  <span className="text-[18px] font-extrabold text-primary tracking-tight leading-tight">
                     {SITE_CONFIG.name}
                   </span>
                   <span className="text-[9px] font-semibold text-gray-500 tracking-widest uppercase">
