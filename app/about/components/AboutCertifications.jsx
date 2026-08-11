@@ -1,5 +1,8 @@
-import { Trophy } from "lucide-react";
-import { achievements, certifications } from "../data";
+import { Trophy, TrendingUp } from "lucide-react";
+import { achievements, certifications, yearlyGrowth } from "../data";
+
+// the 2025 entry is flat at the 2024 figure, so it adds nothing to the strip
+const growthYears = yearlyGrowth.slice(0, 3);
 
 export default function AboutCertifications() {
   return (
@@ -30,19 +33,40 @@ export default function AboutCertifications() {
               {achievements.map((item) => (
                 <li
                   key={item.title}
-                  className="flex items-center gap-4 rounded-xl border border-gray-200 bg-white px-5 py-4 transition-shadow hover:shadow-sm"
+                  className="rounded-xl border border-gray-200 bg-white px-5 py-4 transition-shadow hover:shadow-sm"
                 >
-                  <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/[0.07]">
-                    <Trophy className="w-5 h-5 text-primary" />
-                  </span>
-                  <span>
-                    <span className="block text-[14px] font-bold text-gray-900 leading-tight">
-                      {item.title}
+                  <div className="flex items-center gap-4">
+                    <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-primary/[0.07]">
+                      <Trophy className="w-5 h-5 text-primary" />
                     </span>
-                    <span className="block text-[12px] text-gray-500 mt-0.5">
-                      {item.meta}
+                    <span>
+                      <span className="block text-[14px] font-bold text-gray-900 leading-tight">
+                        {item.title}
+                      </span>
+                      <span className="block text-[12px] text-gray-500 mt-0.5">
+                        {item.meta}
+                      </span>
                     </span>
-                  </span>
+                  </div>
+
+                  {item.showGrowth && (
+                    <div className="mt-4 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-x-2 gap-y-2">
+                      <TrendingUp className="w-4 h-4 text-primary shrink-0" />
+                      {growthYears.map((g, i) => (
+                        <span key={g.year} className="flex items-center gap-2">
+                          {i > 0 && (
+                            <span className="text-gray-300 text-[12px]">→</span>
+                          )}
+                          <span className="text-[12px] text-gray-500">
+                            <span className="font-bold text-gray-900">
+                              ${g.value.toFixed(1)}M
+                            </span>{" "}
+                            {g.year}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

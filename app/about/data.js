@@ -107,6 +107,7 @@ export const achievements = [
   {
     title: "$4.5 Million Annual Turnover",
     meta: "Grew 14.2% in 2023, 12.5% in 2024",
+    showGrowth: true,
   },
 ];
 
