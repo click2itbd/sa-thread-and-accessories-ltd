@@ -1,8 +1,8 @@
-import ProtectedImage from "@/app/components/ProtectedImage";
+import Image from "next/image";
 
 export default function AboutMDMessage() {
   return (
-    <section className="bg-gradient-to-r from-blue-50 to-blue-100/50 py-16 md:py-24 border-y border-gray-100">
+    <section id="message" className="bg-gradient-to-r from-blue-50 to-blue-100/50 py-16 md:py-24 border-y border-gray-100 scroll-mt-24">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Left: Message Text */}
@@ -22,25 +22,15 @@ export default function AboutMDMessage() {
               Managing Director SA Thread & Accessories Ltd.
             </div>
           </div>
-          {/* Right: MD Photo */}
-          <div className="flex-1 w-full lg:max-w-[38%] flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[360px]">
-              <ProtectedImage
-                src="/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg"
-                alt="Mohammed Shahidul Islam — Managing Director"
+          {/* Right: illustration graphic, no card/badge — plain image on the gradient background */}
+          <div className="flex-1 w-full lg:max-w-[42%] flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-[420px] aspect-square">
+              <Image
+                src="/mdmessage.png"
+                alt="Team collaborating around a table"
                 fill
-                className="object-cover object-top"
-                wrapperClassName="relative w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-xl border-4 border-white"
-              >
-                {/* Name Badge */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2C3B52]/90 to-transparent px-5 py-6 z-20 pointer-events-none">
-                  <p className="text-white font-bold text-[16px] leading-tight">Mohammed Shahidul Islam</p>
-                  <p className="text-[#B8863B] text-[12px] font-semibold tracking-wide mt-1">Managing Director</p>
-                  <p className="text-white/60 text-[11px] mt-0.5">SA Thread & Accessories Ltd.</p>
-                </div>
-              </ProtectedImage>
-              {/* Decorative accent */}
-              <div className="absolute -bottom-3 -right-3 w-full h-full border-2 border-dashed border-[#B8863B]/40 rounded-2xl -z-10" />
+                className="object-contain"
+              />
             </div>
           </div>
         </div>
