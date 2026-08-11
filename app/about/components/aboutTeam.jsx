@@ -232,25 +232,6 @@ export default function AboutTeam() {
         )}
         ── End of Featured Member Detail Card ── */}
 
-        {/* Core Values Row */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8 border-t border-gray-100 pt-8">
-          {[
-            { icon: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>, title: "Integrity", text: "We do the right thing, always." },
-            { icon: <><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></>, title: "Excellence", text: "Committed to the highest standards." },
-            { icon: <path d="M9 21h6M12 21v-4M9 17h6M12 17a4.5 4.5 0 0 1-4.5-4.5c0-1.6.8-3.1 2.1-3.9A4.5 4.5 0 0 0 12 2a4.5 4.5 0 0 0 2.4 6.6c1.3.8 2.1 2.3 2.1 3.9A4.5 4.5 0 0 1 12 17z"/>, title: "Innovation", text: "Continuously improving and innovating." },
-            { icon: <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>, title: "Teamwork", text: "Together we achieve more." },
-            { icon: <><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></>, title: "Customer Focus", text: "Dedicated to our customers' success." }
-          ].map((v, i) => (
-            <div key={i} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-gray-100">
-              <div className="text-primary mt-1 shrink-0"><svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{v.icon}</svg></div>
-              <div>
-                <h6 className="font-bold text-[13px] text-gray-900 mb-0.5">{v.title}</h6>
-                <p className="text-[11px] text-gray-500 leading-snug">{v.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
   );

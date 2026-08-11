@@ -4,6 +4,7 @@ import AboutDirectors from "./components/AboutDirectors";
 import AboutHero from "./components/AboutHero";
 import AboutMDMessage from "./components/AboutMDMessage";
 import AboutTeam from "./components/aboutTeam";
+import AboutValues from "./components/AboutValues";
 import AboutWhoWeAre from "./components/AboutWhoWeAre";
 
 
@@ -23,6 +24,7 @@ export default function AboutPage() {
           <AboutMDMessage />
           <AboutCertifications />
           <AboutTeam />
+          <AboutValues />
           <AboutCTA />
         </main>
     )

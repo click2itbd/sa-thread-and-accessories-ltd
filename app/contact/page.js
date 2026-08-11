@@ -73,71 +73,102 @@ export default function ContactPage() {
     const closeModal = () => setStatus("idle");
 
     return (
-        <main>
-            <div className="container mx-auto px-6 w-full pb-10">
-                {/* Page Header */}
-                <section className="flex flex-col md:flex-row items-center justify-between py-6 md:py-10 gap-10">
-                    <div className="flex-1 max-w-[600px] text-center md:text-left">
-                      <h4 className="text-primary text-sm font-semibold uppercase tracking-wide mb-4">
-                       {CONTACT_PAGE_CONTENT.hero.eyebrow}  
-                      </h4> 
-                      <h1 className="text-4xl md:text-[42px] font-bold leading-tight mb-4 text-black/90 whitespace-pre-line">
-                        {CONTACT_PAGE_CONTENT.hero.title}
-                      </h1>
-                      <p className="text-base text-black/70 max-w-[450px] mx-auto md:mx-0 whitespace-pre-line">
-                        {CONTACT_PAGE_CONTENT.hero.description}
-                      </p>
-                    </div>
-                    <div className="flex-1 flex justify-center md:justify-end w-full">
-                      <Image src={CONTACT_PAGE_CONTENT.hero.image} alt="SA Thread & Accessories ltd" width={500} height={400} priority className="max-w-[500px] w-full h-auto object-contain"/>
-                    </div>
-                </section>
+        <main className="bg-white">
+            {/* Hero */}
+            <section className="relative overflow-visible bg-[#f7f9fc]">
+              {/* Subtle wavy pattern — right */}
+              <svg
+                className="absolute top-0 right-0 w-[50%] h-full pointer-events-none opacity-20"
+                viewBox="0 0 500 400"
+                preserveAspectRatio="xMaxYMid slice"
+                aria-hidden="true"
+              >
+                <path d="M400 0 Q350 100 400 200 T400 400" fill="none" stroke="#1a56d9" strokeWidth="1" strokeDasharray="4 6" />
+                <path d="M440 0 Q390 120 440 220 T440 400" fill="none" stroke="#1a56d9" strokeWidth="1" strokeDasharray="4 6" />
+                <path d="M360 0 Q310 80 360 180 T360 400" fill="none" stroke="#93b5ff" strokeWidth="0.8" strokeDasharray="3 5" />
+              </svg>
 
-                {/* Contact Cards */}
-                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                   {CONTACT_PAGE_CONTENT.cards.map((card) => {
-                     const CardIcon = CARD_ICONS[card.key] ?? Building2;
-                     return (
-                       <div
-                         key={card.key}
-                         className="shadow-lg rounded-xl p-6 flex flex-col md:flex-row items-center md:items-start gap-4 bg-white text-center md:text-left"
-                       >
-                         <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-primary shrink-0">
-                           <CardIcon className="w-6 h-6" strokeWidth={2} />
-                         </div>
-                         <div>
-                           <h4 className="text-[15px] font-semibold text-gray-800 mb-1">
-                             {card.title}
-                           </h4>
-                           {card.value ? (
-                             <p className="text-[14px] text-primary font-medium mb-1">
-                               {card.value}
-                             </p>
-                           ) : null}
-                           {card.meta ? (
-                             <span className="text-[12px] text-gray-500 block mb-2 whitespace-pre-line">
-                               {card.meta}
-                             </span>
-                           ) : null}
-                           {card.key === "location" ? (
-                             <a
-                               href="#"
-                               className="text-primary text-[13px] font-semibold inline-flex items-center gap-1 hover:underline"  >
-                               {card.link}
-                               <ArrowRight className="w-3 h-3" strokeWidth={2} />
-                             </a>
-                           ) : null}
-                         </div>
-                       </div>
-                     );
-                   })}
-                 </section>
-                 
+              <div className="container mx-auto px-6 relative z-10">
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-8 md:pt-10 pb-20 md:pb-24 lg:pb-28">
+                  {/* Left: text */}
+                  <div className="text-center lg:text-left">
+                    <h4 className="text-primary text-[13px] font-semibold uppercase tracking-widest mb-3">
+                      {CONTACT_PAGE_CONTENT.hero.eyebrow} —
+                    </h4>
+                    <h1 className="text-[34px] md:text-[42px] font-bold leading-tight mb-3 text-gray-900 whitespace-pre-line">
+                      {CONTACT_PAGE_CONTENT.hero.title}
+                    </h1>
+                    <p className="text-[14px] md:text-[15px] text-gray-500 max-w-[420px] mx-auto lg:mx-0 whitespace-pre-line leading-relaxed">
+                      {CONTACT_PAGE_CONTENT.hero.description}
+                    </p>
+                  </div>
+
+                  {/* Right: image */}
+                  <div className="flex justify-center lg:justify-end">
+                    <Image
+                      src={CONTACT_PAGE_CONTENT.hero.image}
+                      alt="SA Thread & Accessories ltd"
+                      width={480}
+                      height={200}
+                      priority
+                      className="max-w-[400px] lg:max-w-[460px] w-full h-auto object-contain"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Cards — half overlaps into next section */}
+              <div className="container mx-auto px-6 relative z-20 -mt-28 md:-mt-32 lg:-mt-36 translate-y-6 md:translate-y-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {CONTACT_PAGE_CONTENT.cards.map((card) => {
+                    const CardIcon = CARD_ICONS[card.key] ?? Building2;
+                    return (
+                      <div
+                        key={card.key}
+                        className="rounded-xl p-5 flex items-start gap-3.5 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-shadow"
+                      >
+                        <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-primary shrink-0">
+                          <CardIcon className="w-[18px] h-[18px]" strokeWidth={1.75} />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="text-[13px] font-bold text-gray-900 mb-0.5">
+                            {card.title}
+                          </h4>
+                          {card.value ? (
+                            <p className="text-[13px] text-primary font-semibold mb-0.5 leading-snug">
+                              {card.value}
+                            </p>
+                          ) : null}
+                          {card.meta ? (
+                            <span className="text-[11px] text-gray-500 block leading-relaxed whitespace-pre-line">
+                              {card.meta}
+                            </span>
+                          ) : null}
+                          {card.key === "location" ? (
+                            <a
+                              href={CONTACT_FORM_CONTENT.map.directionHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary text-[12px] font-semibold inline-flex items-center gap-1 mt-1 hover:underline"
+                            >
+                              {card.link}
+                              <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
+                            </a>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            <div className="container mx-auto px-6 w-full pb-12 pt-16 md:pt-20 lg:pt-24">
 
                  {/* Map and Form */}
-                  <section className="flex flex-col lg:flex-row gap-8 mb-12">
+                  <section className="flex flex-col lg:flex-row gap-6 mb-12">
           {/* Map Area */}
-          <div className="flex-1 rounded-xl overflow-hidden relative min-h-[450px]">
+          <div className="flex-1 rounded-xl overflow-hidden relative min-h-[450px] border border-gray-200">
             {/* Real Google Maps embed – Gazipur Chowrasta, Bangladesh */}
             <iframe
               src={CONTACT_FORM_CONTENT.map.src}
@@ -151,7 +182,7 @@ export default function ContactPage() {
             ></iframe>
 
             {/* Address Info Card overlay */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white p-5 rounded-xl shadow-lg max-w-[260px] z-10">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white p-5 rounded-xl shadow-md border border-gray-100 max-w-[260px] z-10">
               <h4 className="text-[15px] font-semibold mb-2">
                 {CONTACT_PAGE_CONTENT.mapCard.title}
               </h4>
@@ -172,7 +203,7 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <div className="flex-1  rounded-xl p-6 md:p-8 bg-white shadow-sm relative overflow-hidden">
+          <div className="flex-1 rounded-xl p-6 md:p-8 bg-white border border-gray-200 relative overflow-hidden">
             {/* ── Success Popup Modal ───────────────────────────────── */}
             {status === "success" && (
               <div
@@ -229,7 +260,7 @@ export default function ContactPage() {
               </div>
             )}
 
-            <h3 className="text-xl font-semibold mb-2 text-[#2C3B52]">
+            <h3 className="text-xl font-bold mb-2 text-gray-900">
               {CONTACT_PAGE_CONTENT.form.title}
             </h3>
             <p className="text-[13px] text-gray-500 mb-6">
@@ -257,7 +288,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   disabled={status === "submitting"}
-                  className="w-full p-3.5 border border-border rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  className="w-full p-3.5 border border-gray-200 rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
                   placeholder={CONTACT_FORM_CONTENT.form.name}
                 />
                 <input
@@ -267,7 +298,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   disabled={status === "submitting"}
-                  className="w-full p-3.5 border border-border rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  className="w-full p-3.5 border border-gray-200 rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
                   placeholder={CONTACT_FORM_CONTENT.form.email}
                 />
                 <input
@@ -277,7 +308,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   disabled={status === "submitting"}
-                  className="w-full p-3.5 border border-border rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  className="w-full p-3.5 border border-gray-200 rounded-lg text-[14px] outline-none focus:border-primary transition-colors focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
                   placeholder={CONTACT_FORM_CONTENT.form.phone}
                 />
                 <select
@@ -286,7 +317,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   disabled={status === "submitting"}
-                  className="w-full p-3.5 border border-border rounded-lg text-[14px] outline-none focus:border-primary transition-colors bg-white text-gray-600 focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  className="w-full p-3.5 border border-gray-200 rounded-lg text-[14px] outline-none focus:border-primary transition-colors bg-white text-gray-600 focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
                 >
                   <option value="" disabled>
                     {CONTACT_FORM_CONTENT.form.subject}
@@ -304,7 +335,7 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 disabled={status === "submitting"}
-                className="w-full p-3.5 border border-border rounded-lg text-[14px] outline-none focus:border-primary transition-colors min-h-[120px] resize-y mb-4 focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="w-full p-3.5 border border-gray-200 rounded-lg text-[14px] outline-none focus:border-primary transition-colors min-h-[120px] resize-y mb-4 focus:ring-2 focus:ring-primary/20 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
                 placeholder={CONTACT_FORM_CONTENT.form.message}
               ></textarea>
 
@@ -325,27 +356,23 @@ export default function ContactPage() {
               <button 
                 type="submit"
                 disabled={status === "submitting"}
-                className={`w-full py-4 rounded-xl font-bold text-[15px] flex justify-center items-center transition-all duration-500 group relative overflow-hidden shadow-md ${
-                  status === "submitting" ? "bg-black/90 cursor-not-allowed text-white" : 
-                  "bg-black/90 text-white hover:shadow-xl hover:shadow-[#1F4D2C]/20"
+                className={`w-full py-3.5 rounded-lg font-bold text-[15px] flex justify-center items-center gap-2 transition-all duration-300 ${
+                  status === "submitting"
+                    ? "bg-primary/70 cursor-not-allowed text-white"
+                    : "bg-primary text-white hover:bg-blue-700 shadow-sm hover:shadow-md"
                 }`}
               >
-                {/* Background Sweep Animation */}
-                <span className="absolute inset-0 w-full h-full bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-0"></span>
-                
-                <span className="relative z-10 flex items-center">
-                  {status === "submitting" ? (
-                    <>
-                      <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5" strokeWidth={2} />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      {CONTACT_FORM_CONTENT.form.sendButton}
-                      <Send className="w-4 h-4 ml-2" strokeWidth={2} />
-                    </>
-                  )}
-                </span>
+                {status === "submitting" ? (
+                  <>
+                    <Loader2 className="animate-spin h-5 w-5" strokeWidth={2} />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    {CONTACT_FORM_CONTENT.form.sendButton}
+                    <Send className="w-4 h-4" strokeWidth={2} />
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -353,21 +380,21 @@ export default function ContactPage() {
  
 
           {/* Bottom Banner */}
-        <section className="flex flex-col lg:flex-row shadow-lg rounded-xl overflow-hidden">
-          <div className="flex-[3] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 bg-white p-6">
+        <section className="flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-gray-200">
+          <div className="flex-[3] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 bg-gray-50/80 p-6 md:p-8">
             {CONTACT_PAGE_CONTENT.highlights.map((item, index) => {
               const HighlightIcon = HIGHLIGHT_ICONS[index] ?? BadgeCheck;
               return (
                 <div
                   key={item.title}
-                  className={`flex items-start gap-3 p-4 ${index < CONTACT_PAGE_CONTENT.highlights.length - 1 ? "border-b sm:border-b-0 sm:border-r border-border border-dashed sm:border-solid" : ""}`}
+                  className={`flex items-start gap-3 p-3 md:p-4 ${index < CONTACT_PAGE_CONTENT.highlights.length - 1 ? "md:border-r md:border-gray-200" : ""}`}
                 >
-                  <HighlightIcon className="w-6 h-6 text-primary shrink-0" strokeWidth={2} />
+                  <HighlightIcon className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.75} />
                   <div>
-                    <h5 className="text-[14px] font-semibold mb-1">
+                    <h5 className="text-[13px] font-bold text-gray-900 mb-1">
                       {item.title}
                     </h5>
-                    <p className="text-[12px] text-gray-500 whitespace-pre-line">
+                    <p className="text-[12px] text-gray-500 whitespace-pre-line leading-relaxed">
                       {item.details.join("\n")}
                     </p>
                   </div>
@@ -375,16 +402,29 @@ export default function ContactPage() {
               );
             })}
           </div>
-          <div className="flex-1 bg-primary p-6 flex flex-col justify-center items-center md:items-start text-white text-center md:text-left">
-            <h4 className="text-[16px] font-semibold mb-2">
+          <div className="relative flex-1 bg-gradient-to-br from-[#1a56d9] to-[#2563eb] p-6 md:p-8 flex flex-col justify-center items-center md:items-start text-white text-center md:text-left overflow-hidden">
+            {/* Watermark spool */}
+            <svg
+              viewBox="0 0 24 24"
+              className="absolute right-0 bottom-0 w-32 h-32 md:w-40 md:h-40 text-white opacity-[0.08] translate-x-1/4 translate-y-1/4 pointer-events-none"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+              <path d="M6 9h12M6 15h12M9 6V3M15 6V3M9 21v-3M15 21v-3" />
+            </svg>
+
+            <h4 className="text-[15px] font-bold mb-2 relative z-10">
               {CONTACT_PAGE_CONTENT.banner.title}
             </h4>
-            <p className="text-[13px] opacity-90 mb-4">
+            <p className="text-[13px] text-white/85 mb-5 relative z-10 leading-relaxed">
               {CONTACT_PAGE_CONTENT.banner.description}
             </p>
-            <Button variant="white" className="w-full md:w-auto">
+            <Button variant="white" className="relative z-10 w-full md:w-auto rounded-lg font-bold text-[13px]">
               {CONTACT_PAGE_CONTENT.banner.cta}
-              <ArrowRight className="w-3 h-3 ml-1" strokeWidth={2} />
+              <ArrowRight className="w-3.5 h-3.5 ml-1" strokeWidth={2.5} />
             </Button>
           </div>
         </section>
