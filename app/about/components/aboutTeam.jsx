@@ -27,7 +27,7 @@ export default function AboutTeam() {
   });
 
   return (
-    <section className="py-16 bg-gray-50/50">
+    <section id="team" className="py-16 bg-gray-50/50 scroll-mt-24">
       <div className="container mx-auto px-6">
         <h2 className="text-[28px] font-bold text-primary uppercase text-center mb-10 tracking-wide">MEET OUR TEAM</h2>
         
