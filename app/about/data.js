@@ -91,6 +91,25 @@ export const timeline = [
   },
 ];
 
+export const achievements = [
+  {
+    title: "100% OEKO-TEX Certified Products",
+    meta: "STANDARD 100 — all product lines",
+  },
+  {
+    title: "BGAPMEA Member",
+    meta: "Membership #593",
+  },
+  {
+    title: "Own 24,514 Sq Ft Factory",
+    meta: "Gacha Road, Gazipur — since 2017",
+  },
+  {
+    title: "$4.5 Million Annual Turnover",
+    meta: "Grew 14.2% in 2023, 12.5% in 2024",
+  },
+];
+
 export const certifications = [
   {
     abbr: "OEKO-TEX",
