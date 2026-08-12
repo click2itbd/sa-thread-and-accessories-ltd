@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Phone, Mail, MapPin, ArrowLeft, CheckCircle2, Briefcase, X } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  ArrowLeft,
+  CheckCircle2,
+  Briefcase,
+  X,
+} from "lucide-react";
 
 const DEPARTMENTS = [
   "Sewing Thread Section",
@@ -106,7 +114,9 @@ export default function CareersPage() {
     setStatus("loading");
     try {
       const payload = new FormData();
-      Object.entries(formData).forEach(([key, value]) => payload.append(key, value));
+      Object.entries(formData).forEach(([key, value]) =>
+        payload.append(key, value),
+      );
       payload.append("resume", resumeFile);
 
       const res = await fetch("/api/careers", {
@@ -144,12 +154,17 @@ export default function CareersPage() {
       <section className="min-h-screen bg-gray-50 flex items-center justify-center px-6 py-16">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center">
           <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
-            <CheckCircle2 className="w-8 h-8 text-green-500" strokeWidth={1.5} />
+            <CheckCircle2
+              className="w-8 h-8 text-green-500"
+              strokeWidth={1.5}
+            />
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">Application Received!</h1>
+          <h1 className="text-xl font-bold text-gray-900 mb-2">
+            Application Received!
+          </h1>
           <p className="text-[14px] text-gray-500 leading-relaxed mb-8">
-            Thank you for applying to S.A. Thread &amp; Accessories Ltd. Our HR team will review your
-            application and get back to you soon.
+            Thank you for applying to S.A. Thread &amp; Accessories Ltd. Our HR
+            team will review your application and get back to you soon.
           </p>
           <Link
             href="/"
@@ -174,27 +189,41 @@ export default function CareersPage() {
 
         {!loadingJobs && jobs.length > 0 && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Open Positions</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Open Positions
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {jobs.map((job) => (
                 <div
                   key={job._id}
                   className={`bg-white rounded-xl border p-6 cursor-pointer transition-all hover:shadow-md ${
-                    selectedJob?._id === job._id ? "border-primary ring-1 ring-primary" : "border-gray-200"
+                    selectedJob?._id === job._id
+                      ? "border-primary ring-1 ring-primary"
+                      : "border-gray-200"
                   }`}
                   onClick={() => handleJobSelect(job)}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-[16px] font-semibold text-gray-900">{job.title}</h3>
+                    <h3 className="text-[16px] font-semibold text-gray-900">
+                      {job.title}
+                    </h3>
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
                       {job.status}
                     </span>
                   </div>
-                  <p className="text-[13px] text-gray-500 mb-4 line-clamp-2">{job.description}</p>
+                  <p className="text-[13px] text-gray-500 mb-4 line-clamp-2">
+                    {job.description}
+                  </p>
                   <div className="flex flex-wrap gap-2 text-[11px] text-gray-500">
-                    <span className="bg-gray-50 px-2 py-1 rounded">{job.department}</span>
-                    <span className="bg-gray-50 px-2 py-1 rounded">{job.location}</span>
-                    <span className="bg-gray-50 px-2 py-1 rounded">{job.employmentType}</span>
+                    <span className="bg-gray-50 px-2 py-1 rounded">
+                      {job.department}
+                    </span>
+                    <span className="bg-gray-50 px-2 py-1 rounded">
+                      {job.location}
+                    </span>
+                    <span className="bg-gray-50 px-2 py-1 rounded">
+                      {job.employmentType}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -216,13 +245,17 @@ export default function CareersPage() {
                 Build Your Career With Us
               </h1>
               <p className="text-[14px] text-white/80 leading-relaxed mb-8">
-                Since 2003, S.A. Thread &amp; Accessories Ltd. has been a trusted name in garments
-                accessories. Join a team that values integrity, excellence, and growth.
+                Since 2003, S.A. Thread &amp; Accessories Ltd. has been a
+                trusted name in garments accessories. Join a team that values
+                integrity, excellence, and growth.
               </p>
 
               <ul className="space-y-3 mb-10">
                 {WHY_JOIN.map((point, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[13px] text-white/90 leading-snug">
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-[13px] text-white/90 leading-snug"
+                  >
                     <span className="mt-1 w-1.5 h-1.5 rounded-full bg-[#5cc93f] shrink-0" />
                     {point}
                   </li>
@@ -261,16 +294,25 @@ export default function CareersPage() {
           {/* Right: Application Form */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10">
-              <h2 className="text-[20px] font-bold text-gray-900 mb-1">Job Application Form</h2>
+              <h2 className="text-[20px] font-bold text-gray-900 mb-1">
+                Job Application Form
+              </h2>
               <p className="text-[13px] text-gray-500 mb-8">
-                Fields marked with <span className="text-red-500">*</span> are required.
+                Fields marked with <span className="text-red-500">*</span> are
+                required.
               </p>
 
               {selectedJob && (
                 <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg flex items-start justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Applying for: <span className="text-primary">{selectedJob.title}</span></p>
-                    <p className="text-xs text-gray-500 mt-1">{selectedJob.department} · {selectedJob.location} · {selectedJob.employmentType}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      Applying for:{" "}
+                      <span className="text-primary">{selectedJob.title}</span>
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {selectedJob.department} · {selectedJob.location} ·{" "}
+                      {selectedJob.employmentType}
+                    </p>
                   </div>
                   <button
                     onClick={() => setSelectedJob(null)}
@@ -412,7 +454,9 @@ export default function CareersPage() {
                     <span className="text-[13px] font-semibold text-gray-600">
                       {resumeFile ? resumeFile.name : "Click to upload your CV"}
                     </span>
-                    <span className="text-[12px] text-gray-400 mt-1">PDF or Word, max 5MB</span>
+                    <span className="text-[12px] text-gray-400 mt-1">
+                      PDF or Word, max 5MB
+                    </span>
                     <input
                       id="resume-upload"
                       type="file"
@@ -421,7 +465,9 @@ export default function CareersPage() {
                       className="hidden"
                     />
                   </label>
-                  {fileError && <p className="text-[12px] text-red-600 mt-2">{fileError}</p>}
+                  {fileError && (
+                    <p className="text-[12px] text-red-600 mt-2">{fileError}</p>
+                  )}
                 </div>
 
                 {/* Honeypot */}
@@ -440,7 +486,9 @@ export default function CareersPage() {
                   disabled={status === "loading"}
                   className="w-full bg-primary text-white font-semibold py-3.5 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {status === "loading" ? "Submitting..." : "Submit Application"}
+                  {status === "loading"
+                    ? "Submitting..."
+                    : "Submit Application"}
                 </button>
 
                 {status === "error" && (
