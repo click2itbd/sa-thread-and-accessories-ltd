@@ -25,7 +25,10 @@ export default function ProductsPage() {
         const data = await res.json();
         const activeProducts = data.products || [];
         setProducts(activeProducts);
-        const uniqueCategories = ["All", ...new Set(activeProducts.map((p) => p.category).filter(Boolean))];
+        const uniqueCategories = [
+          "All",
+          ...new Set(activeProducts.map((p) => p.category).filter(Boolean)),
+        ];
         setCategories(uniqueCategories);
         if (uniqueCategories.length > 0 && activeCategory === "All") {
           setActiveCategory(uniqueCategories[0]);
@@ -49,7 +52,9 @@ export default function ProductsPage() {
     return (
       <main>
         <div className="container mx-auto px-6 w-full pb-20">
-          <div className="text-center py-20 text-gray-500">Loading products...</div>
+          <div className="text-center py-20 text-gray-500">
+            Loading products...
+          </div>
         </div>
       </main>
     );
