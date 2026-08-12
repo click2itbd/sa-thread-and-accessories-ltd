@@ -137,7 +137,7 @@ export const teamMembers = [
     name: "Sultana Parvin",
     role: "Chairman",
     dept: "Management",
-    image: "/Employee Photograph/Sultana Parvin - Chairman.jpeg",
+    image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
     email: "sultana@sathread.com",
     phone: "+880 1971 170 961",
     location: "Gazipur, Bangladesh",
