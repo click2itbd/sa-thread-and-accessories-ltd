@@ -65,7 +65,7 @@ export const directors = [
   {
     name: "Sultana Parvin",
     role: "Chairman",
-    image: "/Employee Photograph/Sultana Parvin - Chairman.jpeg",
+    image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
   },
   {
     name: "Asif Abdullah",
