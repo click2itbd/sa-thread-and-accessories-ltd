@@ -4,7 +4,7 @@ export default function PrivacyPolicyPage() {
   return (
     <main className="bg-gray-50 min-h-screen py-16">
       <div className="container mx-auto px-6 max-w-4xl">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12">
           <header className="mb-12 border-b border-gray-100 pb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {PRIVACY_POLICY_CONTENT.title}
