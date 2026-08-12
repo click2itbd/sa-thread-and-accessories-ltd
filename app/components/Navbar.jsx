@@ -6,18 +6,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Close menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // Add shadow on scroll
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 8);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -33,11 +33,10 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 w-full">
-        <nav className="flex items-center justify-between h-16 md:h-[72px]">
-          {/* ── Logo ────────────────────────────────────────────────── */}
+        <nav className="flex items-center justify-between h-16 md:h-[80px]">
+          {/* ── Logo ─────────────────────────────────────────────── */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            {/* Logo Image */}
-            <div className="relative w-10 h-10 md:w-11 md:h-11 rounded-lg overflow-hidden shrink-0">
+            <div className="relative w-12 h-12 md:w-[60px] md:h-[60px] rounded-lg overflow-hidden shrink-0">
               <Image
                 src="/logo.jpg"
                 alt="SA Thread & Accessories Ltd. Logo"
@@ -46,7 +45,6 @@ export default function Navbar() {
                 priority
               />
             </div>
-            {/* Company Text */}
             <div className="flex flex-col leading-none">
               <span className="text-lg md:text-xl font-extrabold text-primary tracking-tight leading-tight">
                 {SITE_CONFIG.name}
@@ -57,7 +55,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* ── Desktop Nav Links ───────────────────────────────────── */}
+          {/* ── Desktop Nav Links ───────────────────────────────── */}
           <ul className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <li key={link.name}>
@@ -65,8 +63,8 @@ export default function Navbar() {
                   href={link.path}
                   className={`relative px-3 py-2 text-[12px] font-semibold tracking-wider transition-colors duration-200 rounded-md ${
                     pathname === link.path
-                      ? "text-primary "
-                      : "text-gray-500 hover:text-primary "
+                      ? "text-primary"
+                      : "text-gray-500 hover:text-primary"
                   }`}
                 >
                   {link.name}
@@ -78,18 +76,49 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* ── Desktop CTA ─────────────────────────────────────────── */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* ── Desktop CTA with Social Icons ───────────────────── */}
+          {/* ── Desktop CTA with Social Icons ───────────────────── */}
+          <div className="hidden lg:flex items-center gap-4">
+            {/* Social Icons */}
+            <div className="flex items-center gap-2 pr-3 border-r border-gray-200">
+              <a
+                href="https://facebook.com/yourpage"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#1877F2] hover:text-white transition-all duration-200 hover:scale-110"
+              >
+                <FaFacebookF className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="mailto:info@example.com"
+                aria-label="Email"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-red-700 hover:text-white transition-all duration-200 hover:scale-110"
+              >
+                <MdEmail className="w-4 h-4" />
+              </a>
+              <a
+                href="https://wa.me/8801XXXXXXXXX"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#25D366] hover:text-white transition-all duration-200 hover:scale-110"
+              >
+                <FaWhatsapp className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Phone CTA */}
             <a
               href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center gap-2 text-[12px] font-semibold text-gray-600 hover:text-primary transition-colors border-2 border-primary p-2 rounded-lg"
+              className="flex items-center gap-2 text-[12px] font-bold text-primary hover:text-white hover:bg-primary transition-colors duration-200 border-2 border-primary px-3.5 py-2 rounded-lg"
             >
-              <Phone className="w-4 h-4" strokeWidth={2} />
+              <Phone className="w-4 h-4" strokeWidth={2.5} />
               {SITE_CONFIG.phone}
             </a>
           </div>
 
-          {/* ── Hamburger ───────────────────────────────────────────── */}
+          {/* ── Hamburger ───────────────────────────────────────── */}
           <button
             className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -116,7 +145,7 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* ── Mobile Menu ─────────────────────────────────────────────── */}
+      {/* ── Mobile Menu ───────────────────────────────────────── */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out border-t border-gray-100 ${
           isMobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
@@ -144,8 +173,32 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Mobile CTA */}
+          {/* Mobile CTA with Social Icons */}
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
+            <div className="flex items-center justify-center gap-4 text-gray-600 mb-2">
+              <a
+                href="https://facebook.com/yourpage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                <FaFacebookF className="w-5 h-5" />
+              </a>
+              <a
+                href="mailto:info@example.com"
+                className="hover:text-primary transition-colors"
+              >
+                <MdEmail className="w-6 h-6" />
+              </a>
+              <a
+                href="https://wa.me/8801XXXXXXXXX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                <FaWhatsapp className="w-6 h-6" />
+              </a>
+            </div>
             <a
               href={`tel:${SITE_CONFIG.phone}`}
               className="flex items-center justify-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg text-[13px] font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors"

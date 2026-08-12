@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Who We Are", href: "#who-we-are" },
-  { label: "Board of Director", href: "#directors" },
+  { label: "Board of Director", href: "#board-of-directors" },
   { label: "Message", href: "#message" },
-  { label: "Achievement", href: "#achievements" },
+  { label: "Achievement", href: "#achievement" },
   { label: "Team", href: "#team" },
 ];
 
 export default function AboutNav() {
   const [activeHref, setActiveHref] = useState("#about");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef(null);
 
-  // Highlight whichever section is currently in view as the user scrolls
+  // Intersection Observer for active link highlight
   useEffect(() => {
     const sections = NAV_LINKS.map((link) =>
       document.querySelector(link.href)
@@ -30,7 +33,7 @@ export default function AboutNav() {
           }
         });
       },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+      { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -40,15 +43,22 @@ export default function AboutNav() {
   const handleClick = (e, href) => {
     e.preventDefault();
     const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActiveHref(href);
-    }
+    if (!target) return;
+
+    const y = target.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: y, behavior: "smooth" });
+    setActiveHref(href);
+    setMenuOpen(false);
   };
 
   return (
-    <nav className="relative z-10 flex justify-center pt-6">
-      <ul className="flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md shadow-sm px-2 py-2">
+    <nav
+      ref={navRef}
+      className="sticky top-[60px] z-40 -mb-20"
+    >
+      {/* Desktop pill-style menu */}
+      <div className="hidden sm:flex justify-center py-4">
+        <ul className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md shadow-md px-4 py-2">
         {NAV_LINKS.map((link) => {
           const active = activeHref === link.href;
           return (
@@ -56,7 +66,7 @@ export default function AboutNav() {
               <a
                 href={link.href}
                 onClick={(e) => handleClick(e, link.href)}
-                className={`block rounded-full px-5 py-2 text-[13px] font-medium border transition-colors ${
+                className={`block rounded-full px-5 py-2 text-sm font-medium border transition-colors ${
                   active
                     ? "border-primary text-primary bg-white"
                     : "border-gray-200 text-gray-700 hover:border-primary hover:text-primary bg-white/60"
@@ -68,6 +78,46 @@ export default function AboutNav() {
           );
         })}
       </ul>
+      </div> 
+
+      {/* Mobile hamburger */}
+      <div className="sm:hidden  flex justify-end items-center px-4 py-2">
+        {/* <span className="font-semibold text-gray-700">About Menu</span> */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="p-2 rounded-md border bg-white"
+        >
+          {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+        </button>
+      </div>
+
+      {/* Mobile slide-down menu (no extra full-width container) */}
+      <div
+        className={`sm:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col bg-white border-y ">
+          {NAV_LINKS.map((link) => {
+            const active = activeHref === link.href;
+            return (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  onClick={(e) => handleClick(e, link.href)}
+                  className={`block px-4 py-3 text-sm font-medium ${
+                    active
+                      ? "text-primary bg-gray-50 border-l-4 border-primary"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </nav>
   );
 }

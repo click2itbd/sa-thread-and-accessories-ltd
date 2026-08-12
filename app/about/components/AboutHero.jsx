@@ -1,5 +1,4 @@
 import Image from "next/image";
-import AboutNav from "./AboutNav";
 
 export default function AboutHero() {
   return (
@@ -7,7 +6,6 @@ export default function AboutHero() {
       id="about"
       className="relative overflow-hidden min-h-[420px] lg:min-h-[460px] scroll-mt-24"
     >
-      {/* Background image — full bleed across the whole section */}
       <div className="absolute inset-0">
         <Image
           src="/elastic-section.jpg"
@@ -16,17 +14,14 @@ export default function AboutHero() {
           priority
           className="object-cover object-right"
         />
-        {/* Soft white-to-transparent veil so the photo shows through more on the right, like the reference */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/5" />
-        {/* Faint blue haze across the whole photo to match the reference's glassy tone */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/65 to-white/5" />
         <div className="absolute inset-0 bg-blue-50/20 mix-blend-overlay" />
       </div>
 
-      {/* Floating pill navbar */}
-      <AboutNav />
-
-      {/* Text content */}
-      <div className="relative z-10 px-6 md:px-12 lg:px-16 xl:px-24 pt-14 md:pt-16 pb-16 max-w-2xl">
+      <div
+        className="relative z-10 px-6 pb-16 max-w-3xl"
+        style={{ paddingTop: "calc(var(--about-nav-offset, 60px) + 1.5rem)" }}
+      >
         <div className="flex items-center gap-3 mb-4">
           <span className="text-primary text-[12px] font-bold uppercase tracking-[3px]">
             About SA Thread

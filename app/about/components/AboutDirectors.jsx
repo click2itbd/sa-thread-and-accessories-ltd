@@ -14,8 +14,8 @@ export default function AboutDirectors() {
           <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
             {directors.map((d, i) => (
               <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div className="relative w-full h-[300px] md:h-[260px] lg:h-[320px] bg-gray-100">
-                  <Image src={d.image} alt={d.name} fill className="object-cover" />
+                <div className="relative w-full h-[300px] md:h-[260px] lg:h-[350px] bg-gray-100">
+                  <Image src={d.image} alt={d.name} fill className="object-contain object-fill bg-white" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-gray-900 text-[16px] mb-1">{d.name}</h3>

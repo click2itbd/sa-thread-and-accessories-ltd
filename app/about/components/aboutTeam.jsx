@@ -4,19 +4,12 @@ import { Clock, Users, Building2, Package } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { teamTabs, teamMembers } from "../data";
+import Link from "next/link";
 
 export default function AboutTeam() {
   const [activeTab, setActiveTab] = useState("All Members");
   const [searchQuery, setSearchQuery] = useState("");
-  // ── Member detail panel disabled (uncomment to re-enable) ──────────────────
-  // const [selectedMember, setSelectedMember] = useState(null);
-  // const handleMemberClick = (member) => {
-  //   if (selectedMember?.name === member.name) {
-  //     setSelectedMember(null);
-  //   } else {
-  //     setSelectedMember(member);
-  //   }
-  // };
+  const [openForm, setOpenForm] = useState(false);
 
   const filteredTeam = teamMembers.filter(m => {
     const matchesTab = activeTab === "All Members" || m.dept === activeTab;
@@ -83,7 +76,7 @@ export default function AboutTeam() {
         {/* Team Grid */}
         <div className="flex flex-col lg:flex-row gap-6 mb-10">
           {/* Grid */}
-          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredTeam.length > 0 ? filteredTeam.map((member, i) => {
               // const isSelected = selectedMember?.name === member.name;  ← re-enable for detail panel
               return (
@@ -92,12 +85,15 @@ export default function AboutTeam() {
                   className="relative bg-white rounded-xl border flex flex-col items-center justify-between shadow-sm transition-all overflow-hidden text-left border-gray-200 hover:border-gray-300 hover:shadow-md"
                   // onClick={() => handleMemberClick(member)}  ← re-enable for detail panel
                 >
-                  <div className="pt-6 pb-2 px-3 flex flex-col items-center w-full">
-                    <div className="img-protected w-16 h-16 rounded-full overflow-hidden bg-gray-100 mb-3 border-[3px] border-white shadow-sm relative" onContextMenu={(e) => e.preventDefault()}>
-                      <Image src={member.image} alt={member.name} fill className="object-cover"/>
+                  <div className="pt-7 pb-2 px-3 flex flex-col items-center w-full">
+                    <div 
+                      className="img-protected w-24 h-24 rounded-full overflow-hidden bg-gray-100 mb-3 border-[3px] border-white shadow-md relative" 
+                      onContextMenu={(e) => e.preventDefault()}
+                    >
+                      <Image src={member.image} alt={member.name} fill className="object-cover object-top object-fill"/>
                     </div>
-                    <div className="font-bold text-[13px] text-gray-900 text-center leading-tight mb-1">{member.name}</div>
-                    <div className="text-[11px] text-gray-500 text-center">{member.role}</div>
+                    <div className="font-bold text-[14px] text-gray-900 text-center leading-tight mb-1">{member.name}</div>
+                    <div className="text-[12px] text-gray-500 text-center">{member.role}</div>
                   </div>
                   
                   <div className="w-full py-3 mt-auto flex items-center justify-center gap-3 bg-gray-50 border-t border-gray-100">
@@ -145,92 +141,27 @@ export default function AboutTeam() {
           </div>
 
           {/* Join Our Team Card */}
-          <div className="lg:w-[200px] shrink-0 bg-[#f8fbff] rounded-xl border border-blue-100 p-6 flex flex-col items-center justify-center text-center">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm mb-3">
-              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-            </div>
-            <h4 className="font-bold text-[14px] text-gray-900 mb-2">Join Our Team</h4>
-            <p className="text-gray-500 text-[11px] leading-relaxed mb-4">Want to be a part of S.A. Thread & Accessories Ltd. family?</p>
-            <button className="border border-primary text-primary font-semibold text-[11px] py-1.5 px-4 rounded hover:bg-primary hover:text-white transition-colors w-full">
-              View Careers <span className="font-normal">-&gt;</span>
-            </button>
-          </div>
+           <div className="lg:w-[200px] shrink-0 bg-[#f8fbff] rounded-xl border border-blue-100 p-6 flex flex-col items-center justify-center text-center">
+  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm mb-3">
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <line x1="20" y1="8" x2="20" y2="14"/>
+      <line x1="23" y1="11" x2="17" y2="11"/>
+    </svg>
+  </div>
+  <h4 className="font-bold text-[14px] text-gray-900 mb-2">Join Our Team</h4>
+  <p className="text-gray-500 text-[11px] leading-relaxed mb-4">
+    Want to be a part of S.A. Thread & Accessories Ltd. family?
+  </p>
+  <Link
+    href="/careers"
+    className="border border-primary text-primary font-semibold text-[11px] py-1.5 px-4 rounded hover:bg-primary hover:text-white transition-colors w-full inline-block"
+  >
+    View Careers <span className="font-normal">-&gt;</span>
+  </Link>
+</div>
         </div>
-
-        {/* ── Featured Member Detail Card (disabled — uncomment to re-enable) ─────
-        {selectedMember && (
-          <div className="bg-white border border-gray-100 rounded-xl p-8 shadow-sm flex flex-col lg:flex-row gap-10 relative mt-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <button 
-              onClick={() => setSelectedMember(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded-full p-1.5 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            </button>
-
-            Left Photo & Info
-            <div className="flex items-center gap-6 lg:w-1/3">
-              <div className="img-protected relative w-32 h-32 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 shrink-0 shadow-sm border border-white" onContextMenu={(e) => e.preventDefault()}>
-                <Image src={selectedMember.image} alt={selectedMember.name} fill className="object-cover mix-blend-multiply opacity-90"/>
-              </div>
-              <div>
-                <h4 className="text-[20px] font-bold text-gray-900 mb-1">{selectedMember.name}</h4>
-                <p className="text-gray-500 text-[13px] mb-4 font-medium">{selectedMember.role}</p>
-                <div className="space-y-2.5">
-                  <a href={`mailto:${selectedMember.email}`} className="text-[12px] text-gray-600 flex items-center gap-2 hover:text-primary transition-colors">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-primary/70" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    {selectedMember.email}
-                  </a>
-                  <a href={`tel:${selectedMember.phone}`} className="text-[12px] text-gray-600 flex items-center gap-2 hover:text-primary transition-colors">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-primary/70" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    {selectedMember.phone}
-                  </a>
-                  <div className="text-[12px] text-gray-600 flex items-center gap-2">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-primary/70" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    {selectedMember.location}
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            Middle About & Expertise
-            <div className="lg:w-1/3 lg:border-l border-gray-100 lg:pl-8">
-              <h5 className="text-[14px] font-bold text-gray-900 mb-2">About</h5>
-              <p className="text-[12px] text-gray-500 leading-relaxed mb-5">{selectedMember.about}</p>
-              <h5 className="text-[14px] font-bold text-gray-900 mb-2.5">Expertise</h5>
-              <div className="flex flex-wrap gap-2">
-                {selectedMember.expertise.map(e => (
-                  <span key={e} className="px-3 py-1 bg-blue-50/50 text-primary text-[11px] font-semibold rounded-full border border-blue-100">{e}</span>
-                ))}
-              </div>
-            </div>
-
-            Right Responsibilities & Contact
-            <div className="lg:w-1/3 flex flex-col justify-between bg-gray-50/50 rounded-xl p-5 border border-gray-50">
-              <div>
-                <h5 className="text-[14px] font-bold text-gray-900 mb-3">Key Responsibilities</h5>
-                <ul className="space-y-2.5">
-                  {selectedMember.responsibilities.map((r, i) => (
-                    <li key={i} className="text-[12px] text-gray-600 flex items-start gap-2.5">
-                      <div className="w-4 h-4 rounded-full bg-blue-100/50 flex items-center justify-center shrink-0 mt-0.5"><span className="w-1.5 h-1.5 rounded-full bg-primary"/></div>
-                      <span className="leading-snug">{r}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 flex flex-col xl:flex-row gap-3 pt-4 border-t border-gray-100">
-                <div className="flex-1">
-                   <h5 className="text-[12px] font-bold text-gray-900 mb-1">Contact Directly</h5>
-                   <div className="text-[11px] text-gray-500">{selectedMember.email}</div>
-                </div>
-                <a href={`mailto:${selectedMember.email}`} className="bg-primary text-white font-semibold text-[12px] px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shrink-0 shadow-sm">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                  Send Message
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-        ── End of Featured Member Detail Card ── */}
 
       </div>
     </section>
