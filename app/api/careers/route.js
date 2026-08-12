@@ -1,10 +1,18 @@
 import { Resend } from 'resend';
+import Application from '@/lib/models/Application';
+import connectToDatabase from '@/lib/mongoose';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Simple rate limiter using a Map (in-memory, works for a single instance)
 const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 3;
 
 const ALLOWED_FILE_TYPES = [
@@ -12,11 +20,10 @@ const ALLOWED_FILE_TYPES = [
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export async function POST(request) {
   try {
-    // Basic rate limiting by IP
     const ip = request.headers.get("x-forwarded-for") || "unknown";
     const currentTime = Date.now();
 
@@ -32,7 +39,6 @@ export async function POST(request) {
       rateLimitMap.set(ip, recentRequests);
     }
 
-    // Parse multipart form data (fields + resume file)
     const formData = await request.formData();
 
     const name = formData.get("name")?.toString() || "";
@@ -46,18 +52,15 @@ export async function POST(request) {
     const honeypot = formData.get("honeypot")?.toString() || "";
     const resume = formData.get("resume");
 
-    // Honeypot check (if it's filled out, it's likely a bot)
     if (honeypot) {
-      // Return a fake success response to trick the bot
       return Response.json({ success: true, message: "Application sent successfully" });
     }
 
-    // Basic required-field validation
     if (!name || !email || !phone || !department || !experience || !message) {
       return Response.json({ success: false, error: "Missing required fields." }, { status: 400 });
     }
 
-    // Resume validation
+    let cvFileUrl = "";
     let attachments = [];
     if (resume && typeof resume === "object" && resume.size > 0) {
       if (!ALLOWED_FILE_TYPES.includes(resume.type)) {
@@ -67,9 +70,22 @@ export async function POST(request) {
         return Response.json({ success: false, error: "Resume file too large (max 5MB)." }, { status: 400 });
       }
 
-      const arrayBuffer = await resume.arrayBuffer();
-      const base64Content = Buffer.from(arrayBuffer).toString("base64");
+      const bytes = await resume.arrayBuffer();
+      const buffer = Buffer.from(bytes);
 
+      const uploadResult = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: "sathread/applications", resource_type: "auto" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        ).end(buffer);
+      });
+
+      cvFileUrl = uploadResult.secure_url;
+
+      const base64Content = Buffer.from(bytes).toString("base64");
       attachments.push({
         filename: resume.name || "resume",
         content: base64Content,
@@ -78,9 +94,19 @@ export async function POST(request) {
       return Response.json({ success: false, error: "Resume file is required." }, { status: 400 });
     }
 
+    await connectToDatabase();
+    await Application.create({
+      fullName: name,
+      email,
+      phone,
+      appliedPosition: department,
+      cvFile: cvFileUrl,
+      coverLetter: message,
+    });
+
     const { data, error } = await resend.emails.send({
       from: 'SA Thread & Accessories <onboarding@resend.dev>',
-      to: ['muntasiralamresti@gmail.com'], // Use a verified email in production
+      to: ['muntasiralamresti@gmail.com'],
       reply_to: email,
       subject: `New Job Application: ${name} — ${department}`,
       attachments,

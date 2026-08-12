@@ -1,5 +1,6 @@
 import AboutCertifications from "./components/AboutCertifications";
 import AboutCTA from "./components/AboutCTA";
+import AboutClients from "./components/AboutClients";
 import AboutDirectors from "./components/AboutDirectors";
 import AboutHero from "./components/AboutHero";
 import AboutMDMessage from "./components/AboutMDMessage";
@@ -14,7 +15,21 @@ export const metadata = {
     "Learn about SA Thread & Accessories Ltd. — our 23-year history, our factory in Gazipur, and our dedicated team of professionals serving the garments industry.",
 };
 
-export default function AboutPage() {
+async function getTeamMembers() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  try {
+    const res = await fetch(`${baseUrl}/api/team`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed");
+    const data = await res.json();
+    return data.members || [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function AboutPage() {
+  const teamMembers = await getTeamMembers();
+
   return (
     <>
       <AboutNav />
@@ -35,8 +50,11 @@ export default function AboutPage() {
           <section id="achievement">
             <AboutCertifications />
           </section>
+          <section id="clients">
+            <AboutClients />
+          </section>
           <section id="team">
-            <AboutTeam />
+            <AboutTeam members={teamMembers} />
           </section>
           <AboutValues />
           <AboutCTA />

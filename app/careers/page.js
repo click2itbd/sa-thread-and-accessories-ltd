@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Phone, Mail, MapPin, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowLeft, CheckCircle2, Briefcase, X } from "lucide-react";
 
 const DEPARTMENTS = [
   "Sewing Thread Section",
@@ -41,9 +42,31 @@ export default function CareersPage() {
   const [resumeFile, setResumeFile] = useState(null);
   const [fileError, setFileError] = useState("");
   const [status, setStatus] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [loadingJobs, setLoadingJobs] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(null);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async () => {
+    try {
+      const res = await fetch("/api/jobs");
+      if (res.ok) {
+        const data = await res.json();
+        setJobs(data.jobs || []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch jobs:", error);
+    } finally {
+      setLoadingJobs(false);
+    }
+  };
+
+  const handleJobSelect = (job) => {
+    setSelectedJob(job);
+    setFormData((prev) => ({ ...prev, department: job.department }));
   };
 
   const handleFileChange = (e) => {
@@ -107,6 +130,7 @@ export default function CareersPage() {
           honeypot: "",
         });
         setResumeFile(null);
+        setSelectedJob(null);
       } else {
         setStatus("error");
       }
@@ -148,11 +172,40 @@ export default function CareersPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
 
+        {!loadingJobs && jobs.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Open Positions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {jobs.map((job) => (
+                <div
+                  key={job._id}
+                  className={`bg-white rounded-xl border p-6 cursor-pointer transition-all hover:shadow-md ${
+                    selectedJob?._id === job._id ? "border-primary ring-1 ring-primary" : "border-gray-200"
+                  }`}
+                  onClick={() => handleJobSelect(job)}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-[16px] font-semibold text-gray-900">{job.title}</h3>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
+                      {job.status}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-gray-500 mb-4 line-clamp-2">{job.description}</p>
+                  <div className="flex flex-wrap gap-2 text-[11px] text-gray-500">
+                    <span className="bg-gray-50 px-2 py-1 rounded">{job.department}</span>
+                    <span className="bg-gray-50 px-2 py-1 rounded">{job.location}</span>
+                    <span className="bg-gray-50 px-2 py-1 rounded">{job.employmentType}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
-          {/* ── Left: Company / Branding Panel ─────────────────── */}
+          {/* Left: Company / Branding Panel */}
           <div className="lg:col-span-2">
             <div className="lg:sticky lg:top-24 bg-primary rounded-2xl p-8 md:p-10 text-white overflow-hidden relative">
-              {/* Decorative shapes matching brand identity */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#5cc93f]/20 rounded-tr-full" />
 
@@ -205,13 +258,28 @@ export default function CareersPage() {
             </div>
           </div>
 
-          {/* ── Right: Application Form ─────────────────────────── */}
+          {/* Right: Application Form */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10">
               <h2 className="text-[20px] font-bold text-gray-900 mb-1">Job Application Form</h2>
               <p className="text-[13px] text-gray-500 mb-8">
                 Fields marked with <span className="text-red-500">*</span> are required.
               </p>
+
+              {selectedJob && (
+                <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg flex items-start justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Applying for: <span className="text-primary">{selectedJob.title}</span></p>
+                    <p className="text-xs text-gray-500 mt-1">{selectedJob.department} · {selectedJob.location} · {selectedJob.employmentType}</p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedJob(null)}
+                    className="p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Personal Info */}

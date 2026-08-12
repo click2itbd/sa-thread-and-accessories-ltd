@@ -1,41 +1,39 @@
 import { Resend } from 'resend';
+import ContactMessage from '@/lib/models/ContactMessage';
+import connectToDatabase from '@/lib/mongoose';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Simple rate limiter using a Map (in-memory, works for a single instance)
 const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 3;
 
 export async function POST(request) {
   try {
-    // Basic rate limiting by IP
     const ip = request.headers.get("x-forwarded-for") || "unknown";
     const currentTime = Date.now();
-    
+
     if (ip !== "unknown") {
       const userRequests = rateLimitMap.get(ip) || [];
       const recentRequests = userRequests.filter(time => currentTime - time < RATE_LIMIT_WINDOW_MS);
-      
+
       if (recentRequests.length >= MAX_REQUESTS_PER_WINDOW) {
         return Response.json({ success: false, error: "Too many requests. Please try again later." }, { status: 429 });
       }
-      
+
       recentRequests.push(currentTime);
       rateLimitMap.set(ip, recentRequests);
     }
 
     const { name, email, phone, subject, message, honeypot } = await request.json();
 
-    // Honeypot check (if it's filled out, it's likely a bot)
     if (honeypot) {
-      // Return a fake success response to trick the bot
       return Response.json({ success: true, message: "Message sent successfully" });
     }
 
     const { data, error } = await resend.emails.send({
       from: 'SA Thread & Accessories <onboarding@resend.dev>',
-      to: ['muntasiralamresti@gmail.com'], // Use a verified email in production
+      to: ['muntasiralamresti@gmail.com'],
       reply_to: email,
       subject: `New Contact Form Submission: ${subject}`,
       html: `
@@ -98,6 +96,15 @@ export async function POST(request) {
     if (error) {
       return Response.json({ success: false, error }, { status: 400 });
     }
+
+    await connectToDatabase();
+    await ContactMessage.create({
+      fullName: name,
+      email,
+      phone,
+      subject,
+      message,
+    });
 
     return Response.json({ success: true, data });
   } catch (error) {

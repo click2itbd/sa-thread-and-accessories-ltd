@@ -3,13 +3,226 @@
 import { Clock, Users, Building2, Package } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
-import { teamTabs, teamMembers } from "../data";
+import { teamTabs } from "../data";
 import Link from "next/link";
 
-export default function AboutTeam() {
+export default function AboutTeam({ members: propMembers }) {
   const [activeTab, setActiveTab] = useState("All Members");
   const [searchQuery, setSearchQuery] = useState("");
   const [openForm, setOpenForm] = useState(false);
+
+  const teamMembers = propMembers && propMembers.length > 0 ? propMembers : [
+   {
+     name: "Sultana Parvin",
+     role: "Chairman",
+     dept: "Management",
+     image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
+     email: "sultana@sathread.com",
+     phone: "+880 1971 170 961",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/sultanaparvin",
+     linkedinUrl: "https://linkedin.com/in/sultanaparvin",
+     whatsappNumber: "8801971170961",
+     about:
+       "As Chairman of SA Thread & Accessories Ltd., Sultana Parvin provides strategic oversight and guidance, helping steer the company's long-term vision since its founding in 2003.",
+     expertise: [
+       "Corporate Governance",
+       "Strategic Oversight",
+       "Business Ethics",
+       "Stakeholder Relations",
+     ],
+     responsibilities: [
+       "Board-level strategic direction",
+       "Corporate governance and compliance",
+       "Long-term vision setting",
+       "Stakeholder representation",
+     ],
+   },
+   {
+     name: "Mohammed Shahidul Islam",
+     role: "Managing Director",
+     dept: "Management",
+     image:
+       "/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg",
+     email: "shahidul@sathread.com",
+     phone: "+880 1971 170 962",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/mohammedshahidul",
+     linkedinUrl: "https://linkedin.com/in/mohammedshahidul",
+     whatsappNumber: "8801971170962",
+     about:
+       "With over two decades of experience in the garments accessories industry, Mohammed Shahidul Islam leads SA Thread & Accessories Ltd. with a vision for quality, innovation, and sustainable growth.",
+     expertise: [
+       "Strategic Planning",
+       "Business Development",
+       "Operations Management",
+       "Team Leadership",
+     ],
+     responsibilities: [
+       "Overall business strategy and leadership",
+       "Client relations and partnerships",
+       "New opportunities and market expansion",
+       "Operational excellence and growth",
+     ],
+   },
+   {
+     name: "Asif Abdullah",
+     role: "Executive Director",
+     dept: "Management",
+     image: "/Employee Photograph/Asif Abdullah- Executive Director.jpg",
+     email: "asif@sathread.com",
+     phone: "+880 1971 170 963",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/asifabdullah",
+     linkedinUrl: "https://linkedin.com/in/asifabdullah",
+     whatsappNumber: "8801971170963",
+     about:
+       "Asif Abdullah works closely with the Managing Director to drive day-to-day executive decisions, ensuring the company's operations align with its strategic goals.",
+     expertise: [
+       "Executive Management",
+       "Operational Strategy",
+       "Financial Oversight",
+       "Cross-functional Leadership",
+     ],
+     responsibilities: [
+       "Executive decision-making",
+       "Cross-department coordination",
+       "Business performance monitoring",
+       "Policy implementation",
+     ],
+   },
+   {
+     name: "Md. Shafiqul Islam",
+     role: "General Manager",
+     dept: "Management",
+     image: "/Employee Photograph/Md. Shafiqul Islam- General Manager.jpg",
+     email: "shafiqul@sathread.com",
+     phone: "+8801819430668",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/mdshafiqulislam",
+     linkedinUrl: "https://linkedin.com/in/mdshafiqulislam",
+     whatsappNumber: "+8801819430668",
+     about:
+       "Md. Shafiqul Islam oversees the general management of the company's daily operations, coordinating between departments to keep production and business running smoothly.",
+     expertise: [
+       "General Administration",
+       "Operations Coordination",
+       "Resource Planning",
+       "Process Management",
+     ],
+     responsibilities: [
+       "Day-to-day operations management",
+       "Inter-departmental coordination",
+       "Administrative oversight",
+       "Reporting to Managing Director",
+     ],
+   },
+   {
+     name: "Md. Rafiqul Islam",
+     role: "Assistant General Manager (Marketing/Factory)",
+     dept: "Marketing & Factory",
+     image:
+       "/Employee Photograph/Md. Rafiqul Islam-  Assisstant General Manager  (Marketing&Factory).jpg",
+     email: "rafiqul@sathread.com",
+     phone: "+8801718716451",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/mdrafiqulislam",
+     linkedinUrl: "https://linkedin.com/in/mdrafiqulislam",
+     whatsappNumber: "+8801718716451",
+     about:
+       "Md. Rafiqul Islam bridges marketing and factory operations, supporting both client-facing initiatives and on-ground production coordination.",
+     expertise: [
+       "Marketing Coordination",
+       "Factory Liaison",
+       "Client Communication",
+       "Production Support",
+     ],
+     responsibilities: [
+       "Support marketing and sales efforts",
+       "Coordinate with factory floor",
+       "Assist client communications",
+       "Track order fulfilment",
+     ],
+   },
+   {
+     name: "Md. Parvez Bhatty",
+     role: "Marketing Manager",
+     dept: "Sales & Marketing",
+     image: "/Employee Photograph/Md. Parveg Bhatty- Marketing Manager.jpg",
+     email: "parvez@sathread.com",
+     phone: "+8801679506304",
+     location: "Dhaka, Bangladesh",
+     facebookUrl: "https://facebook.com/mdparvezbhatty",
+     linkedinUrl: "https://linkedin.com/in/mdparvezbhatty",
+     whatsappNumber: "+8801679506304",
+     about:
+       "Md. Parvez Bhatty drives client acquisition and relationship management, helping SA Thread & Accessories Ltd. expand its footprint among garments manufacturers.",
+     expertise: [
+       "B2B Sales",
+       "Client Relationship Management",
+       "Market Research",
+       "Negotiation",
+     ],
+     responsibilities: [
+       "Manage key client accounts",
+       "Identify new business opportunities",
+       "Market research and analysis",
+       "Coordinate sales pipeline",
+     ],
+   },
+   {
+     name: "Md. Wahid Miah",
+     role: "Marketing Manager",
+     dept: "Sales & Marketing",
+     image: "/Employee Photograph/Md. Wahid Miah- Marketing Manager.jpg",
+     email: "wahid@sathread.com",
+     phone: "+8801971170961",
+     location: "Dhaka, Bangladesh",
+     facebookUrl: "https://facebook.com/mdwahidmiah",
+     linkedinUrl: "https://linkedin.com/in/mdwahidmiah",
+     whatsappNumber: "+8801971170961",
+     about:
+       "Md. Wahid Miah focuses on client outreach and order management, ensuring smooth communication between customers and internal teams.",
+     expertise: [
+       "Client Outreach",
+       "Order Management",
+       "Sales Coordination",
+       "Customer Retention",
+     ],
+     responsibilities: [
+       "Handle client inquiries and orders",
+       "Support sales growth targets",
+       "Coordinate deliveries with factory",
+       "Maintain customer relationships",
+     ],
+   },
+   {
+     name: "Md. Tafsir Alom",
+     role: "Factory Manager",
+     dept: "Production",
+     image: "/Employee Photograph/Md. Tafsir Alom- Factory Manager.jpeg",
+     email: "tafsir@sathread.com",
+     phone: "+880 1971 170 968",
+     location: "Gazipur, Bangladesh",
+     facebookUrl: "https://facebook.com/mdtafsiralom",
+     linkedinUrl: "https://linkedin.com/in/mdtafsiralom",
+     whatsappNumber: "8801971170968",
+     about:
+       "Md. Tafsir Alom manages the factory floor at the Gacha Road facility, overseeing production across sewing thread, elastic, twill tape, and drawstring sections.",
+     expertise: [
+       "Production Planning",
+       "Factory Operations",
+       "Quality Control",
+       "Workforce Management",
+     ],
+     responsibilities: [
+       "Oversee daily factory production",
+       "Manage 150+ factory workers",
+       "Ensure machine uptime and maintenance",
+       "Maintain production quality standards",
+     ],
+   },
+ ];
 
   const filteredTeam = teamMembers.filter(m => {
     const matchesTab = activeTab === "All Members" || m.dept === activeTab;
