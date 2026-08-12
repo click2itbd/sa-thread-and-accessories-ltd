@@ -129,13 +129,13 @@ export default async function ProductDetailPage({ params }) {
                     <h4 className="text-[15px] font-semibold text-gray-800 mb-3">
                       {PRODUCT_MODAL_CONTENT.specificationsTitle}
                     </h4>
-                    <div className=" rounded-xl overflow-hidden mb-4">
-                      <table className="w-full ">
+                    <div className="border border-border rounded-xl overflow-hidden mb-4">
+                      <table className="w-full border-collapse">
                         <tbody>
                           {product.specifications.map((spec, i) => (
                             <tr
                               key={i}
-                              className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} ${i < product.specifications.length - 1 ? "" : ""}`}
+                              className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"} ${i < product.specifications.length - 1 ? "border-b border-border" : ""}`}
                             >
                               <td className="py-3 px-4 text-[13px] text-gray-500 w-[35%] font-medium">
                                 {spec.label}

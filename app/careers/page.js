@@ -77,6 +77,14 @@ export default function CareersPage() {
     setFormData((prev) => ({ ...prev, department: job.department }));
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
