@@ -98,17 +98,17 @@ export default function Home() {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                       <Link
                         href="/products"
-                        className="inline-flex items-center justify-center gap-2 bg-[#1F4D2C] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#163d24] transition-colors"
+                        className="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#163d24] transition-colors"
                       >
                         {HOME_CTA.products}
                         <ChevronRight className="w-4 h-4 ml-2" strokeWidth={3} />
                       </Link>
                       <Link
                         href="/contact"
-                        className="inline-flex items-center justify-center gap-2 border border-[#1F4D2C] text-[#1F4D2C] px-6 py-3 rounded-lg font-semibold hover:bg-[#1F4D2C]/10 transition-colors"
+                        className="inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-[#1F4D2C]/10 transition-colors"
                       >
                         {HOME_CTA.contact}
-                        <ChevronRight className="w-4 h-4 ml-2 text-[#1F4D2C]" strokeWidth={3} />
+                        <ChevronRight className="w-4 h-4 ml-2 text-primary" strokeWidth={3} />
                       </Link>
                     </div>
                   </div>
