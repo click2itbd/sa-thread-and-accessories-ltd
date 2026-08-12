@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, Eye, EyeOff, Search, Award } from "lucide-react";
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  Eye,
+  EyeOff,
+  Search,
+  Award,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import FileUpload from "@/components/admin/FileUpload";
 
@@ -14,12 +23,17 @@ const emptyCertificate = {
   displayOrder: 0,
 };
 
-export default function AdminCertificatesClient({ initialCreate = false, initialEdit = null }) {
+export default function AdminCertificatesClient({
+  initialCreate = false,
+  initialEdit = null,
+}) {
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(initialCreate || !!initialEdit);
-  const [editingId, setEditingId] = useState(initialEdit ? initialEdit._id : null);
+  const [editingId, setEditingId] = useState(
+    initialEdit ? initialEdit._id : null,
+  );
   const [formData, setFormData] = useState(() => {
     if (initialEdit) {
       return {
@@ -143,7 +157,9 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
     setSaving(true);
 
     try {
-      const url = editingId ? `/api/admin/certificates/${editingId}` : "/api/admin/certificates";
+      const url = editingId
+        ? `/api/admin/certificates/${editingId}`
+        : "/api/admin/certificates";
       const method = editingId ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -175,7 +191,9 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
 
     setDeleting(cert._id);
     try {
-      const res = await fetch(`/api/admin/certificates/${cert._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/certificates/${cert._id}`, {
+        method: "DELETE",
+      });
       if (res.ok) {
         setCertificates((prev) => prev.filter((c) => c._id !== cert._id));
       } else {
@@ -188,17 +206,23 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
     }
   };
 
-  const filteredCertificates = certificates.filter((c) =>
-    c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (c.description && c.description.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredCertificates = certificates.filter(
+    (c) =>
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.description &&
+        c.description.toLowerCase().includes(searchQuery.toLowerCase())),
   );
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Certificates & Documents</h1>
-          <p className="text-sm text-gray-500 mt-1">Manage certificates, documents, and display order</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Certificates & Documents
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Manage certificates, documents, and display order
+          </p>
         </div>
         <button
           onClick={() => handleOpenModal()}
@@ -226,7 +250,9 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <Award className="w-12 h-12 text-gray-300 mx-auto mb-3" />
           <p className="text-gray-500 text-sm">
-            {searchQuery ? "No certificates match your search." : "No certificates yet. Add your first certificate!"}
+            {searchQuery
+              ? "No certificates match your search."
+              : "No certificates yet. Add your first certificate!"}
           </p>
         </div>
       ) : (
@@ -235,25 +261,48 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
-                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Certificate</th>
-                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Image</th>
-                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">PDF</th>
-                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Order</th>
-                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Status</th>
-                  <th className="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">Actions</th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    Certificate
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    Image
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    PDF
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    Order
+                  </th>
+                  <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    Status
+                  </th>
+                  <th className="text-right text-xs font-semibold text-gray-500 uppercase tracking-wider px-6 py-3">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {filteredCertificates.map((cert) => (
-                  <tr key={cert._id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr
+                    key={cert._id}
+                    className="hover:bg-gray-50/50 transition-colors"
+                  >
                     <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-gray-900">{cert.title}</div>
-                      <div className="text-xs text-gray-500 line-clamp-1 max-w-[200px]">{cert.description || "—"}</div>
+                      <div className="text-sm font-medium text-gray-900">
+                        {cert.title}
+                      </div>
+                      <div className="text-xs text-gray-500 line-clamp-1 max-w-[200px]">
+                        {cert.description || "—"}
+                      </div>
                     </td>
                     <td className="px-6 py-4">
                       {cert.image ? (
                         <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-                          <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
+                          <img
+                            src={cert.image}
+                            alt={cert.title}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                       ) : (
                         <span className="text-xs text-gray-400">—</span>
@@ -261,19 +310,34 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
                     </td>
                     <td className="px-6 py-4">
                       {cert.pdfFile ? (
-                        <a href={cert.pdfFile} target="_blank" rel="noopener noreferrer" className="text-xs text-red-600 hover:underline">
+                        <a
+                          href={cert.pdfFile}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-red-600 hover:underline"
+                        >
                           View PDF
                         </a>
                       ) : (
                         <span className="text-xs text-gray-400">—</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{cert.displayOrder}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {cert.displayOrder}
+                    </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        cert.isActive ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-600"
-                      }`}>
-                        {cert.isActive ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          cert.isActive
+                            ? "bg-green-50 text-green-700"
+                            : "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {cert.isActive ? (
+                          <Eye className="w-3 h-3" />
+                        ) : (
+                          <EyeOff className="w-3 h-3" />
+                        )}
                         {cert.isActive ? "Active" : "Inactive"}
                       </span>
                     </td>
@@ -306,7 +370,10 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
 
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={handleCloseModal} />
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={handleCloseModal}
+          />
           <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
               <h2 className="text-lg font-bold text-gray-900">
@@ -322,21 +389,32 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
 
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Title *
+                </label>
                 <input
                   type="text"
                   value={formData.title}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, title: e.target.value }))
+                  }
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
                 <textarea
                   value={formData.description}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
                   rows={3}
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors resize-none"
                 />
@@ -360,11 +438,18 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Display Order
+                  </label>
                   <input
                     type="number"
                     value={formData.displayOrder}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, displayOrder: parseInt(e.target.value) || 0 }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        displayOrder: parseInt(e.target.value) || 0,
+                      }))
+                    }
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                   />
                 </div>
@@ -374,10 +459,20 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
                     type="checkbox"
                     id="isActive"
                     checked={formData.isActive}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, isActive: e.target.checked }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        isActive: e.target.checked,
+                      }))
+                    }
                     className="w-4 h-4 text-[#1F4D2C] border-gray-300 rounded focus:ring-[#1F4D2C]"
                   />
-                  <label htmlFor="isActive" className="text-sm font-medium text-gray-700">Active</label>
+                  <label
+                    htmlFor="isActive"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Active
+                  </label>
                 </div>
               </div>
 
@@ -394,7 +489,11 @@ export default function AdminCertificatesClient({ initialCreate = false, initial
                   disabled={saving}
                   className="px-6 py-2 rounded-lg text-sm font-semibold bg-[#1F4D2C] text-white hover:bg-[#163d24] transition-colors disabled:opacity-50"
                 >
-                  {saving ? "Saving..." : editingId ? "Update Certificate" : "Add Certificate"}
+                  {saving
+                    ? "Saving..."
+                    : editingId
+                      ? "Update Certificate"
+                      : "Add Certificate"}
                 </button>
               </div>
             </form>
