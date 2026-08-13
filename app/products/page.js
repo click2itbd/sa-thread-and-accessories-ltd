@@ -6,7 +6,21 @@ import Link from "next/link";
 import Button from "@/app/components/Button";
 import { ChevronRight, Award, Settings, Leaf, Globe } from "lucide-react";
 import { PRODUCTS_PAGE_CONTENT } from "@/data/siteContent";
+import { PRODUCTS } from "@/data/products";
 import { blurDataURL } from "@/lib/imageUtils";
+
+function getFallbackProducts() {
+  return PRODUCTS.map((product) => ({
+    ...product,
+    _id: String(product.id),
+    name: product.title,
+    shortDescription: product.type,
+    fullDescription: product.description,
+    isActive: true,
+    images: [product.image],
+    displayOrder: product.id,
+  }));
+}
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -14,16 +28,14 @@ export default function ProductsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  async function fetchProducts() {
     try {
       const res = await fetch("/api/products");
       if (res.ok) {
         const data = await res.json();
-        const activeProducts = data.products || [];
+        const activeProducts = data.products?.length
+          ? data.products
+          : getFallbackProducts();
         setProducts(activeProducts);
         const uniqueCategories = [
           "All",
@@ -33,13 +45,38 @@ export default function ProductsPage() {
         if (uniqueCategories.length > 0 && activeCategory === "All") {
           setActiveCategory(uniqueCategories[0]);
         }
+      } else {
+        const staticProducts = getFallbackProducts();
+        setProducts(staticProducts);
+        const uniqueCategories = [
+          "All",
+          ...new Set(staticProducts.map((p) => p.category).filter(Boolean)),
+        ];
+        setCategories(uniqueCategories);
+        if (uniqueCategories.length > 0 && activeCategory === "All") {
+          setActiveCategory(uniqueCategories[0]);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
+      const staticProducts = getFallbackProducts();
+      setProducts(staticProducts);
+      const uniqueCategories = [
+        "All",
+        ...new Set(staticProducts.map((p) => p.category).filter(Boolean)),
+      ];
+      setCategories(uniqueCategories);
+      if (uniqueCategories.length > 0 && activeCategory === "All") {
+        setActiveCategory(uniqueCategories[0]);
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const filteredProducts =
     activeCategory === "All"
@@ -118,32 +155,44 @@ export default function ProductsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {filteredProducts.map((product) => (
               <div
-                className="shadow-2xl rounded-xl overflow-hidden bg-white flex flex-col group hover:shadow-md transition-shadow"
+                className="group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_45px_-18px_rgba(26,86,217,0.35)]"
                 key={product._id}
               >
-                <div className="h-[200px] relative bg-gray-50 overflow-hidden">
+                <div className="relative h-[200px] overflow-hidden bg-gray-50">
                   <Image
                     src={product.images?.[0] || "/yarn.jpg"}
                     alt={product.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                     placeholder="blur"
                     blurDataURL={blurDataURL()}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  {product.category && (
+                    <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur-sm">
+                      {product.category}
+                    </span>
+                  )}
                 </div>
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-[20px] font-semibold text-gray-800 mb-2">
+
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="mb-2 text-[18px] font-semibold leading-snug text-gray-900">
                     {product.name}
                   </h3>
-                  <p className="text-[13px] text-gray-500 mb-5 flex-1">
+                  <p className="mb-6 line-clamp-2 flex-1 text-[13px] leading-relaxed text-gray-500">
                     {product.shortDescription}
                   </p>
+
+                  <div className="mb-4 border-t border-dashed border-gray-200" />
+
                   <Link
                     href={`/products/${product._id}`}
-                    className="text-primary font-semibold text-[14px] flex items-center gap-1.5 hover:underline"
+                    className="flex items-center justify-between text-[14px] font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 rounded-md"
                   >
                     View Details
-                    <ChevronRight className="w-3 h-3" strokeWidth={2} />
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/5 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                      <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+                    </span>
                   </Link>
                 </div>
               </div>

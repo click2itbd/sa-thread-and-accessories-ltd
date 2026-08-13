@@ -29,6 +29,7 @@ export default function AdminCertificatesClient({
 }) {
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(initialCreate || !!initialEdit);
   const [editingId, setEditingId] = useState(
@@ -58,13 +59,22 @@ export default function AdminCertificatesClient({
 
   const fetchCertificates = async () => {
     try {
-      const res = await fetch("/api/admin/certificates");
-      if (res.ok) {
-        const data = await res.json();
-        setCertificates(data.certificates || []);
+      const res = await fetch("/api/admin/certificates", { credentials: "include" });
+      if (res.status === 401) {
+        setError("Session expired or not logged in. Please log in again.");
+        setLoading(false);
+        return;
       }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
+      const data = await res.json();
+      setCertificates(data.certificates || []);
+      setError(null);
     } catch (error) {
       console.error("Failed to fetch certificates:", error);
+      setError(error.message || "Unable to load certificates.");
     } finally {
       setLoading(false);
     }
@@ -106,6 +116,7 @@ export default function AdminCertificatesClient({
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -135,6 +146,7 @@ export default function AdminCertificatesClient({
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -166,6 +178,7 @@ export default function AdminCertificatesClient({
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -193,6 +206,7 @@ export default function AdminCertificatesClient({
     try {
       const res = await fetch(`/api/admin/certificates/${cert._id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       if (res.ok) {
         setCertificates((prev) => prev.filter((c) => c._id !== cert._id));
@@ -246,6 +260,16 @@ export default function AdminCertificatesClient({
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchCertificates}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : filteredCertificates.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <Award className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -503,3 +527,4 @@ export default function AdminCertificatesClient({
     </div>
   );
 }
+

@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function AdminContactPage({ initialMessage = null }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterDate, setFilterDate] = useState("");
   const [filterRead, setFilterRead] = useState("");
@@ -25,14 +26,25 @@ export default function AdminContactPage({ initialMessage = null }) {
       if (filterDate) url.searchParams.set("date", filterDate);
       if (filterRead) url.searchParams.set("read", filterRead);
 
-      const res = await fetch(url.toString());
-      if (res.ok) {
-        const data = await res.json();
-        setMessages(data.messages || []);
-        setUnreadCount(data.unreadCount || 0);
+      const res = await fetch(url.toString(), {
+        credentials: "include",
+      });
+      if (res.status === 401) {
+        setError("Session expired or not logged in. Please log in again.");
+        setLoading(false);
+        return;
       }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
+      const data = await res.json();
+      setMessages(data.messages || []);
+      setUnreadCount(data.unreadCount || 0);
+      setError(null);
     } catch (error) {
       console.error("Failed to fetch messages:", error);
+      setError(error.message || "Unable to load messages.");
     } finally {
       setLoading(false);
     }
@@ -51,6 +63,7 @@ export default function AdminContactPage({ initialMessage = null }) {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isRead: !currentStatus }),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -70,7 +83,7 @@ export default function AdminContactPage({ initialMessage = null }) {
     if (!confirm(`Are you sure you want to delete message from ${msg.fullName}?`)) return;
 
     try {
-      const res = await fetch(`/api/admin/contact/${msg._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/contact/${msg._id}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         setMessages((prev) => prev.filter((m) => m._id !== msg._id));
         if (!msg.isRead) {
@@ -210,6 +223,16 @@ export default function AdminContactPage({ initialMessage = null }) {
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchMessages}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : messages.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <p className="text-gray-500 text-sm">No messages found.</p>

@@ -14,6 +14,7 @@ const emptyClient = {
 export default function AdminClientsPage() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingClient, setEditingClient] = useState(null);
@@ -28,13 +29,17 @@ export default function AdminClientsPage() {
 
   const fetchClients = async () => {
     try {
-      const res = await fetch("/api/admin/clients");
+      const res = await fetch("/api/admin/clients", { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
         setClients(data.clients || []);
+        setError(null);
+      } else {
+        throw new Error("Failed to fetch clients");
       }
     } catch (error) {
       console.error("Failed to fetch clients:", error);
+      setError("Unable to load clients. Please check your database connection.");
     } finally {
       setLoading(false);
     }
@@ -73,6 +78,7 @@ export default function AdminClientsPage() {
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -102,6 +108,7 @@ export default function AdminClientsPage() {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -123,7 +130,7 @@ export default function AdminClientsPage() {
 
     setDeleting(client._id);
     try {
-      const res = await fetch(`/api/admin/clients/${client._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/clients/${client._id}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         setClients((prev) => prev.filter((c) => c._id !== client._id));
       } else {
@@ -169,6 +176,16 @@ export default function AdminClientsPage() {
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchClients}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : filteredClients.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <Building2 className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -365,3 +382,4 @@ export default function AdminClientsPage() {
     </div>
   );
 }
+

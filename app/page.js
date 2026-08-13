@@ -3,10 +3,34 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HOME_HERO_SLIDES, HOME_CTA } from "@/data/siteContent";
+import { HOME_HERO_SLIDES, HOME_CTA, TRUSTED_BRANDS } from "@/data/siteContent";
+import { PRODUCTS } from "@/data/products";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import Footer from "./components/Footer";
 
 const AUTO_SLIDE_INTERVAL = 4000;
+
+function getFallbackClients() {
+  return TRUSTED_BRANDS.map((brand, index) => ({
+    _id: `static-client-${index}`,
+    name: brand.name,
+    logo: brand.src,
+    isActive: true,
+  }));
+}
+
+function getFallbackProducts() {
+  return PRODUCTS.slice(0, 4).map((product) => ({
+    ...product,
+    _id: String(product.id),
+    name: product.title,
+    shortDescription: product.type,
+    fullDescription: product.description,
+    images: [product.image],
+    displayOrder: product.id,
+    isActive: true,
+  }));
+}
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -24,10 +48,12 @@ export default function Home() {
       const res = await fetch("/api/clients");
       if (res.ok) {
         const data = await res.json();
-        setClients(data.clients || []);
+        setClients(data.clients?.length ? data.clients : getFallbackClients());
+      } else {
+        setClients(getFallbackClients());
       }
     } catch (error) {
-      console.error("Failed to fetch clients:", error);
+      setClients(getFallbackClients());
     }
   };
 
@@ -36,10 +62,14 @@ export default function Home() {
       const res = await fetch("/api/products");
       if (res.ok) {
         const data = await res.json();
-        setProducts(data.products?.slice(0, 4) || []);
+        setProducts(
+          data.products?.length ? data.products.slice(0, 4) : getFallbackProducts(),
+        );
+      } else {
+        setProducts(getFallbackProducts());
       }
     } catch (error) {
-      console.error("Failed to fetch products:", error);
+      setProducts(getFallbackProducts());
     }
   };
 
@@ -273,6 +303,10 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Footer */}
+
+      <Footer/>
     </main>
   );
 }

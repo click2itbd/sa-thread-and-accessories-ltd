@@ -7,6 +7,10 @@ import {
   PRODUCT_BADGES,
   PRODUCT_MODAL_CONTENT,
 } from "@/data/siteContent";
+import { PRODUCTS } from "@/data/products";
+import Product from "@/lib/models/Product";
+import connectToDatabase from "@/lib/mongoose";
+import mongoose from "mongoose";
 import {
   Award,
   Shield,
@@ -24,22 +28,38 @@ const badgeIcons = {
   eco: Leaf,
 };
 
+function getStaticProduct(id) {
+  return PRODUCTS.map((product) => ({
+    ...product,
+    _id: String(product.id),
+    name: product.title,
+    shortDescription: product.type,
+    fullDescription: product.description,
+    images: [product.image],
+    isActive: true,
+    displayOrder: product.id,
+  })).find((product) => String(product._id) === String(id));
+}
+
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
 
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/products`, {
-      next: { revalidate: 60 },
-    });
+  let product = null;
 
-    if (!res.ok) return notFound();
+  if (mongoose.isValidObjectId(id)) {
+    try {
+      await connectToDatabase();
+      product = await Product.findOne({ _id: id, isActive: true }).lean();
+    } catch (error) {
+      console.error("Failed to load product:", error);
+    }
+  }
 
-    const data = await res.json();
-    const product = (data.products || []).find((p) => String(p._id) === String(id));
+  product = product || getStaticProduct(id);
 
-    if (!product) return notFound();
+  if (!product) return notFound();
 
-    return (
+  return (
       <main className="min-h-screen bg-gray-50">
         <div className="container mx-auto px-6 w-full py-10">
           {/* Breadcrumb */}
@@ -100,6 +120,10 @@ export default async function ProductDetailPage({ params }) {
                 <div className="inline-block self-start bg-blue-50 text-primary px-4 py-1.5 rounded-full text-[13px] font-semibold mb-4">
                   {product.category}
                 </div>
+
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                  {product.name}
+                </h1>
 
                 <p className="text-[14px] text-gray-600 leading-relaxed mb-6">
                   {product.fullDescription}
@@ -267,8 +291,5 @@ export default async function ProductDetailPage({ params }) {
           </div>
         </div>
       </main>
-    );
-  } catch {
-    return notFound();
-  }
+  );
 }

@@ -26,6 +26,7 @@ const emptyMember = {
 export default function AdminTeamClient() {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
@@ -40,13 +41,22 @@ export default function AdminTeamClient() {
 
   const fetchMembers = async () => {
     try {
-      const res = await fetch("/api/admin/team");
-      if (res.ok) {
-        const data = await res.json();
-        setMembers(data.members || []);
+      const res = await fetch("/api/admin/team", { credentials: "include" });
+      if (res.status === 401) {
+        setError("Session expired or not logged in. Please log in again.");
+        setLoading(false);
+        return;
       }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
+      const data = await res.json();
+      setMembers(data.members || []);
+      setError(null);
     } catch (error) {
       console.error("Failed to fetch members:", error);
+      setError(error.message || "Unable to load team members.");
     } finally {
       setLoading(false);
     }
@@ -95,6 +105,7 @@ export default function AdminTeamClient() {
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -124,6 +135,7 @@ export default function AdminTeamClient() {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -145,7 +157,7 @@ export default function AdminTeamClient() {
 
     setDeleting(member._id);
     try {
-      const res = await fetch(`/api/admin/team/${member._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/team/${member._id}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         setMembers((prev) => prev.filter((m) => m._id !== member._id));
       } else {
@@ -194,6 +206,16 @@ export default function AdminTeamClient() {
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchMembers}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : filteredMembers.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -478,3 +500,4 @@ export default function AdminTeamClient() {
     </div>
   );
 }
+

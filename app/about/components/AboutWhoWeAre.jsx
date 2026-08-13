@@ -5,7 +5,7 @@ export default function AboutWhoWeAre() {
   return (
     <section
       id="who-we-are"
-      className="relative overflow-hidden min-h-[420px] flex items-center scroll-mt-24"
+      className="relative overflow-hidden scroll-mt-24"
     >
       {/* Background photo — spans the FULL section, including behind the text */}
       <div className="absolute inset-0">
@@ -13,11 +13,15 @@ export default function AboutWhoWeAre() {
           src="/sewing-section2.jpg"
           alt="SA Thread Factory Interior"
           fill
-          className="object-cover"
+          sizes="100vw"
+          className="object-cover object-center lg:object-left"
         />
         {/* Blue-tinted wash across the whole photo, growing stronger/whiter toward the text side */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/20 via-white/55 to-white/95 lg:hidden"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none hidden lg:block"
           style={{
             background:
               "linear-gradient(to right, rgba(37,99,235,0.16) 0%, rgba(37,99,235,0.22) 45%, rgba(255,255,255,0.85) 55%, rgba(255,255,255,0.94) 100%)",

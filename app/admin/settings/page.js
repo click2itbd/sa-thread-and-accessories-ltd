@@ -32,7 +32,7 @@ export default function AdminSettingsPage() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch("/api/admin/settings");
+      const res = await fetch("/api/admin/settings", { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
         setSettings(data.settings || emptySettings);
@@ -56,6 +56,7 @@ export default function AdminSettingsPage() {
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -85,6 +86,7 @@ export default function AdminSettingsPage() {
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -109,6 +111,7 @@ export default function AdminSettingsPage() {
 
     try {
       const res = await fetch("/api/admin/settings", {
+        credentials: 'include',
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(settings),
@@ -315,3 +318,4 @@ export default function AdminSettingsPage() {
     </div>
   );
 }
+

@@ -2,15 +2,30 @@
 
 import { useState, useEffect } from "react";
 import { Building2 } from "lucide-react";
+import { TRUSTED_BRANDS } from "@/data/siteContent";
+
+function getFallbackClients() {
+  return TRUSTED_BRANDS.map((brand, index) => ({
+    _id: `static-client-${index}`,
+    name: brand.name,
+    logo: brand.src,
+    isActive: true,
+  }));
+}
 
 export default function AboutClients() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
     fetch("/api/clients")
-      .then((res) => res.json())
-      .then((data) => setClients(data.clients || []))
-      .catch((err) => console.error("Failed to fetch clients:", err));
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Failed");
+      })
+      .then((data) => setClients(data.clients?.length ? data.clients : getFallbackClients()))
+      .catch(() => {
+        setClients(getFallbackClients());
+      });
   }, []);
 
   return (
@@ -25,7 +40,7 @@ export default function AboutClients() {
           Trusted by Leading Brands
         </h3>
         <p className="text-gray-500 text-[14px] mb-10 leading-relaxed max-w-md">
-          We proudly supply to 20+ renowned garment factories and brands across Bangladesh.
+          We proudly support renowned garment factories and brands across Bangladesh with reliable, quality accessories and consistent service.
         </p>
 
         {clients.length === 0 ? (

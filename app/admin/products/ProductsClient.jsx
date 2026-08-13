@@ -46,6 +46,7 @@ function parseSpecs(value) {
 export default function AdminProductsPage({ initialEdit = null }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [modalOpen, setModalOpen] = useState(!!initialEdit);
@@ -84,15 +85,24 @@ export default function AdminProductsPage({ initialEdit = null }) {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/admin/products");
-      if (res.ok) {
-        const data = await res.json();
-        setProducts(data.products || []);
-        const cats = [...new Set((data.products || []).map((p) => p.category).filter(Boolean))];
-        setUniqueCategories(cats);
+      const res = await fetch("/api/admin/products", { credentials: "include" });
+      if (res.status === 401) {
+        setError("Session expired or not logged in. Please log in again.");
+        setLoading(false);
+        return;
       }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
+      const data = await res.json();
+      setProducts(data.products || []);
+      const cats = [...new Set((data.products || []).map((p) => p.category).filter(Boolean))];
+      setUniqueCategories(cats);
+      setError(null);
     } catch (error) {
       console.error("Failed to fetch products:", error);
+      setError(error.message || "Unable to load products. Please check your database connection.");
     } finally {
       setLoading(false);
     }
@@ -144,6 +154,7 @@ export default function AdminProductsPage({ initialEdit = null }) {
       formData.append("file", file);
 
       const res = await fetch("/api/admin/upload", {
+        credentials: 'include',
         method: "POST",
         body: formData,
       });
@@ -182,6 +193,7 @@ export default function AdminProductsPage({ initialEdit = null }) {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -203,7 +215,7 @@ export default function AdminProductsPage({ initialEdit = null }) {
 
     setDeleting(product._id);
     try {
-      const res = await fetch(`/api/admin/products/${product._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/products/${product._id}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         setProducts((prev) => prev.filter((p) => p._id !== product._id));
       } else {
@@ -267,6 +279,16 @@ export default function AdminProductsPage({ initialEdit = null }) {
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchProducts}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : filteredProducts.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <Package className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -599,3 +621,4 @@ export default function AdminProductsPage({ initialEdit = null }) {
     </div>
   );
 }
+

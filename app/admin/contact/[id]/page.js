@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import AdminContactClient from "../../contact/ContactClient";
 
 export default async function AdminContactDetailPage({ params }) {
   const { id } = await params;
+  const cookieHeader = cookies().toString();
 
   try {
     const res = await fetch(`/api/admin/contact/${id}`, {
       cache: "no-store",
+      headers: { cookie: cookieHeader },
     });
 
     if (!res.ok) {

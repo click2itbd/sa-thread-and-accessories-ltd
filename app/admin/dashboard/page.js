@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, Briefcase, Package, Award, Users, Building2, FileText, TrendingUp } from "lucide-react";
+import { Mail, Briefcase, Package, Award, Users, Building2, FileText, TrendingUp, Database } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminDashboard() {
@@ -20,6 +20,8 @@ export default function AdminDashboard() {
     pendingApplications: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [importing, setImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState("");
 
   useEffect(() => {
     fetchStats();
@@ -28,12 +30,12 @@ export default function AdminDashboard() {
   const fetchStats = async () => {
     try {
       const [contactRes, jobsRes, productsRes, teamRes, clientsRes, applicationsRes] = await Promise.all([
-        fetch("/api/admin/contact"),
-        fetch("/api/admin/jobs"),
-        fetch("/api/admin/products"),
-        fetch("/api/admin/team"),
-        fetch("/api/admin/clients"),
-        fetch("/api/admin/applications"),
+        fetch("/api/admin/contact", { credentials: "include" }),
+        fetch("/api/admin/jobs", { credentials: "include" }),
+        fetch("/api/admin/products", { credentials: "include" }),
+        fetch("/api/admin/team", { credentials: "include" }),
+        fetch("/api/admin/clients", { credentials: "include" }),
+        fetch("/api/admin/applications", { credentials: "include" }),
       ]);
 
       let unreadCount = 0;
@@ -105,6 +107,38 @@ export default function AdminDashboard() {
     }
   };
 
+  const importStarterData = async () => {
+    setImporting(true);
+    setImportMessage("");
+
+    try {
+      const response = await fetch("/api/admin/import", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "all" }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Could not import starter data.");
+      }
+
+      const imported = Object.values(data.results)
+        .reduce((total, result) => total + (result.imported || 0), 0);
+      setImportMessage(
+        imported > 0
+          ? `${imported} starter records imported successfully.`
+          : "Starter data is already in the database.",
+      );
+      fetchStats();
+    } catch (error) {
+      setImportMessage(error.message || "Could not import starter data.");
+    } finally {
+      setImporting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -131,9 +165,25 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-sm text-gray-500 mt-1">Welcome to SA Thread Admin Panel</p>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-sm text-gray-500 mt-1">Welcome to SA Thread Admin Panel</p>
+        </div>
+        <div className="flex flex-col items-start gap-2 sm:items-end">
+          <button
+            type="button"
+            onClick={importStarterData}
+            disabled={importing}
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <Database className="h-4 w-4" />
+            {importing ? "Importing..." : "Import Starter Data"}
+          </button>
+          {importMessage && (
+            <p className="text-xs text-gray-500">{importMessage}</p>
+          )}
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -180,3 +230,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

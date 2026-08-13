@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import "./globals.css";
 
@@ -136,7 +136,7 @@ export default function RootLayout({ children }) {
         <PageTransition>
           <div className="flex-1">{children}</div>
         </PageTransition>
-        <Footer/>
+        {/* <Footer/> */}
       </body>
     </html>
   )

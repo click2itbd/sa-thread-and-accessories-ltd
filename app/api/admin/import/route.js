@@ -4,12 +4,18 @@ import TeamMember from "@/lib/models/TeamMember";
 import Certificate from "@/lib/models/Certificate";
 import Client from "@/lib/models/Client";
 import connectToDatabase from "@/lib/mongoose";
+import { getAdminFromRequest } from "@/lib/adminAuth";
 import { PRODUCTS } from "@/data/products";
 import { teamMembers, certifications } from "@/app/about/data";
 import { TRUSTED_BRANDS } from "@/data/siteContent";
 
 export async function POST(request) {
   try {
+    const admin = await getAdminFromRequest(request);
+    if (!admin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     await connectToDatabase();
 
     const { type } = await request.json();

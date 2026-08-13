@@ -8,6 +8,7 @@ const STATUS_OPTIONS = ["Pending", "Shortlisted", "Rejected", "Hired"];
 export default function AdminApplicationsPage() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterPosition, setFilterPosition] = useState("");
   const [uniquePositions, setUniquePositions] = useState([]);
@@ -23,15 +24,26 @@ export default function AdminApplicationsPage() {
       if (searchQuery) url.searchParams.set("search", searchQuery);
       if (filterPosition) url.searchParams.set("position", filterPosition);
 
-      const res = await fetch(url.toString());
-      if (res.ok) {
+      const res = await fetch(url.toString(), {
+        credentials: "include",
+      });
+      if (res.status === 401) {
+        setError("Session expired or not logged in. Please log in again.");
+        setLoading(false);
+        return;
+      }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Server error (${res.status})`);
+      }
         const data = await res.json();
         setApplications(data.applications || []);
         const positions = [...new Set((data.applications || []).map((a) => a.appliedPosition))];
         setUniquePositions(positions);
-      }
+        setError(null);
     } catch (error) {
       console.error("Failed to fetch applications:", error);
+      setError(error.message || "Unable to load applications.");
     } finally {
       setLoading(false);
     }
@@ -51,6 +63,7 @@ export default function AdminApplicationsPage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ applicationStatus: newStatus }),
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -71,7 +84,7 @@ export default function AdminApplicationsPage() {
     if (!confirm(`Are you sure you want to delete application from ${app.fullName}?`)) return;
 
     try {
-      const res = await fetch(`/api/admin/applications/${app._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/applications/${app._id}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         setApplications((prev) => prev.filter((a) => a._id !== app._id));
       } else {
@@ -128,6 +141,16 @@ export default function AdminApplicationsPage() {
 
       {loading ? (
         <div className="text-center py-12 text-gray-500">Loading...</div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <p className="text-red-700 text-sm font-medium">{error}</p>
+          <button
+            onClick={fetchApplications}
+            className="mt-3 text-sm text-red-600 hover:text-red-700 underline"
+          >
+            Retry
+          </button>
+        </div>
       ) : applications.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
           <p className="text-gray-500 text-sm">No applications found.</p>
