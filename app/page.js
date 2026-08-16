@@ -100,7 +100,7 @@ export default function Home() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="relative w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[600px]">
+          <div className="relative w-full grid">
             {HOME_HERO_SLIDES.map((slide, idx) => {
               const isActive = idx === currentSlide;
               const isPrev = idx < currentSlide;
@@ -109,7 +109,7 @@ export default function Home() {
                 <div
                   key={slide.id}
                   aria-hidden={!isActive}
-                  className={`absolute inset-0 flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 pt-6 md:pt-10 pb-10 md:pb-16 transition-all duration-700 ease-out ${
+                  className={`[grid-area:1/1] flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 pt-6 md:pt-10 pb-10 md:pb-16 transition-all duration-700 ease-out ${
                     isActive
                       ? "opacity-100 translate-x-0 pointer-events-auto"
                       : isPrev
@@ -153,7 +153,7 @@ export default function Home() {
 
                   <div className="w-full md:flex-1 shrink-0">
                     <div
-                      className="img-protected relative w-full overflow-hidden rounded-2xl h-[260px] sm:h-[340px] md:h-[420px] lg:h-[500px]"
+                      className="img-protected relative w-full overflow-hidden rounded-2xl aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:h-[420px] lg:h-[500px]"
                       onContextMenu={(e) => e.preventDefault()}
                     >
                       <div className="img-overlay" />
