@@ -283,7 +283,6 @@ export const teamMembers = [
     role: "Marketing Manager",
     dept: "Sales & Marketing",
     image: "/Employee Photograph/Md. Wahid Miah- Marketing Manager.jpg",
-    email: "wahid@sathread.com",
     phone: "+8801971170961",
     location: "Dhaka, Bangladesh",
     whatsappNumber: "+8801971170961",
@@ -306,8 +305,7 @@ export const teamMembers = [
     name: "Md. Tafsir Alom",
     role: "Factory Manager",
     dept: "Production",
-    image: "/Employee Photograph/Md. Tafsir Alom- Factory Manager.jpeg",
-    email: "tafsir@sathread.com",
+    image: "/Employee Photograph/Md. Tafsir Alom- Factory Manager.jpg",
     phone: "+880 1971 170 968",
     location: "Gazipur, Bangladesh",
     about:

@@ -57,7 +57,7 @@ export const TRUSTED_BRANDS = [
   { name: "Eurozone Group", src: "/Clients/Eurozone.jpg" },
   {
     name: "Sinha Knit & Denims Ltd.",
-    src: "/Clients/Sinha-knit-&-Denims-ltd.png",
+    src: "/Clients/Sinha-Knit-&-Denims-ltd.png",
   },
   { name: "M.M Knitwear", src: "/Clients/m_m_knitwear_ltd_logo.jpg" },
   { name: "AZ Composite Ltd.", src: "/Clients/AZ-Composite.png" },
