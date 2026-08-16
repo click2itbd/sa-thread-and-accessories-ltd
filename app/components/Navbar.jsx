@@ -46,76 +46,76 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col leading-none">
-              <span className="text-lg md:text-xl font-extrabold text-primary tracking-tight leading-tight">
+              <span className="text-lg md:text-xl font-extrabold text-black tracking-tight leading-tight">
                 {SITE_CONFIG.name}
               </span>
-              <span className="text-[8px] md:text-[9px] font-semibold text-gray-400 tracking-widest uppercase">
+              <span className="text-[8px] md:text-[9px] font-semibold text-black-600 tracking-widest uppercase">
                 {SITE_CONFIG.nameSuffix}
               </span>
             </div>
           </Link>
 
-          {/* ── Desktop Nav Links ───────────────────────────────── */}
-          <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  href={link.path}
-                  className={`relative px-3 py-2 text-[12px] font-semibold tracking-wider transition-colors duration-200 rounded-md ${
-                    pathname === link.path
-                      ? "text-primary"
-                      : "text-gray-500 hover:text-primary"
-                  }`}
-                >
-                  {link.name}
-                  {pathname === link.path && (
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full" />
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {/* ── Right side group: Nav Links + Social + CTA ───────── */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+            {/* Nav Links */}
+            <ul className="flex items-center gap-1">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.path}
+                    className={`relative px-3 py-2 text-[12px] font-semibold tracking-wider transition-colors duration-200 rounded-md ${
+                      pathname === link.path
+                        ? "text-primary"
+                        : "text-gray-500 hover:text-primary"
+                    }`}
+                  >
+                    {link.name}
+                    {pathname === link.path && (
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full" />
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-          {/* ── Desktop CTA with Social Icons ───────────────────── */}
-          {/* ── Desktop CTA with Social Icons ───────────────────── */}
-          <div className="hidden lg:flex items-center gap-4">
-            {/* Social Icons */}
-            <div className="flex items-center gap-2 pr-3 border-r border-gray-200">
+            {/* Social Icons + Phone CTA (lg and up only) */}
+            <div className="hidden lg:flex items-center gap-4">
+              <div className="flex items-center gap-2 pr-3 border-r border-gray-200">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61577206238228"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#1877F2] hover:text-white transition-all duration-200 hover:scale-110"
+                >
+                  <FaFacebookF className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="mailto:info@example.com"
+                  aria-label="Email"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-red-700 hover:text-white transition-all duration-200 hover:scale-110"
+                >
+                  <MdEmail className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://wa.me/+8801869517302"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#25D366] hover:text-white transition-all duration-200 hover:scale-110"
+                >
+                  <FaWhatsapp className="w-4 h-4" />
+                </a>
+              </div>
+
               <a
-                href="https://facebook.com/yourpage"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#1877F2] hover:text-white transition-all duration-200 hover:scale-110"
+                href={`tel:${SITE_CONFIG.phone}`}
+                className="flex items-center gap-2 text-[12px] font-bold text-primary hover:text-white hover:bg-primary transition-colors duration-200 border-2 border-primary px-3.5 py-2 rounded-lg"
               >
-                <FaFacebookF className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="mailto:info@example.com"
-                aria-label="Email"
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-red-700 hover:text-white transition-all duration-200 hover:scale-110"
-              >
-                <MdEmail className="w-4 h-4" />
-              </a>
-              <a
-                href="https://wa.me/8801XXXXXXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-[#25D366] hover:text-white transition-all duration-200 hover:scale-110"
-              >
-                <FaWhatsapp className="w-4 h-4" />
+                <Phone className="w-4 h-4" strokeWidth={2.5} />
+                {SITE_CONFIG.phone}
               </a>
             </div>
-
-            {/* Phone CTA */}
-            <a
-              href={`tel:${SITE_CONFIG.phone}`}
-              className="flex items-center gap-2 text-[12px] font-bold text-primary hover:text-white hover:bg-primary transition-colors duration-200 border-2 border-primary px-3.5 py-2 rounded-lg"
-            >
-              <Phone className="w-4 h-4" strokeWidth={2.5} />
-              {SITE_CONFIG.phone}
-            </a>
           </div>
 
           {/* ── Hamburger ───────────────────────────────────────── */}

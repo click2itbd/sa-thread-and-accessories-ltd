@@ -171,7 +171,7 @@ export default function CareersPage() {
             Application Received!
           </h1>
           <p className="text-[14px] text-gray-500 leading-relaxed mb-8">
-            Thank you for applying to S.A. Thread &amp; Accessories Ltd. Our HR
+            Thank you for applying to SA Thread &amp; Accessories Ltd. Our HR
             team will review your application and get back to you soon.
           </p>
           <Link
@@ -253,9 +253,9 @@ export default function CareersPage() {
                 Build Your Career With Us
               </h1>
               <p className="text-[14px] text-white/80 leading-relaxed mb-8">
-                Since 2003, S.A. Thread &amp; Accessories Ltd. has been a
-                trusted name in garments accessories. Join a team that values
-                integrity, excellence, and growth.
+                Since 2003, SA Thread &amp; Accessories Ltd. has been a trusted
+                name in garments accessories. Join a team that values integrity,
+                excellence, and growth.
               </p>
 
               <ul className="space-y-3 mb-10">

@@ -3,11 +3,13 @@ import Product from "@/lib/models/Product";
 import TeamMember from "@/lib/models/TeamMember";
 import Certificate from "@/lib/models/Certificate";
 import Client from "@/lib/models/Client";
+import Blog from "@/lib/models/Blog";
 import connectToDatabase from "@/lib/mongoose";
 import { getAdminFromRequest } from "@/lib/adminAuth";
 import { PRODUCTS } from "@/data/products";
 import { teamMembers, certifications } from "@/app/about/data";
 import { TRUSTED_BRANDS } from "@/data/siteContent";
+import { csr } from "@/data/siteContent";
 
 export async function POST(request) {
   try {
@@ -20,8 +22,8 @@ export async function POST(request) {
 
     const { type } = await request.json();
 
-    if (!type || !["products", "team", "certificates", "clients", "all"].includes(type)) {
-      return NextResponse.json({ error: "Invalid type. Use 'products', 'team', 'certificates', 'clients', or 'all'" }, { status: 400 });
+    if (!type || !["products", "team", "certificates", "clients", "blogs", "all"].includes(type)) {
+      return NextResponse.json({ error: "Invalid type. Use 'products', 'team', 'certificates', 'clients', 'blogs', or 'all'" }, { status: 400 });
     }
 
     const results = {};
@@ -124,6 +126,31 @@ export async function POST(request) {
         results.clients = { imported: clientsToImport.length, message: "Clients imported successfully" };
       } else {
         results.clients = { imported: 0, message: `Clients already exist (${existingCount} found)` };
+      }
+    }
+
+    if (type === "blogs" || type === "all") {
+      const existingBlogs = await Blog.find({});
+      const existingCount = existingBlogs.length;
+
+      if (existingCount === 0) {
+        const blogsToImport = csr.map((item, index) => ({
+          title: item.title,
+          slug: item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+          excerpt: item.description,
+          content: item.description,
+          image: "",
+          author: "SA Thread",
+          category: "CSR",
+          tags: ["CSR", "Sustainability"],
+          isPublished: true,
+          isActive: true,
+        }));
+
+        await Blog.insertMany(blogsToImport);
+        results.blogs = { imported: blogsToImport.length, message: "Blogs imported successfully" };
+      } else {
+        results.blogs = { imported: 0, message: `Blogs already exist (${existingCount} found)` };
       }
     }
 

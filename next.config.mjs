@@ -2,6 +2,23 @@
 const nextConfig = {
   reactCompiler: true,
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.openstreetmap.org",
+      },
+      {
+        protocol: "https",
+        hostname: "*.tile.openstreetmap.org",
+      },
+    ],
+  },
+
   // ── HTTP Security Headers ──────────────────────────────────────────────────
   async headers() {
     return [

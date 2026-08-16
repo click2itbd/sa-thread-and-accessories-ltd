@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2 } from "lucide-react";
+import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen } from "lucide-react";
 
 export default function AdminSidebar({ onClose }) {
   const pathname = usePathname();
@@ -20,6 +20,7 @@ export default function AdminSidebar({ onClose }) {
     { href: "/admin/careers/jobs", label: "Careers", icon: Briefcase },
     { href: "/admin/careers/applications", label: "Applications", icon: FileText },
     { href: "/admin/products", label: "Products", icon: Package },
+    { href: "/admin/blogs", label: "Blog Management", icon: BookOpen },
     { href: "/admin/contact", label: "Contact Messages", icon: Mail },
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   ];

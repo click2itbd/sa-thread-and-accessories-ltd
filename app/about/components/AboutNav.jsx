@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: "Board of Director", href: "#board-of-directors" },
   { label: "Message", href: "#message" },
   { label: "Achievement", href: "#achievement" },
+  { label: "Clients", href: "#clients" },
   { label: "Team", href: "#team" },
 ];
 
@@ -54,11 +55,11 @@ export default function AboutNav() {
   return (
     <nav
       ref={navRef}
-      className="sticky top-[60px] z-40 -mb-20"
+      className="sticky top-[75px] z-40 -mb-20"
     >
       {/* Desktop pill-style menu */}
       <div className="hidden sm:flex justify-center py-4">
-        <ul className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md shadow-md px-4 py-2">
+        <ul className="inline-flex items-center gap-2 rounded-full  shadow-md px-4 py-2">
         {NAV_LINKS.map((link) => {
           const active = activeHref === link.href;
           return (

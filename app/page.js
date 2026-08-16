@@ -63,7 +63,9 @@ export default function Home() {
       if (res.ok) {
         const data = await res.json();
         setProducts(
-          data.products?.length ? data.products.slice(0, 4) : getFallbackProducts(),
+          data.products?.length
+            ? data.products.slice(0, 4)
+            : getFallbackProducts(),
         );
       } else {
         setProducts(getFallbackProducts());
@@ -98,7 +100,7 @@ export default function Home() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <div className="relative w-full" style={{ minHeight: "600px" }}>
+          <div className="relative w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[600px]">
             {HOME_HERO_SLIDES.map((slide, idx) => {
               const isActive = idx === currentSlide;
               const isPrev = idx < currentSlide;
@@ -107,7 +109,7 @@ export default function Home() {
                 <div
                   key={slide.id}
                   aria-hidden={!isActive}
-                  className={`absolute inset-0 flex flex-col md:flex-row items-center gap-8 md:gap-12 py-10 md:py-16 transition-all duration-700 ease-out ${
+                  className={`absolute inset-0 flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 pt-6 md:pt-10 pb-10 md:pb-16 transition-all duration-700 ease-out ${
                     isActive
                       ? "opacity-100 translate-x-0 pointer-events-auto"
                       : isPrev
@@ -116,37 +118,42 @@ export default function Home() {
                   }`}
                 >
                   <div className="w-full md:w-[52%] shrink-0 text-center md:text-left">
-                    <h1 className="text-4xl md:text-[46px] xl:text-[52px] font-extrabold leading-[1.1] mb-5 text-black tracking-tight">
+                    <h1 className="text-3xl sm:text-4xl md:text-[46px] xl:text-[52px] font-extrabold leading-[1.15] mb-4 md:mb-5 text-black tracking-tight">
                       {slide.title1}
                       <br />
                       <span className="text-primary">{slide.title2}</span>
                     </h1>
-                    <p className="text-lg md:text-xl text-black/70 leading-relaxed mb-10 max-w-[500px] mx-auto md:mx-0">
+                    <p className="text-base sm:text-lg md:text-xl text-black/70 leading-relaxed mb-6 md:mb-10 max-w-[500px] mx-auto md:mx-0">
                       {slide.description}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                       <Link
                         href="/products"
-                        className="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#163d24] transition-colors"
+                        className="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary transition-colors"
                       >
                         {HOME_CTA.products}
-                        <ChevronRight className="w-4 h-4 ml-2" strokeWidth={3} />
+                        <ChevronRight
+                          className="w-4 h-4 ml-2"
+                          strokeWidth={3}
+                        />
                       </Link>
                       <Link
                         href="/contact"
-                        className="inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-[#1F4D2C]/10 transition-colors"
+                        className="inline-flex items-center justify-center gap-2 border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary/30 transition-colors"
                       >
                         {HOME_CTA.contact}
-                        <ChevronRight className="w-4 h-4 ml-2 text-primary" strokeWidth={3} />
+                        <ChevronRight
+                          className="w-4 h-4 ml-2 text-primary"
+                          strokeWidth={3}
+                        />
                       </Link>
                     </div>
                   </div>
 
                   <div className="w-full md:flex-1 shrink-0">
                     <div
-                      className="img-protected relative w-full overflow-hidden rounded-2xl"
-                      style={{ height: "500px" }}
+                      className="img-protected relative w-full overflow-hidden rounded-2xl h-[260px] sm:h-[340px] md:h-[420px] lg:h-[500px]"
                       onContextMenu={(e) => e.preventDefault()}
                     >
                       <div className="img-overlay" />
@@ -166,7 +173,7 @@ export default function Home() {
           </div>
 
           {/* Slide Controls */}
-          <div className="flex items-center justify-between pb-10">
+          <div className="flex items-center justify-between pb-4">
             <button
               className="w-10 h-10 rounded-full border border-gray-200 bg-white hidden sm:flex items-center justify-center hover:bg-gray-50 transition-colors"
               onClick={prevSlide}
@@ -182,17 +189,27 @@ export default function Home() {
                   onClick={() => setCurrentSlide(idx)}
                   aria-label={`Go to slide ${idx + 1}`}
                   className={`rounded-full border-[1.5px] border-primary transition-all duration-300 ${
-                    currentSlide === idx ? "bg-primary w-6 h-2.5" : "bg-transparent w-2.5 h-2.5"
+                    currentSlide === idx
+                      ? "bg-primary w-6 h-2.5"
+                      : "bg-transparent w-2.5 h-2.5"
                   }`}
                 />
               ))}
             </div>
 
             <div className="flex sm:hidden gap-3">
-              <button className="p-2 text-primary" onClick={prevSlide} aria-label="Previous slide">
+              <button
+                className="p-2 text-primary"
+                onClick={prevSlide}
+                aria-label="Previous slide"
+              >
                 <ChevronLeft className="w-5 h-5" strokeWidth={2} />
               </button>
-              <button className="p-2 text-primary" onClick={nextSlide} aria-label="Next slide">
+              <button
+                className="p-2 text-primary"
+                onClick={nextSlide}
+                aria-label="Next slide"
+              >
                 <ChevronRight className="w-5 h-5" strokeWidth={2} />
               </button>
             </div>
@@ -210,31 +227,40 @@ export default function Home() {
 
       {/* Clients Section */}
       {clients.length > 0 && (
-        <section className="py-16 bg-white">
+        <section className="py-8 bg-transparent">
           <div className="container mx-auto px-6">
+            {/* Section Header */}
             <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">Trusted by Leading Brands</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                Trusted by Leading Brands
+              </h2>
               <p className="text-gray-500 max-w-2xl mx-auto">
-                We proudly supply to 20+ renowned garment factories and brands across Bangladesh.
+                We proudly supply to 20+ renowned garment factories and brands
+                across Bangladesh.
               </p>
             </div>
 
+            {/* Logos Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {clients.map((client) => (
                 <Link
                   key={client._id}
                   href="/about#clients"
-                  className="group flex flex-col items-center justify-center p-6 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-md hover:border-[#1F4D2C]/30 transition-all"
+                  className="group flex flex-col items-center justify-center p-6 bg-transparent rounded-xl border border-transparent hover:border-primary/30 transition-all"
                 >
-                  <div className="relative w-16 h-16 mb-3 rounded-full overflow-hidden bg-white border border-gray-200">
+                  {/* Logo Container */}
+                  <div className="flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 mb-3 rounded-xl bg-white border border-gray-100 shadow-sm overflow-hidden">
                     <Image
                       src={client.logo}
                       alt={client.name}
-                      fill
-                      className="object-contain p-2 group-hover:scale-110 transition-transform"
+                      width={120}
+                      height={120}
+                      className="object-contain max-w-full max-h-full p-2 transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <span className="text-sm font-medium text-gray-700 text-center group-hover:text-[#1F4D2C] transition-colors">
+
+                  {/* Client Name */}
+                  <span className="text-sm font-medium text-gray-700 text-center group-hover:text-primary transition-colors">
                     {client.name}
                   </span>
                 </Link>
@@ -246,18 +272,21 @@ export default function Home() {
 
       {/* Products Preview Section */}
       {products.length > 0 && (
-        <section className="py-16 bg-gray-50">
+        <section className="py-8 bg-gray-50">
           <div className="container mx-auto px-6">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-3">Our Products</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                  Our Products
+                </h2>
                 <p className="text-gray-500 max-w-xl">
-                  Explore our wide range of garments accessories manufactured with premium quality and OEKO-TEX certified standards.
+                  Explore our wide range of garments accessories manufactured
+                  with premium quality and OEKO-TEX certified standards.
                 </p>
               </div>
               <Link
                 href="/products"
-                className="hidden md:inline-flex items-center gap-2 text-[#1F4D2C] font-semibold hover:underline"
+                className="hidden md:inline-flex items-center gap-2 text-primary font-semibold hover:underline"
               >
                 View All
                 <ChevronRight className="w-4 h-4" strokeWidth={2} />
@@ -273,14 +302,14 @@ export default function Home() {
                 >
                   <div className="h-[200px] relative bg-gray-50 overflow-hidden">
                     <Image
-                      src={product.images?.[0] || "/yarn.jpg"}
+                      src={product.images?.[0] || "/yarn.png"}
                       alt={product.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="p-5">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-1 group-hover:text-[#1F4D2C] transition-colors">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1 group-hover:text-primary transition-colors">
                       {product.name}
                     </h3>
                     <p className="text-sm text-gray-500 line-clamp-2">
@@ -294,7 +323,7 @@ export default function Home() {
             <div className="mt-8 text-center md:hidden">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 bg-[#1F4D2C] text-white px-6 py-3 rounded-lg font-semibold"
+                className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold"
               >
                 View All Products
                 <ChevronRight className="w-4 h-4" strokeWidth={2} />
@@ -306,7 +335,7 @@ export default function Home() {
 
       {/* Footer */}
 
-      <Footer/>
+      <Footer />
     </main>
   );
 }

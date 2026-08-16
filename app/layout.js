@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
 import Navbar from "./components/Navbar";
-// import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
 import "./globals.css";
 
@@ -11,11 +10,11 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://www.S.A..com"),
+  metadataBase: new URL("https://www.sathread.com.bd"),
   title: {
-    template: "%s | S.A. Thread & Accessories Ltd.",
+    template: "%s | SA Thread & Accessories Ltd.",
     default:
-      "S.A. Thread & Accessories Ltd. | Sewing Thread, Elastic & Drawstring Manufacturer, Bangladesh",
+      "SA Thread & Accessories Ltd. | Sewing Thread, Elastic & Drawstring Manufacturer, Bangladesh",
   },
   description:
     "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring & draw cord for garments. Supplying 20+ RMG factories from our Gazipur, Bangladesh facility since 2003.",
@@ -28,15 +27,15 @@ export const metadata = {
     "garments accessories Bangladesh",
     "Oeko-Tex certified thread",
     "RMG accessories supplier",
-    "S.A. Thread Gazipur",
+    "SA Thread Gazipur",
     "SA Thread Gazipur",
     "BGAPMEA member",
   ],
   authors: [
-    { name: "S.A. Thread & Accessories Ltd.", url: "https://www.S.A..com" },
+    { name: "SA Thread & Accessories Ltd.", url: "https://www.sathread.com.bd" },
   ],
-  creator: "S.A. Thread & Accessories Ltd.",
-  publisher: "S.A Thread & Accessories Ltd.",
+  creator: "SA Thread & Accessories Ltd.",
+  publisher: "SA Thread & Accessories Ltd.",
   category: "Manufacturing",
   alternates: {
     canonical: "/",
@@ -54,16 +53,18 @@ export const metadata = {
   },
 
   openGraph: {
-    title: "S.A. Thread & Accessories Ltd. | Premium Garments Accessories Manufacturer",
-    description: "Oeko-Tex certified sewing thread, elastic, twill tape & drawstring manufacturer based in Gazipur, Bangladesh. Trusted by 20+ garment factories since 2003.",
-    url: "https://www.S.A..com",
-    siteName: "S.A. Thread & Accessories Ltd.",
+    title:
+      "SA Thread & Accessories Ltd. | Premium Garments Accessories Manufacturer",
+    description:
+      "Oeko-Tex certified sewing thread, elastic, twill tape & drawstring manufacturer based in Gazipur, Bangladesh. Trusted by 20+ garment factories since 2003.",
+    url: "https://www.sathread.com.bd",
+    siteName: "SA Thread & Accessories Ltd.",
     images: [
       {
-        url: "/factory.jpg",
+        url: "/sathread.webp",
         width: 1200,
         height: 630,
-        alt: "S.A. Thread & Accessories Ltd. factory in Gazipur, Bangladesh",
+        alt: "SA Thread & Accessories Ltd. factory in Gazipur, Bangladesh",
       },
     ],
     locale: "en_US",
@@ -72,14 +73,15 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "S.A. Thread & Accessories Ltd.",
-    description: "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape & drawstring for the global garment industry.",
-    images: ["/factory.jpg"],
+    title: "SA Thread & Accessories Ltd.",
+    description:
+      "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape & drawstring for the global garment industry.",
+    images: ["/sathread.webp"],
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
   },
   verification: {
     google: "your-google-search-console-verification-code",
@@ -91,12 +93,13 @@ export const metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type0": "Organization",
-  name: "S.A. Thread & Accessories Ltd.",
-  alternatename: "S.A. Thread",
-  url: "https://www.S.A.thread.com.bd",
-  logo: "https://www.S.A.thread.com.bd/logo.png",
-  image: "https://www.S.A.thread.com.bd/factory.jpg",
-  description: "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring and draw cord for the global garments industry, based in Gazipur, Bangladesh since 2003.",
+  name: "SA Thread & Accessories Ltd.",
+  alternatename: "SA Thread",
+  url: "https://www.sathread.com.bd",
+  logo: "https://www.sathread.com.bd/logo.png",
+  image: "https://www.sathread.com.bd/factory.jpg",
+  description:
+    "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring and draw cord for the global garments industry, based in Gazipur, Bangladesh since 2003.",
   foundingDate: "2003",
   address: {
     "@type": "PostalAddress",
@@ -116,7 +119,7 @@ const organizationJsonLd = {
   },
   sameAs: [
     // Add your live social profiles here, e.g.:
-    // "https://www.facebook.com/sathread",
+    "https://www.facebook.com/profile.php?id=61577206238228",
     // "https://www.linkedin.com/company/sathread",
   ],
   memberOf: {
@@ -129,15 +132,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(organizationJsonLd) }}/>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
+        />
       </head>
-      <body className={`${poppins.variable} font-sans flex flex-col min-h-screen`}>
-        <Navbar/>
+      <body
+        className={`${poppins.variable} font-sans flex flex-col min-h-screen`}
+      >
+        <Navbar />
         <PageTransition>
           <div className="flex-1">{children}</div>
         </PageTransition>
         {/* <Footer/> */}
       </body>
     </html>
-  )
+  );
 }

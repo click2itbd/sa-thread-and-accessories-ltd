@@ -18,6 +18,8 @@ export default function AdminDashboard() {
     activeClients: 0,
     totalApplications: 0,
     pendingApplications: 0,
+    totalBlogs: 0,
+    publishedBlogs: 0,
   });
   const [loading, setLoading] = useState(true);
   const [importing, setImporting] = useState(false);
@@ -29,13 +31,14 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const [contactRes, jobsRes, productsRes, teamRes, clientsRes, applicationsRes] = await Promise.all([
+      const [contactRes, jobsRes, productsRes, teamRes, clientsRes, applicationsRes, blogsRes] = await Promise.all([
         fetch("/api/admin/contact", { credentials: "include" }),
         fetch("/api/admin/jobs", { credentials: "include" }),
         fetch("/api/admin/products", { credentials: "include" }),
         fetch("/api/admin/team", { credentials: "include" }),
         fetch("/api/admin/clients", { credentials: "include" }),
         fetch("/api/admin/applications", { credentials: "include" }),
+        fetch("/api/admin/blogs", { credentials: "include" }),
       ]);
 
       let unreadCount = 0;
@@ -86,9 +89,17 @@ export default function AdminDashboard() {
         pendingApplications = appsData.applications?.filter((a) => a.applicationStatus === "Pending").length || 0;
       }
 
+      let publishedBlogs = 0;
+      let totalBlogs = 0;
+      if (blogsRes.ok) {
+        const blogsData = await blogsRes.json();
+        totalBlogs = blogsData.blogs?.length || 0;
+        publishedBlogs = blogsData.blogs?.filter((b) => b.isPublished && b.isActive).length || 0;
+      }
+
       setStats({
         totalMessages,
-        unreadMessages: unreadCount,
+        unreadCount: unreadCount,
         totalJobs,
         activeJobs,
         totalProducts,
@@ -99,6 +110,8 @@ export default function AdminDashboard() {
         activeClients,
         totalApplications,
         pendingApplications,
+        totalBlogs,
+        publishedBlogs,
       });
     } catch (error) {
       console.error("Failed to fetch stats:", error);
@@ -154,13 +167,14 @@ export default function AdminDashboard() {
     { label: "Active Team", value: stats.activeTeam, total: stats.totalTeam, icon: Users, href: "/admin/team", color: "bg-purple-50 text-purple-700 border-purple-100" },
     { label: "Active Clients", value: stats.activeClients, total: stats.totalClients, icon: Building2, href: "/admin/clients", color: "bg-orange-50 text-orange-700 border-orange-100" },
     { label: "Pending Applications", value: stats.pendingApplications, total: stats.totalApplications, icon: FileText, href: "/admin/careers/applications", color: "bg-red-50 text-red-700 border-red-100" },
+    { label: "Published Blogs", value: stats.publishedBlogs, total: stats.totalBlogs, icon: FileText, href: "/admin/blogs", color: "bg-teal-50 text-teal-700 border-teal-100" },
   ];
 
   const quickActions = [
     { label: "View Messages", desc: `${stats.unreadMessages} unread`, icon: Mail, href: "/admin/contact" },
     { label: "Manage Jobs", desc: `${stats.activeJobs} active`, icon: Briefcase, href: "/admin/careers/jobs" },
     { label: "Manage Products", desc: `${stats.activeProducts} active`, icon: Package, href: "/admin/products" },
-    { label: "Manage Team", desc: `${stats.activeTeam} members`, icon: Users, href: "/admin/team" },
+    { label: "Manage Blogs", desc: `${stats.publishedBlogs} published`, icon: FileText, href: "/admin/blogs" },
   ];
 
   return (

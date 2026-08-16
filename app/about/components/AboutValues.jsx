@@ -11,7 +11,7 @@ const values = [
 export default function AboutValues() {
   return (
     <section className="bg-white border-t border-gray-100">
-      <div className="container mx-auto px-6 py-10">
+      <div className="container mx-auto px-6 py-5">
         {/* Desktop: 5 columns with vertical dividers */}
         <div className="hidden md:grid md:grid-cols-5 md:divide-x md:divide-gray-200">
           {values.map((v) => (

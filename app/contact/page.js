@@ -2,171 +2,212 @@
 
 import Image from "next/image";
 import { CONTACT_PAGE_CONTENT, CONTACT_FORM_CONTENT } from "@/data/siteContent";
-import { ArrowRight, BadgeCheck, Building2, CheckCircle2, Clock, Factory, Loader2, Mail, MapPin, Phone, Send, ShieldCheck, X } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Building2,
+  CheckCircle2,
+  Clock,
+  Factory,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 import Button from "@/app/components/Button";
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-      honeypot: "",
-    });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    honeypot: "",
+  });
 
-    const [status, setStatus] = useState("idle"); // idle, submitting, success, error
+  const [status, setStatus] = useState("idle"); // idle, submitting, success, error
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus("submitting");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("submitting");
 
-        try {
-            const response = await fetch("/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    phone: formData.phone,
-                    subject: formData.subject,
-                    message: formData.message,
-                    honeypot: formData.honeypot,
-                }),
-            });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          honeypot: formData.honeypot,
+        }),
+      });
 
-            const result = await response.json();
+      const result = await response.json();
 
-            if (response.ok && result.success) {
-                setStatus("success");
-                setFormData({ name: "", email: "", phone: "", subject: "", message: "", honeypot: "" });
-            } else {
-                setStatus("error");
-            }
-        } catch (error) {
-            console.error(error);
-            setStatus("error");
-        }
-    };
+      if (response.ok && result.success) {
+        setStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+          honeypot: "",
+        });
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
+  };
 
-    // Card icon
+  // Card icon
 
-    const CARD_ICONS = {
-        phone: Phone,
-        email: Mail,
-        location: MapPin,
-        support: Building2, // Office / Fax card
-    };
+  const CARD_ICONS = {
+    phone: Phone,
+    email: Mail,
+    location: MapPin,
+    support: Building2, // Office / Fax card
+  };
 
-    // Highlight icon
+  // Highlight icon
 
-    const HIGHLIGHT_ICONS = [Clock, Factory, ShieldCheck, BadgeCheck];
+  const HIGHLIGHT_ICONS = [Clock, Factory, ShieldCheck, BadgeCheck];
 
-    const closeModal = () => setStatus("idle");
+  const closeModal = () => setStatus("idle");
 
-    return (
-        <main className="bg-white">
-            {/* Hero */}
-            <section className="relative overflow-visible bg-[#f7f9fc]">
-              {/* Subtle wavy pattern — right */}
-              <svg
-                className="absolute top-0 right-0 w-[50%] h-full pointer-events-none opacity-20"
-                viewBox="0 0 500 400"
-                preserveAspectRatio="xMaxYMid slice"
-                aria-hidden="true"
-              >
-                <path d="M400 0 Q350 100 400 200 T400 400" fill="none" stroke="#1a56d9" strokeWidth="1" strokeDasharray="4 6" />
-                <path d="M440 0 Q390 120 440 220 T440 400" fill="none" stroke="#1a56d9" strokeWidth="1" strokeDasharray="4 6" />
-                <path d="M360 0 Q310 80 360 180 T360 400" fill="none" stroke="#93b5ff" strokeWidth="0.8" strokeDasharray="3 5" />
-              </svg>
+  return (
+    <main className="bg-white">
+      {/* Hero */}
+      <section className="relative overflow-visible bg-[#f7f9fc]">
+        {/* Subtle wavy pattern — right */}
+        <svg
+          className="absolute top-0 right-0 w-[50%] h-full pointer-events-none opacity-20"
+          viewBox="0 0 500 400"
+          preserveAspectRatio="xMaxYMid slice"
+          aria-hidden="true"
+        >
+          <path
+            d="M400 0 Q350 100 400 200 T400 400"
+            fill="none"
+            stroke="#1a56d9"
+            strokeWidth="1"
+            strokeDasharray="4 6"
+          />
+          <path
+            d="M440 0 Q390 120 440 220 T440 400"
+            fill="none"
+            stroke="#1a56d9"
+            strokeWidth="1"
+            strokeDasharray="4 6"
+          />
+          <path
+            d="M360 0 Q310 80 360 180 T360 400"
+            fill="none"
+            stroke="#93b5ff"
+            strokeWidth="0.8"
+            strokeDasharray="3 5"
+          />
+        </svg>
 
-              <div className="container mx-auto px-6 relative z-10">
-                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-8 md:pt-10 pb-20 md:pb-24 lg:pb-28">
-                  {/* Left: text */}
-                  <div className="text-center lg:text-left">
-                    <h4 className="text-primary text-[13px] font-semibold uppercase tracking-widest mb-3">
-                      {CONTACT_PAGE_CONTENT.hero.eyebrow} —
-                    </h4>
-                    <h1 className="text-[34px] md:text-[42px] font-bold leading-tight mb-3 text-gray-900 whitespace-pre-line">
-                      {CONTACT_PAGE_CONTENT.hero.title}
-                    </h1>
-                    <p className="text-[14px] md:text-[15px] text-gray-500 max-w-[420px] mx-auto lg:mx-0 whitespace-pre-line leading-relaxed">
-                      {CONTACT_PAGE_CONTENT.hero.description}
-                    </p>
-                  </div>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pb-10 md:pb-14 lg:pb-[4.5rem]">
+            {/* Left: text */}
+            <div className="text-start">
+              <h4 className="text-primary text-[13px] font-semibold uppercase tracking-widest mb-3">
+                {CONTACT_PAGE_CONTENT.hero.eyebrow} —
+              </h4>
+              <h1 className="text-[34px] md:text-[42px] font-bold leading-tight mb-3 text-gray-900 whitespace-pre-line">
+                {CONTACT_PAGE_CONTENT.hero.title}
+              </h1>
+              <p className="text-[14px] md:text-[15px] text-gray-500 max-w-[420px]  whitespace-pre-line leading-relaxed">
+                {CONTACT_PAGE_CONTENT.hero.description}
+              </p>
+            </div>
 
-                  {/* Right: image */}
-                  <div className="flex justify-center lg:justify-end">
-                    <Image
-                      src={CONTACT_PAGE_CONTENT.hero.image}
-                      alt="SA Thread & Accessories ltd"
-                      width={480}
-                      height={200}
-                      priority
-                      className="max-w-[400px] lg:max-w-[460px] w-full h-auto object-contain"
+            {/* Right: image */}
+            <div className="flex justify-center lg:justify-end">
+              <Image
+                src={CONTACT_PAGE_CONTENT.hero.image}
+                alt="SA Thread & Accessories ltd"
+                width={480}
+                height={200}
+                priority
+                className="max-w-[400px] lg:max-w-[460px] w-full h-auto object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Contact Cards — half overlaps into next section */}
+        <div className="container mx-auto px-6 relative z-20 -mt-28 md:-mt-32 lg:-mt-36 translate-y-6 md:translate-y-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CONTACT_PAGE_CONTENT.cards.map((card) => {
+              const CardIcon = CARD_ICONS[card.key] ?? Building2;
+              return (
+                <div
+                  key={card.key}
+                  className="rounded-xl p-5 flex items-start gap-3.5 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-shadow"
+                >
+                  <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-primary shrink-0">
+                    <CardIcon
+                      className="w-[18px] h-[18px]"
+                      strokeWidth={1.75}
                     />
                   </div>
-                </div>
-              </div>
-
-              {/* Contact Cards — half overlaps into next section */}
-              <div className="container mx-auto px-6 relative z-20 -mt-28 md:-mt-32 lg:-mt-36 translate-y-6 md:translate-y-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {CONTACT_PAGE_CONTENT.cards.map((card) => {
-                    const CardIcon = CARD_ICONS[card.key] ?? Building2;
-                    return (
-                      <div
-                        key={card.key}
-                        className="rounded-xl p-5 flex items-start gap-3.5 bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-shadow"
+                  <div className="min-w-0">
+                    <h4 className="text-[13px] font-bold text-gray-900 mb-0.5">
+                      {card.title}
+                    </h4>
+                    {card.value ? (
+                      <p className="text-[13px] text-primary font-semibold mb-0.5 leading-snug">
+                        {card.value}
+                      </p>
+                    ) : null}
+                    {card.meta ? (
+                      <span className="text-[11px] text-gray-500 block leading-relaxed whitespace-pre-line">
+                        {card.meta}
+                      </span>
+                    ) : null}
+                    {card.key === "location" ? (
+                      <a
+                        href={CONTACT_FORM_CONTENT.map.directionHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary text-[12px] font-semibold inline-flex items-center gap-1 mt-1 hover:underline"
                       >
-                        <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-primary shrink-0">
-                          <CardIcon className="w-[18px] h-[18px]" strokeWidth={1.75} />
-                        </div>
-                        <div className="min-w-0">
-                          <h4 className="text-[13px] font-bold text-gray-900 mb-0.5">
-                            {card.title}
-                          </h4>
-                          {card.value ? (
-                            <p className="text-[13px] text-primary font-semibold mb-0.5 leading-snug">
-                              {card.value}
-                            </p>
-                          ) : null}
-                          {card.meta ? (
-                            <span className="text-[11px] text-gray-500 block leading-relaxed whitespace-pre-line">
-                              {card.meta}
-                            </span>
-                          ) : null}
-                          {card.key === "location" ? (
-                            <a
-                              href={CONTACT_FORM_CONTENT.map.directionHref}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary text-[12px] font-semibold inline-flex items-center gap-1 mt-1 hover:underline"
-                            >
-                              {card.link}
-                              <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
-                            </a>
-                          ) : null}
-                        </div>
-                      </div>
-                    );
-                  })}
+                        {card.link}
+                        <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            </section>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-            <div className="container mx-auto px-6 w-full pb-12 pt-16 md:pt-20 lg:pt-24">
-
-                 {/* Map and Form */}
-                  <section className="flex flex-col lg:flex-row gap-6 mb-12">
+      <div className="container mx-auto px-6 w-full pb-12 pt-16 md:pt-20 lg:pt-24">
+        {/* Map and Form */}
+        <section className="flex flex-col lg:flex-row gap-6 mb-12">
           {/* Map Area */}
           <div className="flex-1 rounded-xl overflow-hidden relative min-h-[450px] border border-gray-200">
             {/* Real Google Maps embed – Gazipur Chowrasta, Bangladesh */}
@@ -189,7 +230,7 @@ export default function ContactPage() {
               <p className="text-[12px] text-gray-600 mb-1 whitespace-pre-line">
                 {CONTACT_PAGE_CONTENT.mapCard.address}
               </p>
-              
+
               <a
                 href={CONTACT_FORM_CONTENT.map.directionHref}
                 target="_blank"
@@ -208,27 +249,45 @@ export default function ContactPage() {
             {status === "success" && (
               <div
                 className="fixed inset-0 z-50 flex items-center justify-center p-4"
-                style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)" }}
-                onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+                style={{
+                  background: "rgba(0,0,0,0.45)",
+                  backdropFilter: "blur(6px)",
+                }}
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) closeModal();
+                }}
               >
                 <div
                   className="bg-white rounded-2xl shadow-2xl p-8 max-w-[420px] w-full text-center"
-                  style={{ animation: "slideUp 0.35s cubic-bezier(.22,1,.36,1) both" }}
+                  style={{
+                    animation: "slideUp 0.35s cubic-bezier(.22,1,.36,1) both",
+                  }}
                 >
                   {/* Animated circle */}
                   <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center animate-[bounce_0.6s_ease_1]">
-                      <CheckCircle2 className="w-9 h-9 text-green-500" strokeWidth={2} />
+                      <CheckCircle2
+                        className="w-9 h-9 text-green-500"
+                        strokeWidth={2}
+                      />
                     </div>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-[22px] font-bold text-gray-900 mb-2">Message Sent!</h3>
+                  <h3 className="text-[22px] font-bold text-gray-900 mb-2">
+                    Message Sent!
+                  </h3>
                   <p className="text-[14px] text-gray-500 leading-relaxed mb-1">
-                    Thank you, <span className="font-semibold text-gray-700">{formData.name || "valued client"}</span>.
+                    Thank you,{" "}
+                    <span className="font-semibold text-gray-700">
+                      {formData.name || "valued client"}
+                    </span>
+                    .
                   </p>
                   <p className="text-[14px] text-gray-500 mb-7">
-                    Our team will get back to you within <span className="font-semibold text-primary">24 hours</span>.
+                    Our team will get back to you within{" "}
+                    <span className="font-semibold text-primary">24 hours</span>
+                    .
                   </p>
 
                   {/* Divider */}
@@ -340,20 +399,31 @@ export default function ContactPage() {
               ></textarea>
 
               <label className="flex items-center gap-2 text-[13px] text-gray-600 mb-6 cursor-pointer">
-                <input type="checkbox" required className="w-4 h-4 accent-primary" />
+                <input
+                  type="checkbox"
+                  required
+                  className="w-4 h-4 accent-primary"
+                />
                 <span>
                   {CONTACT_FORM_CONTENT.form.privacyPolicy}{" "}
-                  <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+                  <a
+                    href="/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-medium"
+                  >
                     {CONTACT_FORM_CONTENT.form.privacyPolicyLink}
                   </a>
                 </span>
               </label>
 
               {status === "error" && (
-                <p className="text-red-500 text-sm mb-4">Something went wrong. Please try again.</p>
+                <p className="text-red-500 text-sm mb-4">
+                  Something went wrong. Please try again.
+                </p>
               )}
 
-              <button 
+              <button
                 type="submit"
                 disabled={status === "submitting"}
                 className={`w-full py-3.5 rounded-lg font-bold text-[15px] flex justify-center items-center gap-2 transition-all duration-300 ${
@@ -376,10 +446,9 @@ export default function ContactPage() {
               </button>
             </form>
           </div>
-          </section>
- 
+        </section>
 
-          {/* Bottom Banner */}
+        {/* Bottom Banner */}
         <section className="flex flex-col lg:flex-row rounded-2xl overflow-hidden border border-gray-200">
           <div className="flex-[3] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 bg-gray-50/80 p-6 md:p-8">
             {CONTACT_PAGE_CONTENT.highlights.map((item, index) => {
@@ -389,7 +458,10 @@ export default function ContactPage() {
                   key={item.title}
                   className={`flex items-start gap-3 p-3 md:p-4 ${index < CONTACT_PAGE_CONTENT.highlights.length - 1 ? "md:border-r md:border-gray-200" : ""}`}
                 >
-                  <HighlightIcon className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <HighlightIcon
+                    className="w-5 h-5 text-primary shrink-0 mt-0.5"
+                    strokeWidth={1.75}
+                  />
                   <div>
                     <h5 className="text-[13px] font-bold text-gray-900 mb-1">
                       {item.title}
@@ -422,15 +494,16 @@ export default function ContactPage() {
             <p className="text-[13px] text-white/85 mb-5 relative z-10 leading-relaxed">
               {CONTACT_PAGE_CONTENT.banner.description}
             </p>
-            <Button variant="white" className="relative z-10 w-full md:w-auto rounded-lg font-bold text-[13px]">
+            {/* <Button
+              variant="white"
+              className="relative z-10 w-full md:w-auto rounded-lg font-bold text-[13px]"
+            >
               {CONTACT_PAGE_CONTENT.banner.cta}
               <ArrowRight className="w-3.5 h-3.5 ml-1" strokeWidth={2.5} />
-            </Button>
+            </Button> */}
           </div>
         </section>
-
-                   
-            </div>
-        </main>
-    )
+      </div>
+    </main>
+  );
 }

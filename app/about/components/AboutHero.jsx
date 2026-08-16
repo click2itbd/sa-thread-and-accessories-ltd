@@ -36,13 +36,13 @@ export default function AboutHero() {
         </h1>
 
         <p className="text-[14px] text-gray-700 leading-relaxed mb-4 max-w-[480px]">
-          Founded in 2003, S.A. Thread &amp; Accessories Ltd. has grown from a
+          Founded in 2003, SA Thread &amp; Accessories Ltd. has grown from a
           local Uttara supplier into a trusted accessories manufacturer serving
           20+ garment factories across Bangladesh.
         </p>
 
         <p className="text-[14px] text-gray-700 leading-relaxed max-w-[480px]">
-          S.A. Thread &amp; Accessories Ltd. began operations in 2003 in Uttara,
+          SA Thread &amp; Accessories Ltd. began operations in 2003 in Uttara,
           Azampur Dewanbari, supplying sewing thread and narrow-fabric
           accessories to nearby garment factories. What set the company apart
           from the start was a simple discipline: deliver exactly what was

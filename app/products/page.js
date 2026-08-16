@@ -99,32 +99,32 @@ export default function ProductsPage() {
 
   return (
     <main>
-      <div className="container mx-auto px-6 w-full pb-20">
+      <div className="container mx-auto px-6 w-full pb-2">
         {/* Page Header */}
-        <section className="flex flex-col md:flex-row items-center justify-between py-6 md:py-10 gap-10">
-          <div className="flex-1 max-w-[600px] text-center md:text-left">
-            <h4 className="text-primary text-[14px] font-semibold uppercase tracking-wide mb-4">
+        <section className="flex flex-col md:flex-row items-start justify-between pt-6 sm:pt-8 md:pt-10 pb-3 md:pb-5 gap-8 sm:gap-10">
+          <div className="flex-1 max-w-[600px] text-center md:text-left order-2 md:order-1">
+            <h4 className="text-primary text-[12px] sm:text-[14px] font-semibold uppercase tracking-wide mb-3 sm:mb-4">
               {PRODUCTS_PAGE_CONTENT.hero.eyebrow}
             </h4>
-            <h1 className="text-4xl md:text-[42px] font-bold leading-tight mb-4 text-gray-800">
+            <h1 className="text-3xl sm:text-4xl md:text-[42px] font-bold leading-tight mb-4 text-gray-800">
               {PRODUCTS_PAGE_CONTENT.hero.titleLine1}
               <br />
               <span className="text-primary">
                 {PRODUCTS_PAGE_CONTENT.hero.titleHighlight}
               </span>
             </h1>
-            <p className="text-[16px] text-gray-600 max-w-[450px] mx-auto md:mx-0">
+            <p className="text-[14px] sm:text-[16px] text-gray-600 max-w-[450px] mx-auto md:mx-0">
               {PRODUCTS_PAGE_CONTENT.hero.description}
             </p>
           </div>
-          <div className="flex-1 flex justify-center md:justify-end w-full">
+          <div className="flex-1 flex justify-center md:justify-end w-full order-1 md:order-2">
             <Image
               src={PRODUCTS_PAGE_CONTENT.hero.image}
               alt="Three spools of yarn"
               width={400}
               height={300}
               priority
-              className="max-w-[400px] w-full h-auto object-contain"
+              className="max-w-[220px] sm:max-w-[300px] md:max-w-[400px] w-full h-auto object-contain"
             />
           </div>
         </section>
@@ -155,42 +155,46 @@ export default function ProductsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {filteredProducts.map((product) => (
               <div
-                className="group relative flex flex-col overflow-hidden rounded-2xl bg-white border border-gray-200 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_45px_-18px_rgba(26,86,217,0.35)]"
                 key={product._id}
+                className="group relative flex flex-col overflow-hidden rounded-xl bg-white border border-gray-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="relative h-[200px] overflow-hidden bg-gray-50">
+                {/* Image Section */}
+                <div className="relative h-[220px] overflow-hidden bg-gray-50">
                   <Image
-                    src={product.images?.[0] || "/yarn.jpg"}
+                    src={product.images?.[0] || "/yarn.png"}
                     alt={product.name}
                     fill
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     placeholder="blur"
                     blurDataURL={blurDataURL()}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   {product.category && (
-                    <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur-sm">
+                    <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary shadow backdrop-blur-sm">
                       {product.category}
                     </span>
                   )}
                 </div>
 
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="mb-2 text-[18px] font-semibold leading-snug text-gray-900">
+                {/* Content Section */}
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="mb-2 text-[17px] font-semibold leading-snug text-gray-900 group-hover:text-primary transition-colors">
                     {product.name}
                   </h3>
-                  <p className="mb-6 line-clamp-2 flex-1 text-[13px] leading-relaxed text-gray-500">
+                  <p className="mb-5 line-clamp-2 flex-1 text-[13px] leading-relaxed text-gray-500">
                     {product.shortDescription}
                   </p>
 
+                  {/* Divider */}
                   <div className="mb-4 border-t border-dashed border-gray-200" />
 
+                  {/* CTA Button */}
                   <Link
                     href={`/products/${product._id}`}
-                    className="flex items-center justify-between text-[14px] font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 rounded-md"
+                    className="flex items-center justify-between text-[14px] font-semibold text-primary rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
                   >
-                    View Details
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/5 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                    <span>View Details</span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                       <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
                     </span>
                   </Link>

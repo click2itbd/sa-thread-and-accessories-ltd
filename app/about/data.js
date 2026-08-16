@@ -138,12 +138,7 @@ export const teamMembers = [
     role: "Chairman",
     dept: "Management",
     image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
-    email: "sultana@sathread.com",
-    phone: "+880 1971 170 961",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/sultanaparvin",
-    linkedinUrl: "https://linkedin.com/in/sultanaparvin",
-    whatsappNumber: "8801971170961",
     about:
       "As Chairman of SA Thread & Accessories Ltd., Sultana Parvin provides strategic oversight and guidance, helping steer the company's long-term vision since its founding in 2003.",
     expertise: [
@@ -168,8 +163,6 @@ export const teamMembers = [
     email: "shahidul@sathread.com",
     phone: "+880 1971 170 962",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/mohammedshahidul",
-    linkedinUrl: "https://linkedin.com/in/mohammedshahidul",
     whatsappNumber: "8801971170962",
     about:
       "With over two decades of experience in the garments accessories industry, Mohammed Shahidul Islam leads SA Thread & Accessories Ltd. with a vision for quality, innovation, and sustainable growth.",
@@ -220,8 +213,6 @@ export const teamMembers = [
     email: "shafiqul@sathread.com",
     phone: "+8801819430668",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/mdshafiqulislam",
-    linkedinUrl: "https://linkedin.com/in/mdshafiqulislam",
     whatsappNumber: "+8801819430668",
     about:
       "Md. Shafiqul Islam oversees the general management of the company's daily operations, coordinating between departments to keep production and business running smoothly.",
@@ -247,8 +238,6 @@ export const teamMembers = [
     email: "rafiqul@sathread.com",
     phone: "+8801718716451",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/mdrafiqulislam",
-    linkedinUrl: "https://linkedin.com/in/mdrafiqulislam",
     whatsappNumber: "+8801718716451",
     about:
       "Md. Rafiqul Islam bridges marketing and factory operations, supporting both client-facing initiatives and on-ground production coordination.",
@@ -273,8 +262,6 @@ export const teamMembers = [
     email: "parvez@sathread.com",
     phone: "+8801679506304",
     location: "Dhaka, Bangladesh",
-    facebookUrl: "https://facebook.com/mdparvezbhatty",
-    linkedinUrl: "https://linkedin.com/in/mdparvezbhatty",
     whatsappNumber: "+8801679506304",
     about:
       "Md. Parvez Bhatty drives client acquisition and relationship management, helping SA Thread & Accessories Ltd. expand its footprint among garments manufacturers.",
@@ -299,8 +286,6 @@ export const teamMembers = [
     email: "wahid@sathread.com",
     phone: "+8801971170961",
     location: "Dhaka, Bangladesh",
-    facebookUrl: "https://facebook.com/mdwahidmiah",
-    linkedinUrl: "https://linkedin.com/in/mdwahidmiah",
     whatsappNumber: "+8801971170961",
     about:
       "Md. Wahid Miah focuses on client outreach and order management, ensuring smooth communication between customers and internal teams.",
@@ -325,9 +310,6 @@ export const teamMembers = [
     email: "tafsir@sathread.com",
     phone: "+880 1971 170 968",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/mdtafsiralom",
-    linkedinUrl: "https://linkedin.com/in/mdtafsiralom",
-    whatsappNumber: "8801971170968",
     about:
       "Md. Tafsir Alom manages the factory floor at the Gacha Road facility, overseeing production across sewing thread, elastic, twill tape, and drawstring sections.",
     expertise: [

@@ -23,7 +23,7 @@ export const HOME_HERO_SLIDES = [
     title2: "Partner Since 2003",
     description:
       "Supplying premium sewing thread, elastic, twill tape and drawstring solutions to Bangladesh's leading garment manufacturers since 2003.",
-    image: "/yarn.jpg", // Premium product showcase
+    image: "/yarn.png", // Premium product showcase
   },
   {
     id: 2,
@@ -53,11 +53,14 @@ export const HOME_HERO_SLIDES = [
 
 // Real clients as listed in the Company Profile (About Us section)
 export const TRUSTED_BRANDS = [
-  { name: "TRZ Group", src: "/yarn.jpg" },
-  { name: "Eurozone Group", src: "/yarn.jpg" },
-  { name: "Sinha Knit & Denims Ltd.", src: "/yarn.jpg" },
-  { name: "M.M Knitwear", src: "/yarn.jpg" },
-  { name: "AZ Composite Ltd.", src: "/yarn.jpg" },
+  { name: "TRZ Group", src: "/Clients/trz-group.jpg" },
+  { name: "Eurozone Group", src: "/Clients/Eurozone.jpg" },
+  {
+    name: "Sinha Knit & Denims Ltd.",
+    src: "/Clients/Sinha-knit-&-Denims-ltd.png",
+  },
+  { name: "M.M Knitwear", src: "/Clients/m_m_knitwear_ltd_logo.jpg" },
+  { name: "AZ Composite Ltd.", src: "/Clients/AZ-Composite.png" },
   // Other confirmed clients from the profile you can rotate in:
   // "Alfa Patterns Bd Ltd", "Day Apparels Ltd", "Iris Design Ltd", "Saturn Textiles Ltd"
 ];
@@ -67,26 +70,29 @@ export const TRUSTED_BRANDS = [
 export const PRODUCT_COLLECTIONS = [
   {
     title: "Sewing Thread",
-    description: "High-strength, consistent sewing thread for garment production.",
-    image: "/yarn.jpg",
+    description:
+      "High-strength, consistent sewing thread for garment production.",
+    image: "/yarn.png",
     gradient: "from-blue-900/50",
   },
   {
     title: "Elastic",
-    description: "Reliable elastic supplied at large-scale production capacity.",
-    image: "/yarn.jpg",
+    description:
+      "Reliable elastic supplied at large-scale production capacity.",
+    image: "/yarn.png",
     gradient: "from-indigo-900/50",
   },
   {
     title: "Twill Tape",
     description: "Durable twill tape / non-elastic tape for garment finishing.",
-    image: "/yarn.jpg",
+    image: "/yarn.png",
     gradient: "from-teal-900/50",
   },
   {
     title: "Drawstring / Elastic Cord",
-    description: "Drawstring, draw cord and elastic cord solutions for apparel.",
-    image: "/yarn.jpg",
+    description:
+      "Drawstring, draw cord and elastic cord solutions for apparel.",
+    image: "/yarn.png",
     gradient: "from-emerald-900/50",
   },
 ];
@@ -102,7 +108,7 @@ export const CONTACT_PAGE_CONTENT = {
     title: "We'd Love to\nHear From You",
     description:
       "Have questions about our products? Our team is ready to help you.",
-    image: "/yarn.jpg",
+    image: "/yarn.png",
   },
   cards: [
     {
@@ -205,7 +211,7 @@ export const NAV_LINKS = [
   { name: "ABOUT US", path: "/about" },
   { name: "PRODUCTS", path: "/products" },
   { name: "CSR", path: "/csr" },
-//   { name: "CAPABILITIES", path: "#" },
+  //   { name: "CAPABILITIES", path: "#" },
   { name: "CONTACT US", path: "/contact" },
 ];
 
@@ -271,7 +277,7 @@ export const PRODUCTS_PAGE_CONTENT = {
     titleHighlight: "Every Textile Need",
     description:
       "Premium quality garments accessories crafted for strength, consistency and performance in every stitch.",
-    image: "/yarn.jpg",
+    image: "/yarn.png",
   },
   features: [
     {
@@ -366,9 +372,28 @@ export const contactInfo = {
 };
 
 export const partnerBanks = [
-  { name: "Exim Bank PLC", branch: "Uttara Branch", address: "House# 61/A, Road# 7, Sector# 4, Uttara Model Town, Dhaka 1230", tel: "16246, +880 96040 16246", swift: "EXBKBDDH" },
-  { name: "Mercantile Bank Ltd.", branch: "Uttara Branch", address: "House# 10A, Road# 7D, Sector# 09, Uttara Model Town, Dhaka-1230", tel: "48958177, 48955879, 8931725", fax: "88-02-48955881", swift: "MBLBBDH017" },
-  { name: "Pubali Bank Ltd.", branch: "Board Bazar Branch", address: "Chaina Town Bangladesh, 71 Kalameswar Road, Ward No. 35, Gazipur", tel: "01701-225530, 8809612824741", swift: "PUBABDDH" },
+  {
+    name: "Exim Bank PLC",
+    branch: "Uttara Branch",
+    address: "House# 61/A, Road# 7, Sector# 4, Uttara Model Town, Dhaka 1230",
+    tel: "16246, +880 96040 16246",
+    swift: "EXBKBDDH",
+  },
+  {
+    name: "Mercantile Bank Ltd.",
+    branch: "Uttara Branch",
+    address: "House# 10A, Road# 7D, Sector# 09, Uttara Model Town, Dhaka-1230",
+    tel: "48958177, 48955879, 8931725",
+    fax: "88-02-48955881",
+    swift: "MBLBBDH017",
+  },
+  {
+    name: "Pubali Bank Ltd.",
+    branch: "Board Bazar Branch",
+    address: "Chaina Town Bangladesh, 71 Kalameswar Road, Ward No. 35, Gazipur",
+    tel: "01701-225530, 8809612824741",
+    swift: "PUBABDDH",
+  },
 ];
 
 export const workforceBySection = [
@@ -382,8 +407,14 @@ export const workforceBySection = [
 ];
 
 export const machinery = [
-  { name: "High Speed Automatic Thread Winding Machine (China)", qty: "36 Set" },
-  { name: "High Speed Braiding Machine — Drawstring/Drawcord (China)", qty: "15 Set" },
+  {
+    name: "High Speed Automatic Thread Winding Machine (China)",
+    qty: "36 Set",
+  },
+  {
+    name: "High Speed Braiding Machine — Drawstring/Drawcord (China)",
+    qty: "15 Set",
+  },
   { name: "Lace & Band Crochet Machine (Taiwan)", qty: "12 Set" },
   { name: "High Speed Automatic Needle Loom Machine (China)", qty: "5 Set" },
   { name: "Tipping Machine (China)", qty: "2 Set" },
@@ -395,8 +426,16 @@ export const machinery = [
 export const productionCapacity = [
   { product: "Elastic", perDay: "146,900 Yd", perMonth: "3,819,400 Yd" },
   { product: "Sewing Thread", perDay: "18,000 Cone", perMonth: "468,000 Cone" },
-  { product: "Twill Tape / Non-Elastic Tape", perDay: "108,000 Yd", perMonth: "2,808,000 Yd" },
-  { product: "Drawstring / Elastic Cord", perDay: "80,400 Yd", perMonth: "2,090,400 Yd" },
+  {
+    product: "Twill Tape / Non-Elastic Tape",
+    perDay: "108,000 Yd",
+    perMonth: "2,808,000 Yd",
+  },
+  {
+    product: "Drawstring / Elastic Cord",
+    perDay: "80,400 Yd",
+    perMonth: "2,090,400 Yd",
+  },
 ];
 
 export const yearlyGrowth = [
@@ -406,12 +445,25 @@ export const yearlyGrowth = [
   { year: "2025", value: 4.5, note: "Flat — remained at $4.5 million" },
 ];
 
-export const futurePlan = "Currently expanding to add an in-house dyeing section within the existing factory premises to meet demand for dyed yarn — third-party dyeing was found too costly, slow, and inconsistent on quality.";
+export const futurePlan =
+  "Currently expanding to add an in-house dyeing section within the existing factory premises to meet demand for dyed yarn — third-party dyeing was found too costly, slow, and inconsistent on quality.";
 
 export const csr = [
-  "100% Oeko-Tex certified products; careful waste management to avoid pollution.",
-  "Ongoing charity activities year-round: donations to religious institutions, funds for treatment, etc.",
-  "Backyard and rooftop gardens with fruit and vegetable trees, for a healthier environment on-site and around it.",
+  {
+    title: "Product Safety & Waste Management",
+    description:
+      "We, as a company always ensure that our products are free of harmful substances. Our company is 100% Oeko-Tex certified. We also manage our wastes carefully so that we don't litter our surrounding and contribute to pollution.",
+  },
+  {
+    title: "Charity & Community Support",
+    description:
+      "We actively take part in charity activities throughout the year. The charity activities include donations to religious institutions, funds for treatment, etc.",
+  },
+  {
+    title: "Green Environment Initiatives",
+    description:
+      "We always believe in green environment. We have a garden at our backyard and also at our rooftop. There are trees of various fruits and vegetables planted and are also taken care of with utmost priority. This eventually helps us create a healthy environment for the company and also the surroundings.",
+  },
 ];
 
 export const PRIVACY_POLICY_CONTENT = {
@@ -420,29 +472,35 @@ export const PRIVACY_POLICY_CONTENT = {
   sections: [
     {
       title: "1. Information We Collect",
-      content: "We may collect personal information such as your name, email address, phone number, and any other details you provide when you fill out our contact form or request a quotation."
+      content:
+        "We may collect personal information such as your name, email address, phone number, and any other details you provide when you fill out our contact form or request a quotation.",
     },
     {
       title: "2. How We Use Your Information",
-      content: "Your information is used strictly to respond to your inquiries, provide requested services, send updates regarding your orders, and improve our website's user experience."
+      content:
+        "Your information is used strictly to respond to your inquiries, provide requested services, send updates regarding your orders, and improve our website's user experience.",
     },
     {
       title: "3. Data Security",
-      content: "We implement a variety of security measures to maintain the safety of your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure."
+      content:
+        "We implement a variety of security measures to maintain the safety of your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure.",
     },
     {
       title: "4. Third-Party Disclosure",
-      content: "We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information unless we provide users with advance notice, except for website hosting partners and other parties who assist us in operating our website, conducting our business, or serving our users."
+      content:
+        "We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information unless we provide users with advance notice, except for website hosting partners and other parties who assist us in operating our website, conducting our business, or serving our users.",
     },
     {
       title: "5. Your Consent",
-      content: "By using our site, you consent to our website's privacy policy."
+      content:
+        "By using our site, you consent to our website's privacy policy.",
     },
     {
       title: "6. Changes to our Privacy Policy",
-      content: "If we decide to change our privacy policy, we will post those changes on this page."
-    }
-  ]
+      content:
+        "If we decide to change our privacy policy, we will post those changes on this page.",
+    },
+  ],
 };
 
 export const TERMS_OF_SERVICE_CONTENT = {
@@ -451,27 +509,33 @@ export const TERMS_OF_SERVICE_CONTENT = {
   sections: [
     {
       title: "1. Acceptance of Terms",
-      content: "By accessing and using the SA Thread & Accessories Ltd. website, you accept and agree to be bound by the terms and provisions of this agreement."
+      content:
+        "By accessing and using the SA Thread & Accessories Ltd. website, you accept and agree to be bound by the terms and provisions of this agreement.",
     },
     {
       title: "2. Use of Site",
-      content: "You may use our site for lawful purposes only. You must not use our site in any way that causes, or may cause, damage to the website or impairment of the availability or accessibility of the website."
+      content:
+        "You may use our site for lawful purposes only. You must not use our site in any way that causes, or may cause, damage to the website or impairment of the availability or accessibility of the website.",
     },
     {
       title: "3. Intellectual Property",
-      content: "All content included on this site, such as text, graphics, logos, images, and software, is the property of SA Thread & Accessories Ltd. or its content suppliers and protected by copyright laws."
+      content:
+        "All content included on this site, such as text, graphics, logos, images, and software, is the property of SA Thread & Accessories Ltd. or its content suppliers and protected by copyright laws.",
     },
     {
       title: "4. Products and Specifications",
-      content: "We make every effort to display as accurately as possible the colors, features, specifications, and details of the products available on our site. However, we do not guarantee that the colors, features, specifications, and details will be accurate, complete, reliable, current, or free of other errors."
+      content:
+        "We make every effort to display as accurately as possible the colors, features, specifications, and details of the products available on our site. However, we do not guarantee that the colors, features, specifications, and details will be accurate, complete, reliable, current, or free of other errors.",
     },
     {
       title: "5. Limitation of Liability",
-      content: "In no event shall SA Thread & Accessories Ltd., nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses."
+      content:
+        "In no event shall SA Thread & Accessories Ltd., nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.",
     },
     {
       title: "6. Governing Law",
-      content: "These Terms shall be governed and construed in accordance with the laws of Bangladesh, without regard to its conflict of law provisions."
-    }
-  ]
+      content:
+        "These Terms shall be governed and construed in accordance with the laws of Bangladesh, without regard to its conflict of law provisions.",
+    },
+  ],
 };

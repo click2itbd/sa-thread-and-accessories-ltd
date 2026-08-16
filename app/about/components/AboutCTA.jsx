@@ -12,7 +12,7 @@ function SpoolIcon({ className = "w-8 h-8" }) {
 
 export default function AboutCTA() {
   return (
-    <section className="bg-white pb-12 md:pb-16">
+    <section className="bg-white pb-2">
       <div className="container mx-auto px-6">
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1a56d9] via-[#2563eb] to-[#3b82f6] px-6 py-10 md:px-10 md:py-12">
           {/* Decorative wavy lines */}
