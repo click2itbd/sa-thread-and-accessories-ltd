@@ -1,6 +1,6 @@
 import Application from '@/lib/models/Application';
 import connectToDatabase from '@/lib/mongoose';
-import { ImageKit } from "@imagekit/nodejs";
+import ImageKit from "imagekit";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
