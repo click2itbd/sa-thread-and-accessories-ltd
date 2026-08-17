@@ -160,10 +160,9 @@ export const teamMembers = [
     dept: "Management",
     image:
       "/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg",
-    email: "shahidul@sathread.com",
-    phone: "+880 1971 170 962",
+    phone: "+8801755504035",
     location: "Gazipur, Bangladesh",
-    whatsappNumber: "8801971170962",
+    whatsappNumber: "8801755504035",
     about:
       "With over two decades of experience in the garments accessories industry, Mohammed Shahidul Islam leads SA Thread & Accessories Ltd. with a vision for quality, innovation, and sustainable growth.",
     expertise: [
@@ -185,11 +184,9 @@ export const teamMembers = [
     dept: "Management",
     image: "/Employee Photograph/Asif Abdullah- Executive Director.jpg",
     email: "asif@sathread.com",
-    phone: "+880 1971 170 963",
     location: "Gazipur, Bangladesh",
-    facebookUrl: "https://facebook.com/asifabdullah",
-    linkedinUrl: "https://linkedin.com/in/asifabdullah",
-    whatsappNumber: "8801971170963",
+    linkedinUrl: "https://www.linkedin.com/in/asifabdullah38/",
+    whatsappNumber: "8801688-803246",
     about:
       "Asif Abdullah works closely with the Managing Director to drive day-to-day executive decisions, ensuring the company's operations align with its strategic goals.",
     expertise: [
@@ -210,7 +207,6 @@ export const teamMembers = [
     role: "General Manager",
     dept: "Management",
     image: "/Employee Photograph/Md. Shafiqul Islam- General Manager.jpg",
-    email: "shafiqul@sathread.com",
     phone: "+8801819430668",
     location: "Gazipur, Bangladesh",
     whatsappNumber: "+8801819430668",
@@ -235,7 +231,6 @@ export const teamMembers = [
     dept: "Marketing & Factory",
     image:
       "/Employee Photograph/Md. Rafiqul Islam-  Assisstant General Manager  (Marketing&Factory).jpg",
-    email: "rafiqul@sathread.com",
     phone: "+8801718716451",
     location: "Gazipur, Bangladesh",
     whatsappNumber: "+8801718716451",
@@ -259,7 +254,6 @@ export const teamMembers = [
     role: "Marketing Manager",
     dept: "Sales & Marketing",
     image: "/Employee Photograph/Md. Parveg Bhatty- Marketing Manager.jpg",
-    email: "parvez@sathread.com",
     phone: "+8801679506304",
     location: "Dhaka, Bangladesh",
     whatsappNumber: "+8801679506304",
@@ -285,7 +279,6 @@ export const teamMembers = [
     image: "/Employee Photograph/Md. Wahid Miah- Marketing Manager.jpg",
     phone: "+8801971170961",
     location: "Dhaka, Bangladesh",
-    whatsappNumber: "+8801971170961",
     about:
       "Md. Wahid Miah focuses on client outreach and order management, ensuring smooth communication between customers and internal teams.",
     expertise: [
@@ -306,7 +299,6 @@ export const teamMembers = [
     role: "Factory Manager",
     dept: "Production",
     image: "/Employee Photograph/Md. Tafsir Alom- Factory Manager.jpg",
-    phone: "+880 1971 170 968",
     location: "Gazipur, Bangladesh",
     about:
       "Md. Tafsir Alom manages the factory floor at the Gacha Road facility, overseeing production across sewing thread, elastic, twill tape, and drawstring sections.",

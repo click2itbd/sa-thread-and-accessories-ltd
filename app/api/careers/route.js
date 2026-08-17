@@ -1,11 +1,11 @@
 import Application from '@/lib/models/Application';
 import connectToDatabase from '@/lib/mongoose';
-import { v2 as cloudinary } from 'cloudinary';
+import { ImageKit } from "@imagekit/nodejs";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 
 // ============================================================================
@@ -94,17 +94,13 @@ export async function POST(request) {
       const bytes = await resume.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const uploadResult = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          { folder: "sathread/applications", resource_type: "auto" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        ).end(buffer);
+      const uploadResult = await imagekit.upload({
+        file: buffer,
+        fileName: resume.name || `resume-${Date.now()}`,
+        folder: "sathread/applications",
       });
 
-      cvFileUrl = uploadResult.secure_url;
+      cvFileUrl = uploadResult.url;
 
       const base64Content = Buffer.from(bytes).toString("base64");
       attachments.push({

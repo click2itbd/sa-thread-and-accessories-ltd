@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
-import Navbar from "./components/Navbar";
-import PageTransition from "./components/PageTransition";
+import SiteHeader from "./components/SiteHeader";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -75,7 +74,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "SA Thread & Accessories Ltd.",
     description:
-      "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape & drawstring for the global garment industry.",
+      "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring and draw cord for the global garments industry, based in Gazipur, Bangladesh since 2003.",
     images: ["/sathread.webp"],
   },
   icons: {
@@ -142,11 +141,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} font-sans flex flex-col min-h-screen`}
       >
-        <Navbar />
-        <PageTransition>
-          <div className="flex-1">{children}</div>
-        </PageTransition>
-        {/* <Footer/> */}
+        <SiteHeader>
+          {children}
+        </SiteHeader>
       </body>
     </html>
   );

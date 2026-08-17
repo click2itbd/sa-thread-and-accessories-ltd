@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
+import { ImageKit } from "@imagekit/nodejs";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 
 export async function POST(request) {
@@ -19,21 +19,13 @@ export async function POST(request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          folder: "sathread/admin",
-          resource_type: "auto",
-        },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(buffer);
+    const result = await imagekit.upload({
+      file: buffer,
+      fileName: file.name || `upload-${Date.now()}`,
+      folder: "sathread/admin",
     });
 
-    const isImage = result.resource_type === "image";
-    return NextResponse.json({ url: result.secure_url, publicId: result.public_id, isImage });
+    return NextResponse.json({ url: result.url, fileId: result.fileId, isImage: true });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

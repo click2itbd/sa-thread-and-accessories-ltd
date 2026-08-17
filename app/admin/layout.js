@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AdminSidebar from "@/components/admin/Sidebar";
 import { Menu } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -101,7 +103,18 @@ export default function AdminLayout({ children }) {
             >
               <Menu className="w-5 h-5" />
             </button>
-            <h1 className="text-sm font-bold text-gray-900">SA THREAD ADMIN</h1>
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <div className="relative w-8 h-8 rounded-md overflow-hidden shrink-0">
+                <Image
+                  src="/logo.jpg"
+                  alt="SA Thread"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="text-sm font-bold text-gray-900">SA THREAD</span>
+            </Link>
           </header>
         )}
 

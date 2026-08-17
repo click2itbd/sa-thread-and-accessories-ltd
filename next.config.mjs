@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
+        hostname: "ik.imagekit.io",
       },
       {
         protocol: "https",
@@ -59,8 +59,8 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js needs these
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://*.openstreetmap.org https://*.tile.openstreetmap.org https://res.cloudinary.com",
-              "connect-src 'self' https://api.resend.com https://api.cloudinary.com",
+              "img-src 'self' data: blob: https://*.openstreetmap.org https://*.tile.openstreetmap.org https://ik.imagekit.io",
+              "connect-src 'self' https://api.resend.com https://api.imagekit.io",
               "frame-src https://www.openstreetmap.org https://maps.google.com https://www.google.com",
               "frame-ancestors 'self'",
             ].join("; "),

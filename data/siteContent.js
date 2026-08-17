@@ -1,20 +1,3 @@
-// ─── VERIFIED AGAINST: Company_Profile_SA_THREAD_updated.pdf ──────────────────
-// Corrections made in this pass (previously fabricated / unsupported by the PDF):
-//   1. PRODUCT_COLLECTIONS — was "Premium Cotton / Polyester Core / Sustainable Eco"
-//      (not in the profile at all). Replaced with the company's actual 4 product
-//      lines from the "Our Products" slide: Sewing Thread, Elastic, Twill Tape,
-//      Drawstring/Elastic Cord.
-//   2. All "custom yarn" manufacturing claims (count/strength/twist/color) removed —
-//      the profile never states this. The only yarn-related plan is the FUTURE
-//      in-house dyeing section (see futurePlan), which is an internal cost-saving
-//      move, not a customer-facing custom-order service.
-//   3. Wording that called the products "yarns" changed to "accessories/products",
-//      since the company is a garments accessories supplier (thread, elastic,
-//      twill tape, drawstring, tips) — not a yarn manufacturer.
-// Everything else (banks, workforce, machinery, production capacity, yearly
-// growth, future plan, CSR, contact info, management team, vision/values) was
-// checked line-by-line against the PDF and matches — left unchanged.
-// ────────────────────────────────────────────────────────────────────────────
 
 export const HOME_HERO_SLIDES = [
   {
@@ -61,11 +44,9 @@ export const TRUSTED_BRANDS = [
   },
   { name: "M.M Knitwear", src: "/Clients/m_m_knitwear_ltd_logo.jpg" },
   { name: "AZ Composite Ltd.", src: "/Clients/AZ-Composite.png" },
-  // Other confirmed clients from the profile you can rotate in:
-  // "Alfa Patterns Bd Ltd", "Day Apparels Ltd", "Iris Design Ltd", "Saturn Textiles Ltd"
+
 ];
 
-// Replaces the old fabricated "Premium Cotton / Polyester Core / Sustainable Eco"
 // categories with the company's real product lines (see "Our Products" slide in PDF).
 export const PRODUCT_COLLECTIONS = [
   {

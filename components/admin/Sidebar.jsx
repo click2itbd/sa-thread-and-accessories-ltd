@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen } from "lucide-react";
+import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export default function AdminSidebar({ onClose }) {
   const pathname = usePathname();
@@ -23,15 +24,31 @@ export default function AdminSidebar({ onClose }) {
     { href: "/admin/blogs", label: "Blog Management", icon: BookOpen },
     { href: "/admin/contact", label: "Contact Messages", icon: Mail },
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/", label: "Visit Website", icon: ExternalLink, external: true },
   ];
 
   return (
     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col h-full">
       <div className="h-16 flex items-center justify-between px-6 border-b border-gray-100">
-        <div>
-          <h2 className="text-sm font-bold text-gray-900 leading-tight">SA THREAD</h2>
-          <p className="text-[10px] text-gray-500 font-medium">ADMIN PANEL</p>
-        </div>
+        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+          <div className="relative w-9 h-9 rounded-lg overflow-hidden shrink-0">
+            <Image
+              src="/logo.jpg"
+              alt="SA Thread & Accessories Ltd."
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-extrabold text-gray-900 tracking-tight leading-tight">
+              SA THREAD
+            </span>
+            <span className="text-[9px] font-semibold text-gray-500 tracking-widest uppercase">
+              Admin Panel
+            </span>
+          </div>
+        </Link>
         {onClose && (
           <button
             onClick={onClose}
@@ -47,12 +64,15 @@ export default function AdminSidebar({ onClose }) {
 
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {links.map((link) => {
-          const isActive = pathname === link.href || (link.href !== "/admin" && pathname.startsWith(link.href));
+          const isActive = pathname === link.href || (!link.external && link.href !== "/admin" && pathname.startsWith(link.href));
+          const LinkComponent = link.external ? "a" : Link;
+          const externalProps = link.external ? { target: "_blank", rel: "noopener noreferrer" } : {};
           return (
-            <Link
+            <LinkComponent
               key={link.href}
               href={link.href}
               onClick={onClose}
+              {...externalProps}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-[#1F4D2C]/10 text-[#1F4D2C]"
@@ -61,7 +81,7 @@ export default function AdminSidebar({ onClose }) {
             >
               <link.icon className="w-4 h-4 shrink-0" />
               <span className="truncate">{link.label}</span>
-            </Link>
+            </LinkComponent>
           );
         })}
       </nav>
