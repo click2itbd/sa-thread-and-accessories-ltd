@@ -11,14 +11,15 @@ export default function Footer() {
             © {new Date().getFullYear()} {SITE_CONFIG.copyright}.
           </p>
 
-          {/* Developer Credit */}
+          <div className="flex flex-row gap-5">
+            {/* Developer Credit */}
           <a
             href="https://www.facebook.com/CLICK2ITBD"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[10px] md:text-[14px] text-gray-500 hover:text-primary transition-colors"
           >
-            Developed by <span className="font-semibold">Click2IT</span>
+            Developed by <span className="font-semibold text-primary">Click2IT</span>
           </a>
 
           {/* Legal Links (hidden on mobile, visible on md+) */}
@@ -32,6 +33,7 @@ export default function Footer() {
                 {item.name}
               </Link>
             ))}
+          </div>
           </div>
         </div>
       </div>
