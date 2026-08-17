@@ -9,6 +9,7 @@ import {
   Sun,
   ArrowRight,
   FileText,
+  SpoolIcon,
 } from "lucide-react";
 import { csr } from "@/data/siteContent";
 
@@ -23,7 +24,7 @@ const pillars = [
     title: "Product Safety",
     description:
       "Certified to Oeko-Tex Standard 100, we guarantee that every thread is free from harmful substances, ensuring safety for workers and end-users globally.",
-    image: "/csr/product-safety.jpg",
+    image: "/yarn.jpg",
     icon: ShieldCheck,
     link: "#certifications",
     linkText: "Learn about our certifications",
@@ -32,7 +33,7 @@ const pillars = [
     title: "Charity & Welfare",
     description:
       "We invest in local healthcare, education, and skill-building initiatives. Our 'SA Care' program supports the families of our 2000+ employees and local community.",
-    image: "/csr/charity-welfare.jpg",
+    image: "/yarn.jpg",
     icon: Users,
     link: "#community",
     linkText: "Our impact stories",
@@ -41,7 +42,7 @@ const pillars = [
     title: "Green Factory",
     description:
       "Our rooftop garden isn't just aesthetic; it reduces building temperatures and sequesters carbon. We also implement water recycling and solar energy harvesting.",
-    image: "/csr/green-factory.jpg",
+    image: "/yarn.jpg",
     icon: Leaf,
     link: "#sustainability",
     linkText: "Sustainability report",
@@ -58,7 +59,9 @@ const stats = [
 async function getBlogs() {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/blogs`, { next: { revalidate: 60 } });
+    const res = await fetch(`${baseUrl}/api/blogs`, {
+      next: { revalidate: 60 },
+    });
     if (res.ok) {
       const data = await res.json();
       return data.blogs || [];
@@ -75,17 +78,15 @@ export default async function CSRPage() {
   return (
     <main className="overflow-x-hidden bg-white">
       {/* ── 1. HERO ─────────────────────────────────────────── */}
-      <section className="pt-20 pb-16 md:pt-28 md:pb-24">
+      <section className="pt-10 md:pt-14 pb-8 bg-primary/5">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <div>
-              <span className="inline-block bg-primary/10 text-primary text-[11px] font-bold uppercase tracking-[2px] px-4 py-2 rounded-full mb-6">
+              <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[2px] py-2 rounded-full mb-6">
                 Sustainability &amp; Responsibility
               </span>
               <h1 className="text-[34px] md:text-[48px] font-bold text-gray-900 leading-[1.15] mb-6">
-                Woven with
-                <br />
-                Purpose.
+                Woven with Purpose.
               </h1>
               <p className="text-gray-500 text-[15px] leading-relaxed max-w-lg">
                 At SA Thread &amp; Accessories, we believe in a circular future.
@@ -113,7 +114,7 @@ export default async function CSRPage() {
       </section>
 
       {/* ── 2. CORE PILLARS ─────────────────────────────────── */}
-      <section className="py-16 md:py-20 bg-gray-50/60">
+      <section className="py-8 md:py-10 bg-primary/5">
         <div className="container mx-auto px-6">
           <div className="text-center mb-14 max-w-2xl mx-auto">
             <h2 className="text-[26px] md:text-[32px] font-bold text-gray-900 mb-4">
@@ -152,12 +153,12 @@ export default async function CSRPage() {
                     <p className="text-gray-500 text-[13.5px] leading-relaxed mb-4">
                       {item.description}
                     </p>
-                    <Link
+                    {/* <Link
                       href={item.link}
                       className="inline-flex items-center gap-1.5 text-primary text-[13px] font-semibold hover:gap-2.5 transition-all"
                     >
                       {item.linkText} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               );
@@ -167,7 +168,7 @@ export default async function CSRPage() {
       </section>
 
       {/* ── 3. STATS BAR ─────────────────────────────────────── */}
-      <section className="bg-gray-900 py-14">
+      {/* <section className="bg-gray-900 py-14">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((s) => (
@@ -182,7 +183,7 @@ export default async function CSRPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {blogs.length > 0 && (
         <section className="py-16 md:py-20 bg-gray-50/60">
@@ -242,23 +243,75 @@ export default async function CSRPage() {
       )}
 
       {/* ── 6. CTA ────────────────────────────────────────────── */}
-      <section className="bg-primary py-16">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="text-white text-center md:text-left">
-            <h3 className="text-[24px] md:text-[28px] font-bold mb-2">
-              Partner for a Greener Tomorrow
-            </h3>
-            <p className="text-white/80 text-[14px] max-w-lg">
-              Join hands with an industry leader that prioritizes people and the
-              planet just as much as quality products.
-            </p>
-          </div>
-          <div className="shrink-0">
-            <Link href="/contact">
-              <button className="px-8 py-3.5 bg-white text-primary font-bold text-[14px] rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
-                Inquire about CSR Partnerships
-              </button>
-            </Link>
+      <section className="bg-white pb-2">
+        <div className="container mx-auto px-6">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1a56d9] via-[#2563eb] to-[#3b82f6] px-6 py-10 md:px-10 md:py-12">
+            {/* Decorative wavy lines */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.12]"
+              viewBox="0 0 800 200"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M0 100 Q200 40 400 100 T800 100"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeDasharray="6 8"
+              />
+              <path
+                d="M0 130 Q200 70 400 130 T800 130"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeDasharray="6 8"
+              />
+              <path
+                d="M0 70 Q200 10 400 70 T800 70"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeDasharray="6 8"
+              />
+            </svg>
+
+            {/* Watermark decorative icon */}
+            <div
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-[0.08]"
+              aria-hidden="true"
+            >
+              <SpoolIcon className="w-48 h-48 md:w-64 md:h-64 text-white" />
+            </div>
+
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+              {/* Text block */}
+              <div className="flex flex-col md:flex-row items-center gap-5 md:gap-6">
+                <div className="w-16 h-16 rounded-full bg-[#0f3a9e]/60 border border-white/20 flex items-center justify-center shrink-0 shadow-lg">
+                  <SpoolIcon className="w-8 h-8 text-white/90" />
+                </div>
+                <div className="text-white">
+                  <h3 className="text-[22px] md:text-[26px] font-bold mb-1.5 tracking-wide">
+                    Partner for a Greener Tomorrow
+                  </h3>
+                  <p className="text-white/85 text-[13px] md:text-[14px] max-w-md">
+                    Join hands with an industry leader that prioritizes people
+                    and the planet just as much as quality products.
+                  </p>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-3 bg-white text-primary font-bold text-[13px] rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  Inquire about CSR Partnerships
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
