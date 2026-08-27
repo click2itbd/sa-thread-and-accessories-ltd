@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import AdminCertificatesClient from "../../certificates/CertificatesClient";
 
 export default async function AdminEditCertificatePage({ params }) {
   const { id } = await params;
-  const cookieHeader = cookies().toString();
+  const headersList = await headers();
+  const cookieHeader = headersList.get("cookie") || "";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   try {
-    const res = await fetch(`/api/admin/certificates/${id}`, {
+    const res = await fetch(`${baseUrl}/api/admin/certificates/${id}`, {
       cache: "no-store",
       headers: { cookie: cookieHeader },
     });

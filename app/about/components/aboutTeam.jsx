@@ -19,6 +19,7 @@ export default function AboutTeam({ members: propMembers }) {
   const [activeTab, setActiveTab] = useState("All Members");
   const [searchQuery, setSearchQuery] = useState("");
   const [openForm, setOpenForm] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const filteredTeam = membersSource.filter((m) => {
     const matchesTab = activeTab === "All Members" || m.dept === activeTab;
@@ -139,17 +140,19 @@ export default function AboutTeam({ members: propMembers }) {
                   member.phone,
                 ].filter(Boolean);
                 const hasContact = contactLinks.length > 0;
-                // const isSelected = selectedMember?.name === member.name;  ← re-enable for detail panel
+                
                 return (
                   <div
                     key={i}
                     className="relative bg-white rounded-xl border flex flex-col items-center justify-between shadow-sm transition-all overflow-hidden text-left border-gray-200 hover:border-gray-300 hover:shadow-md"
-                    // onClick={() => handleMemberClick(member)}  ← re-enable for detail panel
                   >
                     <div className="pt-7 pb-2 px-3 flex flex-col items-center w-full">
                       <div
-                        className="img-protected w-24 h-24 rounded-full overflow-hidden bg-gray-100 mb-3 border-[3px] border-white shadow-md relative"
+                        className="img-protected w-24 h-24 rounded-full overflow-hidden bg-gray-100 mb-3 border-[3px] border-white shadow-md relative cursor-pointer hover:scale-105 transition-transform"
                         onContextMenu={(e) => e.preventDefault()}
+                        onClick={() => {
+                          if (member.image) setSelectedImage(member.image);
+                        }}
                       >
                         {member.image ? (
                           <Image
@@ -292,6 +295,35 @@ export default function AboutTeam({ members: propMembers }) {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-3xl max-h-[90vh] w-full h-full flex items-center justify-center">
+            <button 
+              className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors z-50"
+              onClick={() => setSelectedImage(null)}
+            >
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <div className="relative w-full h-full max-h-[80vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+              <Image 
+                src={selectedImage} 
+                alt="Team member zoomed" 
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

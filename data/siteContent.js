@@ -44,7 +44,10 @@ export const TRUSTED_BRANDS = [
   },
   { name: "M.M Knitwear", src: "/Clients/m_m_knitwear_ltd_logo.jpg" },
   { name: "AZ Composite Ltd.", src: "/Clients/AZ-Composite.png" },
-
+  { name: "Aba Group", src: "/Clients/ABA-Fashion.png" },
+  { name: "Day Group", src: "/Clients/Day-Group.jpg" },
+  { name: "Saturn Textile Ltd", src: "/Clients/Saturn.png" },
+  { name: "Alfa Patterns ltd", src: "/Clients/alpha_dies_and_pattern_logo.jpg" },
 ];
 
 // categories with the company's real product lines (see "Our Products" slide in PDF).

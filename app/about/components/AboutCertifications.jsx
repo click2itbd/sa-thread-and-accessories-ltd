@@ -1,13 +1,25 @@
-import { Trophy, TrendingUp } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Trophy, TrendingUp, X } from "lucide-react";
 import { achievements, certifications, yearlyGrowth } from "../data";
 
 // the 2025 entry is flat at the 2024 figure, so it adds nothing to the strip
 const growthYears = yearlyGrowth.slice(0, 3);
 
-export default function AboutCertifications() {
+export default function AboutCertifications({ certificates: dbCertificates }) {
+  const [selectedCert, setSelectedCert] = useState(null);
+
+  const certsList = dbCertificates?.length > 0 ? dbCertificates : certifications;
+  // Exclude Company Profile or non-certification docs from this section
+  const activeCerts = certsList.filter((cert) => {
+    const title = (cert.title || cert.abbr || "").toLowerCase();
+    return !title.includes("company profile");
+  });
+
   return (
     <section
-      id="achievements"
+      id="achievement"
       className="py-5 sm:py-10 md:py-15 bg-gradient-to-b from-white via-[#FAF9F6] to-white relative overflow-hidden scroll-mt-24"
     >
       {/* subtle decorative background accents */}
@@ -82,9 +94,13 @@ export default function AboutCertifications() {
               and customer satisfaction.
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-x-6 sm:gap-x-10 lg:gap-x-12 gap-y-8 sm:gap-y-10 justify-items-center">
-              {certifications.map((cert, i) => (
-                <div key={i} className="group flex flex-col items-center w-full max-w-[150px] sm:max-w-[160px]">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-6 sm:gap-x-10 lg:gap-x-12 gap-y-8 sm:gap-y-10 justify-items-center">
+              {activeCerts.map((cert, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedCert(cert)}
+                  className="group flex flex-col items-center w-full max-w-[150px] sm:max-w-[160px] cursor-pointer"
+                >
                   <div className="relative w-[110px] h-[110px] sm:w-[140px] sm:h-[140px] md:w-[152px] md:h-[152px] mb-3 sm:mb-5">
                     {/* rotating dashed ring */}
                     <div className="absolute inset-0 rounded-full border border-dashed border-[#B8863B]/40 transition-transform duration-700 ease-out group-hover:rotate-45" />
@@ -96,8 +112,8 @@ export default function AboutCertifications() {
                     <div className="absolute inset-[10px] rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-[0_8px_24px_-4px_rgba(184,134,59,0.25)] group-hover:border-[#B8863B]/50 group-hover:-translate-y-1">
                       <img
                         src={cert.image || "/certifications/placeholder.png"}
-                        alt={cert.abbr}
-                        className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                        alt={cert.title || cert.abbr}
+                        className="object-contain transition-transform duration-300 group-hover:scale-[1.05]"
                         style={{
                           width: `${(cert.scale ?? 1) * 70}%`,
                           height: `${(cert.scale ?? 1) * 70}%`,
@@ -106,12 +122,12 @@ export default function AboutCertifications() {
                     </div>
                   </div>
 
-                  <span className="text-[12px] sm:text-[14px] font-bold text-gray-900 leading-tight text-center tracking-wide">
-                    {cert.abbr}
+                  <span className="text-[12px] sm:text-[14px] font-bold text-gray-900 leading-tight text-center tracking-wide group-hover:text-primary transition-colors">
+                    {cert.title || cert.abbr}
                   </span>
-                  {cert.sub && (
+                  {(cert.description || cert.sub) && (
                     <span className="text-[10px] sm:text-[12px] text-gray-500 font-medium whitespace-pre-line leading-tight text-center mt-1">
-                      {cert.sub}
+                      {cert.description || cert.sub}
                     </span>
                   )}
                 </div>
@@ -120,6 +136,43 @@ export default function AboutCertifications() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox / Zoom Modal for Certificate */}
+      {selectedCert && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          onClick={() => setSelectedCert(null)}
+        >
+          <div
+            className="relative max-w-md w-full bg-white rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col items-center text-center animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedCert(null)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-full border-2 border-primary/20 bg-gray-50/50 flex items-center justify-center p-4 mb-5 shadow-inner">
+              <img
+                src={selectedCert.image || "/certifications/placeholder.png"}
+                alt={selectedCert.title || selectedCert.abbr}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">
+              {selectedCert.title || selectedCert.abbr}
+            </h3>
+            {(selectedCert.description || selectedCert.sub) && (
+              <p className="text-sm text-gray-500 font-medium whitespace-pre-line">
+                {selectedCert.description || selectedCert.sub}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

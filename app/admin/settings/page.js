@@ -295,6 +295,69 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 className="text-base font-semibold text-gray-900 mb-4">Change Password</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  const currentPassword = document.getElementById("currentPassword").value;
+                  const newPassword = document.getElementById("newPassword").value;
+                  const confirmPassword = document.getElementById("confirmPassword").value;
+                  if (!currentPassword || !newPassword || !confirmPassword) return;
+                  
+                  try {
+                    const res = await fetch("/api/admin/auth/change-password", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      setMessage({ type: "success", text: data.message });
+                      document.getElementById("currentPassword").value = "";
+                      document.getElementById("newPassword").value = "";
+                      document.getElementById("confirmPassword").value = "";
+                    } else {
+                      setMessage({ type: "error", text: data.error });
+                    }
+                  } catch (e) {
+                    setMessage({ type: "error", text: "Failed to change password" });
+                  }
+                }}
+                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors"
+              >
+                Change Password
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div className="flex items-center justify-end gap-3">
           <button
             type="submit"
@@ -318,4 +381,3 @@ export default function AdminSettingsPage() {
     </div>
   );
 }
-

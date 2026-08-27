@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import ImageKit from "imagekit";
+import { getAdminFromRequest } from "@/lib/adminAuth";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
@@ -9,6 +10,11 @@ const imagekit = new ImageKit({
 
 export async function POST(request) {
   try {
+    const admin = await getAdminFromRequest(request);
+    if (!admin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
 

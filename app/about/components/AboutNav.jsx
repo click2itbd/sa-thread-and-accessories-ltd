@@ -8,8 +8,10 @@ const NAV_LINKS = [
   { label: "Who We Are", href: "#who-we-are" },
   { label: "Board of Director", href: "#board-of-directors" },
   { label: "Message", href: "#message" },
+  { label: "Future Plan", href: "#future-plan" },
   { label: "Achievement", href: "#achievement" },
   { label: "Clients", href: "#clients" },
+  { label: "Partner Bank", href: "#partner-bank" },
   { label: "Team", href: "#team" },
 ];
 

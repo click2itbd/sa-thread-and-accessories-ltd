@@ -2,11 +2,18 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import Admin from "@/lib/models/Admin";
 import connectToDatabase from "@/lib/mongoose";
-
-const JWT_SECRET = process.env.ADMIN_JWT_SECRET || "fallback-secret-change-in-production";
+import { getJwtSecret } from "@/lib/adminAuth";
+import { loginLimiter, getClientIp } from "@/lib/rateLimit";
 
 export async function POST(request) {
   try {
+    const ip = getClientIp(request);
+    const rateLimitResult = loginLimiter.check(ip);
+    
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json({ error: "Too many login attempts. Please try again later." }, { status: 429 });
+    }
+
     await connectToDatabase();
     const { email, password } = await request.json();
 
@@ -15,16 +22,20 @@ export async function POST(request) {
     }
 
     const admin = await Admin.findOne({ email: email.toLowerCase() });
-    if (!admin) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+    if (!admin || !admin.isActive) {
+      return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
     }
 
     const isPasswordValid = await admin.comparePassword(password);
     if (!isPasswordValid) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
     }
 
-    const token = jwt.sign({ adminId: admin._id, email: admin.email }, JWT_SECRET, {
+    // Reset rate limiter on successful login
+    loginLimiter.reset(ip);
+
+    const secret = getJwtSecret();
+    const token = jwt.sign({ adminId: admin._id, email: admin.email, type: "access" }, secret, {
       expiresIn: "7d",
     });
 
@@ -33,7 +44,7 @@ export async function POST(request) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
     });
 

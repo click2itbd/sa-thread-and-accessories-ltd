@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import PageTransition from "./PageTransition";
 
 export default function SiteHeader({ children }) {
@@ -18,6 +19,7 @@ export default function SiteHeader({ children }) {
       ) : (
         <div className="flex-1">{children}</div>
       )}
+      {!isAdmin && <Footer />}
     </>
   );
 }

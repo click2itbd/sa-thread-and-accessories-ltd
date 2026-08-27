@@ -23,29 +23,20 @@ const pillars = [
   {
     title: "Product Safety",
     description:
-      "Certified to Oeko-Tex Standard 100, we guarantee that every thread is free from harmful substances, ensuring safety for workers and end-users globally.",
-    image: "/yarn.jpg",
+      "We, as a company always ensure that our products are free of harmful substances. Our company is 100% Oeko Tex certified. We also manage our wastes carefully so that we don’t litter our surrounding and contribute to pollution.",
     icon: ShieldCheck,
-    link: "#certifications",
-    linkText: "Learn about our certifications",
   },
   {
     title: "Charity & Welfare",
     description:
-      "We invest in local healthcare, education, and skill-building initiatives. Our 'SA Care' program supports the families of our 2000+ employees and local community.",
-    image: "/yarn.jpg",
+      "We actively take part in charity activities throughout the year. The charity activities includes donations to religious institutions, funds for treatment, etc.",
     icon: Users,
-    link: "#community",
-    linkText: "Our impact stories",
   },
   {
     title: "Green Factory",
     description:
-      "Our rooftop garden isn't just aesthetic; it reduces building temperatures and sequesters carbon. We also implement water recycling and solar energy harvesting.",
-    image: "/yarn.jpg",
+      "We always believe in green environment. We have a garden at our backyard and also at our rooftop. There are trees of various fruits and vegetables planted and are also taken care of with utmost priority. This eventually helps us to create an healthy environment for the company and also the surroundings.",
     icon: Leaf,
-    link: "#sustainability",
-    linkText: "Sustainability report",
   },
 ];
 
@@ -98,7 +89,7 @@ export default async function CSRPage() {
             <div className="relative flex justify-center lg:justify-end">
               <div className="w-[260px] h-[260px] md:w-[340px] md:h-[340px] rounded-full overflow-hidden border-4 border-primary/20 shadow-xl relative">
                 <Image
-                  src="/sewing-section.jpg"
+                  src="/CSR.jpeg"
                   alt="Woven with purpose - sustainable thread manufacturing"
                   fill
                   className="object-cover"
@@ -132,33 +123,19 @@ export default async function CSRPage() {
               return (
                 <div
                   key={item.title}
-                  className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow group"
+                  className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:border-primary/30 transition-all group flex flex-col"
                 >
                   <div className="h-1.5 bg-primary" />
-                  <div className="relative h-44 w-full">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="w-11 h-11 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4">
-                      <Icon className="w-5 h-5" />
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-5 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Icon className="w-6 h-6" />
                     </div>
-                    <h3 className="text-[18px] font-bold text-gray-900 mb-2">
+                    <h3 className="text-[18px] sm:text-[19px] font-bold text-gray-900 mb-2.5">
                       {item.title}
                     </h3>
-                    <p className="text-gray-500 text-[13.5px] leading-relaxed mb-4">
+                    <p className="text-gray-600 text-[13.5px] sm:text-[14px] leading-relaxed flex-1">
                       {item.description}
                     </p>
-                    {/* <Link
-                      href={item.link}
-                      className="inline-flex items-center gap-1.5 text-primary text-[13px] font-semibold hover:gap-2.5 transition-all"
-                    >
-                      {item.linkText} <ArrowRight className="w-3.5 h-3.5" />
-                    </Link> */}
                   </div>
                 </div>
               );

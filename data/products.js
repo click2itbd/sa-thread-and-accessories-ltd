@@ -42,7 +42,7 @@ export const PRODUCTS = [
     image: "/Products/Drawstring.jpg",
     pill: "Drawstring & Draw Code",
     description:
-      "Our Drawstring & Drawcord collection is engineered to deliver the perfect balance of functionality, durability, and refined finishing for modern apparel and lifestyle products. Manufactured using high-quality cotton, polyester, and synthetic yarns, our drawcords are designed to provide reliable performance with a clean, premium appearance. All raw materials are sourced from China, India, Malaysia, Taiwan, and Thailand, and every product is 100% Oeko-Tex certified.",
+      "100% polyester and cotton",
     keyFeatures: [
       "Premium Quality",
       "Durable Construction",
@@ -105,7 +105,7 @@ export const PRODUCTS = [
     image: "/Products/Elastic.jpg",
     pill: "Elastic",
     description:
-      "Our Elastic collection is crafted for maximum stretch retention and comfort. Ideal for waistbands, cuffs, and activewear, each yarn ensures consistent tension and long-lasting performance across all garment types. All raw materials are sourced from China, India, Malaysia, Taiwan, and Thailand, and every product is 100% Oeko-Tex certified.",
+      "100% polyester",
     keyFeatures: [
       "High Stretch Recovery",
       "Soft & Comfortable",
@@ -159,7 +159,7 @@ export const PRODUCTS = [
     image: "/Products/Sewing.png",
     pill: "Sewing Thread",
     description:
-      "Our Sewing Thread is a premium blend of carefully selected quality fibers, engineered to deliver smooth stitching, excellent seam strength, and outstanding consistency. Suitable for high-speed industrial sewing machines and hand sewing alike. All raw materials are sourced from China, India, Malaysia, Taiwan, and Thailand, and every product is 100% Oeko-Tex certified.",
+      "100% spun polyester",
     keyFeatures: [
       "Even Tension",
       "Low Lint",
@@ -171,7 +171,7 @@ export const PRODUCTS = [
     ],
     specifications: [
       { label: "Material", value: "Polyester / Cotton Blend" },
-      { label: "Count", value: "10s – 120s" },
+      { label: "Count", value: "20/2, 20/3, 40/2, 40/3, etc." },
       { label: "Color", value: "Over 500+ shades" },
       { label: "Twist", value: "S / Z Twist" },
       { label: "Finish", value: "Soft / Mercerized" },
@@ -221,7 +221,7 @@ export const PRODUCTS = [
     image: "/Products/Twil-Tape.jpg",
     pill: "Twill Tape",
     description:
-      "Our Twill Tape is woven to deliver a firm, durable structure with smooth edges, making it ideal for garment binding, labelling, straps, and decorative applications. Available in an extensive range of widths and vibrant custom colors. All raw materials are sourced from China, India, Malaysia, Taiwan, and Thailand, and every product is 100% Oeko-Tex certified.",
+      "100% Cotton/ Nylon/ 100% Polyester",
     keyFeatures: [
       "Firm Weave Construction",
       "Smooth Finished Edges",
@@ -282,7 +282,7 @@ export const PRODUCTS = [
     image: "/Products/Tips.png",
     pill: "Tips",
     description:
-      "Our Tips collection covers all kinds of aglets and end-caps used on drawstrings, drawcords, and laces, engineered for a secure fit and a clean, finished look. Manufactured to match a wide range of cord thicknesses and finishes, all raw materials are sourced from China, India, Malaysia, Taiwan, and Thailand, and every product is 100% Oeko-Tex certified.",
+      "Metal/Plastic/Silica Gel",
     keyFeatures: [
       "Secure Crimp Fit",
       "Multiple Finishes",

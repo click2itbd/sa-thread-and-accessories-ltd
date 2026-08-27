@@ -6,7 +6,6 @@ import Link from "next/link";
 import { HOME_HERO_SLIDES, HOME_CTA, TRUSTED_BRANDS } from "@/data/siteContent";
 import { PRODUCTS } from "@/data/products";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import Footer from "./components/Footer";
 
 const AUTO_SLIDE_INTERVAL = 4000;
 
@@ -332,10 +331,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
-      {/* Footer */}
-
-      <Footer />
     </main>
   );
 }

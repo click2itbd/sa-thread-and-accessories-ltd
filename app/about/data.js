@@ -160,6 +160,7 @@ export const teamMembers = [
     dept: "Management",
     image:
       "/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg",
+    email: "sathread@gmail.com",
     phone: "+8801755504035",
     location: "Gazipur, Bangladesh",
     whatsappNumber: "8801755504035",
@@ -183,7 +184,7 @@ export const teamMembers = [
     role: "Executive Director",
     dept: "Management",
     image: "/Employee Photograph/Asif Abdullah- Executive Director.jpg",
-    email: "asif@sathread.com",
+    email: "asif.sathread@gmail.com",
     location: "Gazipur, Bangladesh",
     linkedinUrl: "https://www.linkedin.com/in/asifabdullah38/",
     whatsappNumber: "8801688-803246",
@@ -399,9 +400,9 @@ export const yearlyGrowth = [
 ];
 
 export const futurePlan =
-  "Currently expanding to add an in-house dyeing section within the existing factory premises to meet demand for dyed yarn — third-party dyeing was found too costly, slow, and inconsistent on quality.";
+  "SA Thread & Accessories Ltd. is currently working on a significant expansion project to strengthen its manufacturing capabilities and support the company’s long-term growth. As part of this expansion, the company plans to establish a dedicated in-house dyeing section within its existing factory premises to fulfil the increasing demand for dyed yarn and reduce dependency on external dyeing facilities.\n\nAfter conducting thorough research and evaluating the existing production process, it was identified that relying on third-party dyeing services creates several operational challenges, including high processing costs, longer lead times, limited production flexibility, and inconsistencies in quality. These factors can affect production schedules, increase overall manufacturing expenses, and make it more difficult to maintain consistent product quality.\n\nBy establishing its own dyeing facility, SA Thread & Accessories Ltd. expects to gain greater control over the complete dyeing process, from raw yarn preparation to final quality inspection. The in-house setup will help reduce third-party processing costs, improve production efficiency, shorten turnaround time, and maintain more consistent colour, shade, and overall yarn quality. It will also provide greater flexibility to respond quickly to customer requirements and changing market demand.\n\nIn addition to improving the current production process, the proposed dyeing section will create a stronger and more integrated manufacturing operation. The company plans to gradually improve its dyeing capacity, technology, quality-control procedures, and operational efficiency as demand increases. This expansion is expected to reduce production dependency on external suppliers, improve cost competitiveness, and strengthen the company’s ability to deliver products within the required timeframe.\n\nThrough this investment, SA Thread & Accessories Ltd. aims to build a more efficient, reliable, and quality-focused production system while creating a strong foundation for future business expansion. The company’s long-term objective is to continuously improve its manufacturing capabilities, increase production capacity, maintain consistent quality standards, reduce unnecessary operational costs, and better serve both existing and future customers.";
 
-export const csr = [
+  export const csr = [
   "100% Oeko-Tex certified products; careful waste management to avoid pollution.",
   "Ongoing charity activities year-round: donations to religious institutions, funds for treatment, etc.",
   "Backyard and rooftop gardens with fruit and vegetable trees, for a healthier environment on-site and around it.",

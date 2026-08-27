@@ -1,13 +1,15 @@
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import AdminProductsClient from "../../products/ProductsClient";
 
 export default async function AdminEditProductPage({ params }) {
   const { id } = await params;
-  const cookieHeader = cookies().toString();
+  const headersList = await headers();
+  const cookieHeader = headersList.get("cookie") || "";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   try {
-    const res = await fetch(`/api/admin/products/${id}`, {
+    const res = await fetch(`${baseUrl}/api/admin/products/${id}`, {
       cache: "no-store",
       headers: { cookie: cookieHeader },
     });
