@@ -15,8 +15,8 @@ export async function POST(request) {
       return NextResponse.json({ error: "New passwords do not match" }, { status: 400 });
     }
 
-    if (newPassword.length < 8) {
-      return NextResponse.json({ error: "New password must be at least 8 characters long" }, { status: 400 });
+    if (newPassword.length < 6) {
+      return NextResponse.json({ error: "New password must be at least 6 characters long" }, { status: 400 });
     }
 
     const isPasswordValid = await admin.comparePassword(currentPassword);

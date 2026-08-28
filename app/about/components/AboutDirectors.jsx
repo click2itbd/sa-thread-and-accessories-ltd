@@ -15,7 +15,7 @@ export default function AboutDirectors() {
             {directors.map((d, i) => (
               <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                 <div className="relative w-full h-[300px] md:h-[260px] lg:h-[350px] bg-gray-100">
-                  <Image src={d.image} alt={d.name} fill className="object-contain object-fill bg-white" />
+                  <Image src={d.image} alt={d.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-contain object-fill bg-white" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-gray-900 text-[16px] mb-1">{d.name}</h3>

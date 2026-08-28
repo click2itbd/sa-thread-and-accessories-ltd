@@ -41,6 +41,7 @@ export default function Navbar() {
                 src="/logo.jpg"
                 alt="SA Thread & Accessories Ltd. Logo"
                 fill
+                sizes="(max-width: 768px) 48px, 60px"
                 className="object-contain"
                 priority
               />
@@ -91,14 +92,17 @@ export default function Navbar() {
                   <FaFacebookF className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="mailto:info@example.com"
-                  aria-label="Email"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=sathread@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Email sathread@gmail.com"
+                  title="Send Email to sathread@gmail.com"
                   className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 text-black-500 hover:bg-red-700 hover:text-white transition-all duration-200 hover:scale-110"
                 >
                   <MdEmail className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://wa.me/+8801869517302"
+                  href="https://wa.me/8801971170961"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
@@ -177,23 +181,28 @@ export default function Navbar() {
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
             <div className="flex items-center justify-center gap-4 text-gray-600 mb-2">
               <a
-                href="https://facebook.com/yourpage"
+                href="https://www.facebook.com/profile.php?id=61577206238228"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook"
                 className="hover:text-primary transition-colors"
               >
                 <FaFacebookF className="w-5 h-5" />
               </a>
               <a
-                href="mailto:info@example.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=sathread@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Email sathread@gmail.com"
                 className="hover:text-primary transition-colors"
               >
                 <MdEmail className="w-6 h-6" />
               </a>
               <a
-                href="https://wa.me/8801XXXXXXXXX"
+                href="https://wa.me/8801971170961"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="WhatsApp"
                 className="hover:text-primary transition-colors"
               >
                 <FaWhatsapp className="w-6 h-6" />

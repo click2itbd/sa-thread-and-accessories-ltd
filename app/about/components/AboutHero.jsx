@@ -11,6 +11,7 @@ export default function AboutHero() {
           src="/elastic-section.jpg"
           alt="S A Thread & Accessories Ltd. building"
           fill
+          sizes="100vw"
           priority
           className="object-cover object-right"
         />

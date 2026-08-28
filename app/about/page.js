@@ -11,6 +11,8 @@ import AboutTeam from "./components/aboutTeam";
 import AboutValues from "./components/AboutValues";
 import AboutWhoWeAre from "./components/AboutWhoWeAre";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "About Us",
   description:
@@ -41,9 +43,35 @@ async function getCertificates() {
   }
 }
 
+async function getSettings() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  try {
+    const res = await fetch(`${baseUrl}/api/settings`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed");
+    const data = await res.json();
+    return data.settings || null;
+  } catch {
+    return null;
+  }
+}
+
+async function getBanks() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  try {
+    const res = await fetch(`${baseUrl}/api/banks`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed");
+    const data = await res.json();
+    return data.banks || [];
+  } catch {
+    return [];
+  }
+}
+
 export default async function AboutPage() {
   const teamMembers = await getTeamMembers();
   const certificates = await getCertificates();
+  const settings = await getSettings();
+  const banks = await getBanks();
 
   return (
     <>
@@ -63,7 +91,7 @@ export default async function AboutPage() {
             <AboutMDMessage />
           </section>
           <section id="future-plan">
-            <AboutFuturePlan />
+            <AboutFuturePlan settings={settings} />
           </section>
           <section id="achievement">
             <AboutCertifications certificates={certificates} />
@@ -72,7 +100,7 @@ export default async function AboutPage() {
             <AboutClients />
           </section>
           <section id="partner-bank">
-            <AboutPartnerBank />
+            <AboutPartnerBank banks={banks} />
           </section>
           <section id="team">
             <AboutTeam members={teamMembers} />

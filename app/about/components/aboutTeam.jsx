@@ -159,6 +159,7 @@ export default function AboutTeam({ members: propMembers }) {
                             src={member.image}
                             alt={member.name}
                             fill
+                            sizes="100px"
                             className="object-cover object-top object-fill"
                           />
                         ) : (

@@ -109,6 +109,7 @@ export default function AdminLayout({ children }) {
                   src="/logo.jpg"
                   alt="SA Thread"
                   fill
+                  sizes="32px"
                   className="object-contain"
                   priority
                 />

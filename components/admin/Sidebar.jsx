@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen, ExternalLink } from "lucide-react";
+import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen, Landmark, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 export default function AdminSidebar({ onClose }) {
@@ -17,6 +17,7 @@ export default function AdminSidebar({ onClose }) {
     { href: "/admin/team", label: "Team Management", icon: Users },
     { href: "/admin/certificates", label: "Certificates & Docs", icon: Award },
     { href: "/admin/clients", label: "Clients", icon: Building2 },
+    { href: "/admin/banks", label: "Partner Banks", icon: Landmark },
     { href: "/admin/settings", label: "Company Settings", icon: Settings },
     { href: "/admin/careers/jobs", label: "Careers", icon: Briefcase },
     { href: "/admin/careers/applications", label: "Applications", icon: FileText },
@@ -36,6 +37,7 @@ export default function AdminSidebar({ onClose }) {
               src="/logo.jpg"
               alt="SA Thread & Accessories Ltd."
               fill
+              sizes="36px"
               className="object-contain"
               priority
             />

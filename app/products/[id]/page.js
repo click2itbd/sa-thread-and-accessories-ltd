@@ -85,6 +85,7 @@ export default async function ProductDetailPage({ params }) {
                   src={product.images?.[0] || "/yarn.png"}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                   priority
                 />

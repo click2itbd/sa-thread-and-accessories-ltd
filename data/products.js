@@ -38,7 +38,7 @@ export const PRODUCTS = [
     id: 1,
     title: "Drawstring",
     category: "Drawstring & Draw Code",
-    type: "High tenacity Drawstring yarn",
+    type: "100% polyester and cotton",
     image: "/Products/Drawstring.jpg",
     pill: "Drawstring & Draw Code",
     description:
@@ -101,7 +101,7 @@ export const PRODUCTS = [
     id: 2,
     title: "Elastic",
     category: "Elastic",
-    type: "100% Combed Elastic yarn",
+    type: "100% polyester",
     image: "/Products/Elastic.jpg",
     pill: "Elastic",
     description:
@@ -155,7 +155,7 @@ export const PRODUCTS = [
     id: 3,
     title: "Sewing Thread",
     category: "Sewing Thread",
-    type: "Blend of quality fibers",
+    type: "100% spun polyester",
     image: "/Products/Sewing.png",
     pill: "Sewing Thread",
     description:
@@ -217,7 +217,7 @@ export const PRODUCTS = [
     id: 4,
     title: "Twill Tape",
     category: "Twill Tape",
-    type: "Vibrant colors, lasting quality",
+    type: "100% Cotton/ Nylon/ 100% Polyester",
     image: "/Products/Twil-Tape.jpg",
     pill: "Twill Tape",
     description:
@@ -278,7 +278,7 @@ export const PRODUCTS = [
     id: 5,
     title: "Tips",
     category: "Tips",
-    type: "All kinds of drawcord & lace tips",
+    type: "Metal/Plastic/Silica Gel",
     image: "/Products/Tips.png",
     pill: "Tips",
     description:

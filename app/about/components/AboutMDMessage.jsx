@@ -12,6 +12,7 @@ export default function AboutMDMessage() {
           src="/mdmessage.png"
           alt="Team collaborating around a table"
           fill
+          sizes="52vw"
           className="object-cover object-center"
         />
         {/* fade the illustration's straight left edge into the section background */}
@@ -43,6 +44,7 @@ export default function AboutMDMessage() {
               src="/mdmessage.png"
               alt="Team collaborating around a table"
               fill
+              sizes="(max-width: 768px) 100vw, 420px"
               className="object-contain"
             />
           </div>

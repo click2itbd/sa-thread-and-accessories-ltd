@@ -164,6 +164,7 @@ export default function ProductsPage() {
                     src={product.images?.[0] || "/yarn.png"}
                     alt={product.name}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     placeholder="blur"
                     blurDataURL={blurDataURL()}

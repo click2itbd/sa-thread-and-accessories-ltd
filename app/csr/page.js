@@ -92,6 +92,7 @@ export default async function CSRPage() {
                   src="/CSR.jpeg"
                   alt="Woven with purpose - sustainable thread manufacturing"
                   fill
+                  sizes="(max-width: 768px) 260px, 340px"
                   className="object-cover"
                   priority
                 />

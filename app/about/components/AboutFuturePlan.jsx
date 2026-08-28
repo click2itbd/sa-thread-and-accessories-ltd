@@ -1,6 +1,14 @@
 import { Layers, Zap, TrendingUp, FileText, Award, Download, Sparkles } from "lucide-react";
 
-export default function AboutFuturePlan() {
+export default function AboutFuturePlan({ settings }) {
+  const companyProfilePdf = settings?.companyProfilePdf || "/Certificates/Company Profile SA THREAD & ACCESSORIES LTD..pdf";
+  const companyProfileTitle = settings?.companyProfileTitle || "Company Profile";
+  const companyProfileSubtitle = settings?.companyProfileSubtitle || "SA Thread & Accessories Ltd. (PDF)";
+
+  const oekotexCertificatePdf = settings?.oekotexCertificatePdf || "/Certificates/Oekotex certificate-2025.pdf";
+  const oekotexCertificateTitle = settings?.oekotexCertificateTitle || "OEKO-TEX Certificate";
+  const oekotexCertificateSubtitle = settings?.oekotexCertificateSubtitle || "STANDARD 100 — 2025 (PDF)";
+
   const planItems = [
     {
       icon: Layers,
@@ -79,54 +87,62 @@ export default function AboutFuturePlan() {
 
               <div className="flex flex-col gap-3.5">
                 {/* Button 1: Company Profile */}
-                <a
-                  href="/Certificates/Company Profile SA THREAD & ACCESSORIES LTD..pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-primary hover:bg-primary/[0.02] hover:shadow-md transition-all duration-200"
-                >
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-[14px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                        Company Profile
+                {companyProfilePdf && (
+                  <a
+                    href={companyProfilePdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-primary hover:bg-primary/[0.02] hover:shadow-md transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                        <FileText className="w-5 h-5" />
                       </div>
-                      <div className="text-[11px] text-gray-500">
-                        SA Thread &amp; Accessories Ltd. (PDF)
+                      <div className="text-left">
+                        <div className="text-[14px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                          {companyProfileTitle}
+                        </div>
+                        {companyProfileSubtitle && (
+                          <div className="text-[11px] text-gray-500">
+                            {companyProfileSubtitle}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
-                    <Download className="w-4 h-4" />
-                  </div>
-                </a>
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
+                      <Download className="w-4 h-4" />
+                    </div>
+                  </a>
+                )}
 
                 {/* Button 2: OEKO-TEX Certificate */}
-                <a
-                  href="/Certificates/Oekotex certificate-2025.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-primary hover:bg-primary/[0.02] hover:shadow-md transition-all duration-200"
-                >
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
-                      <Award className="w-5 h-5" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-[14px] font-bold text-gray-900 group-hover:text-primary transition-colors">
-                        OEKO-TEX Certificate
+                {oekotexCertificatePdf && (
+                  <a
+                    href={oekotexCertificatePdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-white hover:border-primary hover:bg-primary/[0.02] hover:shadow-md transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                        <Award className="w-5 h-5" />
                       </div>
-                      <div className="text-[11px] text-gray-500">
-                        STANDARD 100 — 2025 (PDF)
+                      <div className="text-left">
+                        <div className="text-[14px] font-bold text-gray-900 group-hover:text-primary transition-colors">
+                          {oekotexCertificateTitle}
+                        </div>
+                        {oekotexCertificateSubtitle && (
+                          <div className="text-[11px] text-gray-500">
+                            {oekotexCertificateSubtitle}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
-                    <Download className="w-4 h-4" />
-                  </div>
-                </a>
+                    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/10 transition-colors shrink-0">
+                      <Download className="w-4 h-4" />
+                    </div>
+                  </a>
+                )}
               </div>
             </div>
           </div>

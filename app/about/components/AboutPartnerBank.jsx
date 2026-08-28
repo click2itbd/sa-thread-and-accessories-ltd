@@ -1,6 +1,8 @@
 import { partnerBanks } from "../data";
 
-export default function AboutPartnerBank() {
+export default function AboutPartnerBank({ banks: dbBanks }) {
+  const activeBanks = dbBanks?.length > 0 ? dbBanks : partnerBanks;
+
   return (
     <section className="py-10 sm:py-12 md:py-16 bg-gray-50/60 scroll-mt-24">
       <div className="container mx-auto px-5 sm:px-6">
@@ -18,9 +20,9 @@ export default function AboutPartnerBank() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {partnerBanks.map((bank, index) => (
+          {activeBanks.map((bank, index) => (
             <div
-              key={index}
+              key={bank._id || index}
               className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="w-11 h-11 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4 sm:mb-5">
