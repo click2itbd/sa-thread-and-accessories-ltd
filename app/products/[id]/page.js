@@ -38,6 +38,38 @@ function getStaticProduct(id) {
   })).find((product) => String(product._id) === String(id));
 }
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  let product = null;
+
+  if (mongoose.isValidObjectId(id)) {
+    try {
+      await connectToDatabase();
+      product = await Product.findOne({ _id: id, isActive: true }).lean();
+    } catch {
+      // Fallback
+    }
+  }
+
+  product = product || getStaticProduct(id);
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+    };
+  }
+
+  return {
+    title: `${product.name} | Garments Accessories`,
+    description: product.shortDescription || product.fullDescription || `Explore ${product.name} manufactured by SA Thread & Accessories Ltd. in Bangladesh.`,
+    openGraph: {
+      title: `${product.name} | SA Thread & Accessories Ltd.`,
+      description: product.shortDescription || product.fullDescription,
+      images: product.images?.[0] ? [{ url: product.images[0] }] : [],
+    },
+  };
+}
+
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
 

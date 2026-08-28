@@ -23,10 +23,13 @@ function getFallbackProducts() {
 }
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState(getFallbackProducts);
+  const [categories, setCategories] = useState(() => [
+    "All",
+    ...new Set(getFallbackProducts().map((p) => p.category).filter(Boolean)),
+  ]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   async function fetchProducts() {
     try {

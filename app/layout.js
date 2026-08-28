@@ -15,10 +15,10 @@ export const metadata = {
   title: {
     template: "%s | SA Thread & Accessories Ltd.",
     default:
-      "SA Thread & Accessories Ltd. | Sewing Thread, Elastic & Drawstring Manufacturer, Bangladesh",
+      "SA Thread & Accessories Ltd. | Sewing Thread, Elastic & Drawstring Manufacturer Bangladesh",
   },
   description:
-    "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring & draw cord for garments. Supplying 20+ RMG factories from our Gazipur, Bangladesh facility since 2003.",
+    "Oeko-Tex certified manufacturer of sewing thread, elastic tape, twill tape, drawstring, and draw cord for garments. Supplying 20+ RMG factories from Gazipur, Bangladesh since 2003.",
   keywords: [
     "sewing thread manufacturer Bangladesh",
     "elastic tape supplier",
@@ -28,7 +28,6 @@ export const metadata = {
     "garments accessories Bangladesh",
     "Oeko-Tex certified thread",
     "RMG accessories supplier",
-    "SA Thread Gazipur",
     "SA Thread Gazipur",
     "BGAPMEA member",
   ],
@@ -89,16 +88,15 @@ export const metadata = {
   },
 };
 
-// JSON-LD structured data — helps Google understand this is a manufacturing
-
+// JSON-LD structured data for Google Rich Results
 const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type0": "Organization",
+  "@type": "Organization",
   name: "SA Thread & Accessories Ltd.",
-  alternatename: "SA Thread",
+  alternateName: "SA Thread",
   url: "https://www.sathread.com.bd",
-  logo: "https://www.sathread.com.bd/logo.png",
-  image: "https://www.sathread.com.bd/factory.jpg",
+  logo: "https://www.sathread.com.bd/logo.jpg",
+  image: "https://www.sathread.com.bd/sathread.webp",
   description:
     "Oeko-Tex certified manufacturer of sewing thread, elastic, twill tape, drawstring and draw cord for the global garments industry, based in Gazipur, Bangladesh since 2003.",
   foundingDate: "2003",
@@ -109,7 +107,6 @@ const organizationJsonLd = {
     postalCode: "1704",
     addressCountry: "Bangladesh",
   },
-
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+880-1971-170961",
@@ -119,9 +116,7 @@ const organizationJsonLd = {
     availableLanguage: ["English", "Bengali"],
   },
   sameAs: [
-    // Add your live social profiles here, e.g.:
     "https://www.facebook.com/profile.php?id=61577206238228",
-    // "https://www.linkedin.com/company/sathread",
   ],
   memberOf: {
     "@type": "Organization",

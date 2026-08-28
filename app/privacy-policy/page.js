@@ -1,5 +1,10 @@
 import { PRIVACY_POLICY_CONTENT } from "@/data/siteContent";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy and data protection terms of SA Thread & Accessories Ltd.",
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <main className="bg-gray-50 min-h-screen py-16">

@@ -1,6 +1,11 @@
 import { TERMS_OF_SERVICE_CONTENT } from "@/data/siteContent";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Terms of Service",
+  description: "Terms and conditions for using SA Thread & Accessories Ltd. website and services.",
+};
+
 export default function TermsOfServicePage() {
   return (
     <main className="bg-gray-50 min-h-screen py-16">

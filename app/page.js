@@ -34,8 +34,8 @@ function getFallbackProducts() {
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [clients, setClients] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [clients, setClients] = useState(getFallbackClients);
+  const [products, setProducts] = useState(getFallbackProducts);
 
   useEffect(() => {
     fetchClients();
