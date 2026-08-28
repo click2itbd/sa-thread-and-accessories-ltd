@@ -1,3 +1,9 @@
+import connectToDatabase from "@/lib/mongoose";
+import TeamMember from "@/lib/models/TeamMember";
+import Certificate from "@/lib/models/Certificate";
+import CompanySettings from "@/lib/models/CompanySettings";
+import BankPartner from "@/lib/models/BankPartner";
+
 import AboutCertifications from "./components/AboutCertifications";
 import AboutCTA from "./components/AboutCTA";
 import AboutClients from "./components/AboutClients";
@@ -19,59 +25,35 @@ export const metadata = {
     "Learn about SA Thread & Accessories Ltd. — our 23-year history, our factory in Gazipur, and our dedicated team of professionals serving the garments industry.",
 };
 
-async function getTeamMembers() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+async function getAboutData() {
   try {
-    const res = await fetch(`${baseUrl}/api/team`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed");
-    const data = await res.json();
-    return data.members || [];
-  } catch {
-    return [];
-  }
-}
+    await connectToDatabase();
+    const [teamMembers, certificates, settings, banks] = await Promise.all([
+      TeamMember.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: 1 }).lean(),
+      Certificate.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean(),
+      CompanySettings.findOne({}).lean(),
+      BankPartner.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean(),
+    ]);
 
-async function getCertificates() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  try {
-    const res = await fetch(`${baseUrl}/api/certificates`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed");
-    const data = await res.json();
-    return data.certificates || [];
-  } catch {
-    return [];
-  }
-}
-
-async function getSettings() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  try {
-    const res = await fetch(`${baseUrl}/api/settings`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed");
-    const data = await res.json();
-    return data.settings || null;
-  } catch {
-    return null;
-  }
-}
-
-async function getBanks() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  try {
-    const res = await fetch(`${baseUrl}/api/banks`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Failed");
-    const data = await res.json();
-    return data.banks || [];
-  } catch {
-    return [];
+    return {
+      teamMembers: JSON.parse(JSON.stringify(teamMembers || [])),
+      certificates: JSON.parse(JSON.stringify(certificates || [])),
+      settings: settings ? JSON.parse(JSON.stringify(settings)) : null,
+      banks: JSON.parse(JSON.stringify(banks || [])),
+    };
+  } catch (error) {
+    console.error("Error fetching about page data from DB:", error);
+    return {
+      teamMembers: [],
+      certificates: [],
+      settings: null,
+      banks: [],
+    };
   }
 }
 
 export default async function AboutPage() {
-  const teamMembers = await getTeamMembers();
-  const certificates = await getCertificates();
-  const settings = await getSettings();
-  const banks = await getBanks();
+  const { teamMembers, certificates, settings, banks } = await getAboutData();
 
   return (
     <>

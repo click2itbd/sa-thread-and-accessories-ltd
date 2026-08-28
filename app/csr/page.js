@@ -47,20 +47,21 @@ const stats = [
   { value: "2.5M", label: "Liters Water Saved" },
 ];
 
+import connectToDatabase from "@/lib/mongoose";
+import Blog from "@/lib/models/Blog";
+
+export const dynamic = "force-dynamic";
+
 async function getBlogs() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/blogs`, {
-      next: { revalidate: 60 },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      return data.blogs || [];
-    }
+    await connectToDatabase();
+    const blogs = await Blog.find({ category: "CSR" }).sort({ createdAt: -1 }).limit(3).lean();
+    if (blogs && blogs.length > 0) return JSON.parse(JSON.stringify(blogs));
+    const allBlogs = await Blog.find({}).sort({ createdAt: -1 }).limit(3).lean();
+    return JSON.parse(JSON.stringify(allBlogs || []));
   } catch (error) {
-    console.error("Failed to fetch blogs:", error);
+    return [];
   }
-  return [];
 }
 
 export default async function CSRPage() {
