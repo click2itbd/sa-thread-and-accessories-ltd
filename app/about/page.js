@@ -32,7 +32,7 @@ async function getAboutData() {
       TeamMember.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: 1 }).lean(),
       Certificate.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean(),
       CompanySettings.findOne({}).lean(),
-      BankPartner.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean(),
+      BankPartner.find({ isActive: { $ne: false } }).sort({ displayOrder: 1, createdAt: 1 }).lean(),
     ]);
 
     return {
@@ -72,11 +72,8 @@ export default async function AboutPage() {
           <section id="message">
             <AboutMDMessage />
           </section>
-          <section id="future-plan">
-            <AboutFuturePlan settings={settings} />
-          </section>
-          <section id="achievement">
-            <AboutCertifications certificates={certificates} />
+          <section id="team">
+            <AboutTeam members={teamMembers} />
           </section>
           <section id="clients">
             <AboutClients />
@@ -84,8 +81,11 @@ export default async function AboutPage() {
           <section id="partner-bank">
             <AboutPartnerBank banks={banks} />
           </section>
-          <section id="team">
-            <AboutTeam members={teamMembers} />
+          <section id="achievement">
+            <AboutCertifications certificates={certificates} />
+          </section>
+          <section id="future-plan">
+            <AboutFuturePlan settings={settings} />
           </section>
           <AboutValues />
           <AboutCTA />

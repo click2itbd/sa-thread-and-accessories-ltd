@@ -30,7 +30,7 @@ export async function POST(request) {
     // Auto-seed default admin if database is empty
     if (!admin) {
       const adminCount = await Admin.countDocuments();
-      const defaultEmail = (process.env.ADMIN_EMAIL || "admin@sathread.com").toLowerCase();
+      const defaultEmail = (process.env.ADMIN_EMAIL || "asif.sathread@gmail.com").toLowerCase();
       const defaultPassword = process.env.ADMIN_PASSWORD || "adminsathread";
 
       if (adminCount === 0 && email === defaultEmail) {

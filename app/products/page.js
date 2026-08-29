@@ -127,7 +127,8 @@ export default function ProductsPage() {
               width={400}
               height={300}
               priority
-              className="max-w-[220px] sm:max-w-[300px] md:max-w-[400px] w-full h-auto object-contain"
+              style={{ width: "auto", height: "auto" }}
+              className="max-w-[220px] sm:max-w-[300px] md:max-w-[400px] object-contain"
             />
           </div>
         </section>

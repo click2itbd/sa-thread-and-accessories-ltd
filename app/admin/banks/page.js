@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, X, Search, Landmark, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { Plus, Edit2, Trash2, X, Search, Landmark, Loader2, Upload, ImageIcon } from "lucide-react";
 
 const emptyBank = {
   name: "",
@@ -10,6 +11,7 @@ const emptyBank = {
   tel: "",
   fax: "",
   swift: "",
+  logo: "",
   displayOrder: 0,
   isActive: true,
 };
@@ -22,6 +24,7 @@ export default function AdminBanksPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingBank, setEditingBank] = useState(null);
   const [formData, setFormData] = useState(emptyBank);
+  const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(null);
   const [message, setMessage] = useState(null);
@@ -58,6 +61,7 @@ export default function AdminBanksPage() {
         tel: bank.tel || "",
         fax: bank.fax || "",
         swift: bank.swift || "",
+        logo: bank.logo || bank.image || "",
         displayOrder: bank.displayOrder ?? 0,
         isActive: bank.isActive ?? true,
       });
@@ -75,6 +79,34 @@ export default function AdminBanksPage() {
     setModalOpen(false);
     setEditingBank(null);
     setFormData(emptyBank);
+  };
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        credentials: "include",
+        method: "POST",
+        body: fd,
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setFormData((prev) => ({ ...prev, logo: data.url }));
+      } else {
+        alert(data.error || "Upload failed");
+      }
+    } catch (err) {
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -167,12 +199,12 @@ export default function AdminBanksPage() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Partner Banks</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Manage the banking partners shown on the About Us page
+            Manage the banking partners and logos shown on the About Us page
           </p>
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="inline-flex items-center gap-2 bg-[#1F4D2C] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#163d24] transition-colors"
+          className="inline-flex items-center gap-2 bg-[#1F4D2C] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#163d24] transition-colors shadow-sm"
         >
           <Plus className="w-4 h-4" />
           Add Bank Partner
@@ -226,6 +258,7 @@ export default function AdminBanksPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-gray-50 text-gray-600 font-semibold border-b border-gray-200">
                 <tr>
+                  <th className="px-6 py-3.5">Logo</th>
                   <th className="px-6 py-3.5">Bank &amp; Branch</th>
                   <th className="px-6 py-3.5">Contact Details</th>
                   <th className="px-6 py-3.5">SWIFT</th>
@@ -235,67 +268,85 @@ export default function AdminBanksPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {filteredBanks.map((bank) => (
-                  <tr key={bank._id} className="hover:bg-gray-50/80 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="font-bold text-gray-900">{bank.name}</div>
-                      {bank.branch && <div className="text-xs text-gray-500 mt-0.5">{bank.branch}</div>}
-                      {bank.address && <div className="text-xs text-gray-400 mt-0.5 max-w-xs truncate">{bank.address}</div>}
-                    </td>
-                    <td className="px-6 py-4 text-xs text-gray-600">
-                      {bank.tel && <div><span className="font-semibold text-gray-700">Tel:</span> {bank.tel}</div>}
-                      {bank.fax && <div><span className="font-semibold text-gray-700">Fax:</span> {bank.fax}</div>}
-                      {!bank.tel && !bank.fax && <span className="text-gray-400">—</span>}
-                    </td>
-                    <td className="px-6 py-4">
-                      {bank.swift ? (
-                        <span className="inline-block px-2.5 py-1 rounded bg-gray-100 font-mono text-xs font-semibold text-gray-800">
-                          {bank.swift}
-                        </span>
-                      ) : (
-                        <span className="text-gray-400">—</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-xs font-semibold text-gray-600">
-                      {bank.displayOrder ?? 0}
-                    </td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleToggleStatus(bank)}
-                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
-                          bank.isActive
-                            ? "bg-green-50 text-green-700 hover:bg-green-100"
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                      >
-                        {bank.isActive ? "Active" : "Inactive"}
-                      </button>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleOpenModal(bank)}
-                          className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                          title="Edit"
-                        >
-                          <Edit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(bank._id)}
-                          disabled={deleting === bank._id}
-                          className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
-                          title="Delete"
-                        >
-                          {deleting === bank._id ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                {filteredBanks.map((bank) => {
+                  const logoUrl = bank.logo || bank.image;
+                  return (
+                    <tr key={bank._id} className="hover:bg-gray-50/80 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="w-12 h-12 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center overflow-hidden relative">
+                          {logoUrl ? (
+                            <Image
+                              src={logoUrl}
+                              alt={bank.name}
+                              fill
+                              sizes="48px"
+                              className="object-contain p-1"
+                            />
                           ) : (
-                            <Trash2 className="w-4 h-4" />
+                            <Landmark className="w-5 h-5 text-gray-400" />
                           )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="font-bold text-gray-900">{bank.name}</div>
+                        {bank.branch && <div className="text-xs text-gray-500 mt-0.5">{bank.branch}</div>}
+                        {bank.address && <div className="text-xs text-gray-400 mt-0.5 max-w-xs truncate">{bank.address}</div>}
+                      </td>
+                      <td className="px-6 py-4 text-xs text-gray-600">
+                        {bank.tel && <div><span className="font-semibold text-gray-700">Tel:</span> {bank.tel}</div>}
+                        {bank.fax && <div><span className="font-semibold text-gray-700">Fax:</span> {bank.fax}</div>}
+                        {!bank.tel && !bank.fax && <span className="text-gray-400">—</span>}
+                      </td>
+                      <td className="px-6 py-4">
+                        {bank.swift ? (
+                          <span className="inline-block px-2.5 py-1 rounded bg-gray-100 font-mono text-xs font-semibold text-gray-800">
+                            {bank.swift}
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">—</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-xs font-semibold text-gray-600">
+                        {bank.displayOrder ?? 0}
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() => handleToggleStatus(bank)}
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                            bank.isActive
+                              ? "bg-green-50 text-green-700 hover:bg-green-100"
+                              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                          }`}
+                        >
+                          {bank.isActive ? "Active" : "Inactive"}
                         </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleOpenModal(bank)}
+                            className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                            title="Edit"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(bank._id)}
+                            disabled={deleting === bank._id}
+                            className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors disabled:opacity-50"
+                            title="Delete"
+                          >
+                            {deleting === bank._id ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -324,6 +375,66 @@ export default function AdminBanksPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Logo Upload Section */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1.5">
+                  Bank Logo / Image
+                </label>
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-gray-50 border-2 border-dashed border-gray-200 flex items-center justify-center overflow-hidden relative shrink-0">
+                    {formData.logo ? (
+                      <Image
+                        src={formData.logo}
+                        alt="Bank Logo"
+                        fill
+                        sizes="64px"
+                        className="object-contain p-1.5"
+                      />
+                    ) : (
+                      <ImageIcon className="w-6 h-6 text-gray-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-2">
+                    <label className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-[#1F4D2C] bg-[#1F4D2C]/10 rounded-lg hover:bg-[#1F4D2C]/20 cursor-pointer transition-colors">
+                      {uploading ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <Upload className="w-3.5 h-3.5" />
+                          Upload Logo
+                        </>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleLogoUpload}
+                        disabled={uploading}
+                        className="hidden"
+                      />
+                    </label>
+                    {formData.logo && (
+                      <button
+                        type="button"
+                        onClick={() => setFormData((p) => ({ ...p, logo: "" }))}
+                        className="block text-xs text-red-600 hover:underline"
+                      >
+                        Remove Logo
+                      </button>
+                    )}
+                    <input
+                      type="text"
+                      placeholder="Or enter logo image URL (/Bank/... or https://...)"
+                      value={formData.logo}
+                      onChange={(e) => setFormData((p) => ({ ...p, logo: e.target.value }))}
+                      className="w-full px-3 py-1.5 text-xs border border-gray-200 rounded-lg outline-none focus:border-[#1F4D2C]"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wide mb-1">
                   Bank Name *
@@ -440,8 +551,8 @@ export default function AdminBanksPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={saving}
-                  className="inline-flex items-center gap-2 bg-[#1F4D2C] text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-[#163d24] transition-colors disabled:opacity-50"
+                  disabled={saving || uploading}
+                  className="inline-flex items-center gap-2 bg-[#1F4D2C] text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-[#163d24] transition-colors disabled:opacity-50 shadow-sm"
                 >
                   {saving ? (
                     <>

@@ -1,33 +1,10 @@
 import ContactMessage from '@/lib/models/ContactMessage';
 import connectToDatabase from '@/lib/mongoose';
-
-// ============================================================================
-// EMAIL PROVIDER: Resend (DISABLED)
-// ============================================================================
-// Original code used Resend API to send contact form emails.
-// It is commented out below and replaced with SMTP/Nodemailer.
-//
-// To re-enable Resend later:
-// 1. Uncomment the Resend import and initialization
-// 2. Uncomment the resend.emails.send() block
-// 3. Comment out the Nodemailer transporter block
-// ============================================================================
-
-// import { Resend } from 'resend';
-// const resend = new Resend(process.env.RESEND_API_KEY);
-
-// ============================================================================
-// EMAIL PROVIDER: SMTP (Nodemailer) - ACTIVE
-// ============================================================================
-// Using Nodemailer with SMTP configuration from lib/smtp.js
-// Configure SMTP credentials in .env.local:
-//   SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM, SMTP_TO
-// ============================================================================
 import { transporter, getFromAddress, getToAddress } from '@/lib/smtp';
 
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const MAX_REQUESTS_PER_WINDOW = 3;
+const MAX_REQUESTS_PER_WINDOW = 5;
 
 export async function POST(request) {
   try {
@@ -46,30 +23,17 @@ export async function POST(request) {
       rateLimitMap.set(ip, recentRequests);
     }
 
-    const { name, email, phone, subject, message, honeypot } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { name, email, phone = "", subject = "Website Inquiry", message, honeypot } = body;
 
     if (honeypot) {
       return Response.json({ success: true, message: "Message sent successfully" });
     }
 
-    // ============================================================================
-    // EMAIL: Resend (DISABLED)
-    // ============================================================================
-    // const { data, error } = await resend.emails.send({
-    //   from: 'SA Thread & Accessories <onboarding@resend.dev>',
-    //   to: ['muntasiralamresti@gmail.com'],
-    //   reply_to: email,
-    //   subject: `New Contact Form Submission: ${subject}`,
-    //   html: `...`
-    // });
-    // ============================================================================
+    if (!name || !email || !message) {
+      return Response.json({ success: false, error: "Name, email and message are required." }, { status: 400 });
+    }
 
-    // ============================================================================
-    // EMAIL: SMTP via Nodemailer (ACTIVE)
-    // ============================================================================
-    // Sends contact form submission to site admin via SMTP
-    // Requires: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS in .env.local
-    // ============================================================================
     let emailSent = false;
     try {
       const mailOptions = {
@@ -114,7 +78,7 @@ export async function POST(request) {
                 </div>
                 <div class="field">
                   <span class="label">Phone Number</span>
-                  <p class="value">${phone}</p>
+                  <p class="value">${phone || "N/A"}</p>
                 </div>
                 <div class="field">
                   <span class="label">Subject</span>
@@ -138,22 +102,21 @@ export async function POST(request) {
       emailSent = true;
     } catch (emailError) {
       console.error("SMTP email send failed:", emailError);
-      // Continue to save to database even if email fails
     }
 
     await connectToDatabase();
     await ContactMessage.create({
       fullName: name,
       email,
-      phone,
-      subject,
+      phone: phone || "",
+      subject: subject || "Website Inquiry",
       message,
     });
 
     return Response.json({ 
       success: true, 
       data: { emailSent },
-      message: emailSent ? "Message sent successfully" : "Message saved but email notification failed. We will contact you soon."
+      message: emailSent ? "Message sent successfully" : "Message saved successfully."
     });
   } catch (error) {
     return Response.json({ success: false, error: error.message }, { status: 500 });

@@ -34,6 +34,8 @@ export async function POST(request) {
       return NextResponse.json({ error: "Bank name is required" }, { status: 400 });
     }
 
+    const logo = body.logo || body.image || "";
+
     const bank = await BankPartner.create({
       name: body.name,
       branch: body.branch || "",
@@ -41,6 +43,8 @@ export async function POST(request) {
       tel: body.tel || "",
       fax: body.fax || "",
       swift: body.swift || "",
+      logo: logo,
+      image: logo,
       displayOrder: body.displayOrder !== undefined ? Number(body.displayOrder) : 0,
       isActive: body.isActive !== undefined ? Boolean(body.isActive) : true,
     });

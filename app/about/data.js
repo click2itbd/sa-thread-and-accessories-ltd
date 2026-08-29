@@ -332,6 +332,7 @@ export const partnerBanks = [
     address: "House# 61/A, Road# 7, Sector# 4, Uttara Model Town, Dhaka 1230",
     tel: "16246, +880 96040 16246",
     swift: "EXBKBDDH",
+    logo: "/Bank/EXIM-Bank.png",
   },
   {
     name: "Mercantile Bank Ltd.",
@@ -340,6 +341,7 @@ export const partnerBanks = [
     tel: "48958177, 48955879, 8931725",
     fax: "88-02-48955881",
     swift: "MBLBBDH017",
+    logo: "/Bank/mercantile_bank.jpg",
   },
   {
     name: "Pubali Bank Ltd.",
@@ -347,6 +349,7 @@ export const partnerBanks = [
     address: "Chaina Town Bangladesh, 71 Kalameswar Road, Ward No. 35, Gazipur",
     tel: "01701-225530, 8809612824741",
     swift: "PUBABDDH",
+    logo: "/Bank/Pubali-Bank.jpg",
   },
 ];
 

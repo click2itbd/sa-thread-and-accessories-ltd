@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { Landmark } from "lucide-react";
 import { partnerBanks } from "../data";
 
 export default function AboutPartnerBank({ banks: dbBanks }) {
@@ -20,64 +22,73 @@ export default function AboutPartnerBank({ banks: dbBanks }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {activeBanks.map((bank, index) => (
-            <div
-              key={bank._id || index}
-              className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-4 sm:mb-5">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-5 h-5 sm:w-6 sm:h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path d="M12 2L2 7h20L12 2z" />
-                  <path d="M2 7l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                  <path d="M2 17l10 5 10-5" />
-                </svg>
-              </div>
+          {activeBanks.map((bank, index) => {
+            const logoUrl = bank.logo || bank.image;
+            return (
+              <div
+                key={bank._id || index}
+                className="bg-white rounded-2xl p-6 sm:p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              >
+                <div>
+                  {logoUrl ? (
+                    <div className="relative w-full h-24 sm:h-28 mb-5 rounded-xl bg-white border border-gray-100 flex items-center justify-center p-3 overflow-hidden shadow-xs">
+                      <Image
+                        src={logoUrl}
+                        alt={bank.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
+                        className="object-contain p-1"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-5">
+                      <Landmark className="w-7 h-7" />
+                    </div>
+                  )}
 
-              <h4 className="text-[16px] sm:text-[17px] font-bold text-gray-900 mb-2">
-                {bank.name}
-              </h4>
+                  <h4 className="text-[17px] sm:text-[18px] font-bold text-gray-900 mb-3">
+                    {bank.name}
+                  </h4>
 
-              <div className="space-y-2 text-[12px] sm:text-[13px] text-gray-600 leading-relaxed">
-                {bank.branch && (
-                  <p>
-                    <span className="font-semibold text-gray-700">Branch:</span>{" "}
-                    {bank.branch}
-                  </p>
-                )}
-                {bank.address && (
-                  <p>
-                    <span className="font-semibold text-gray-700">Address:</span>{" "}
-                    {bank.address}
-                  </p>
-                )}
-                {bank.tel && (
-                  <p>
-                    <span className="font-semibold text-gray-700">Tel:</span>{" "}
-                    {bank.tel}
-                  </p>
-                )}
-                {bank.fax && (
-                  <p>
-                    <span className="font-semibold text-gray-700">Fax:</span>{" "}
-                    {bank.fax}
-                  </p>
-                )}
+                  <div className="space-y-2 text-[12px] sm:text-[13px] text-gray-600 leading-relaxed">
+                    {bank.branch && (
+                      <p>
+                        <span className="font-semibold text-gray-700">Branch:</span>{" "}
+                        {bank.branch}
+                      </p>
+                    )}
+                    {bank.address && (
+                      <p>
+                        <span className="font-semibold text-gray-700">Address:</span>{" "}
+                        {bank.address}
+                      </p>
+                    )}
+                    {bank.tel && (
+                      <p>
+                        <span className="font-semibold text-gray-700">Tel:</span>{" "}
+                        {bank.tel}
+                      </p>
+                    )}
+                    {bank.fax && (
+                      <p>
+                        <span className="font-semibold text-gray-700">Fax:</span>{" "}
+                        {bank.fax}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
                 {bank.swift && (
-                  <p>
-                    <span className="font-semibold text-gray-700">SWIFT:</span>{" "}
-                    {bank.swift}
-                  </p>
+                  <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">SWIFT</span>
+                    <span className="text-[12px] font-mono font-bold text-primary bg-primary/5 px-2.5 py-0.5 rounded-md">
+                      {bank.swift}
+                    </span>
+                  </div>
                 )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
