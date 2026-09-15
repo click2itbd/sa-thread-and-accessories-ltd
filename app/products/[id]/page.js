@@ -315,14 +315,28 @@ export default async function ProductDetailPage({ params }) {
               {PRODUCT_MODAL_CONTENT.actions.back}
             </Button>
           </Link>
-          <Button variant="outline" className="w-full sm:w-auto justify-center">
-            <FileText className="w-4 h-4 mr-2" strokeWidth={2} />
-            {PRODUCT_MODAL_CONTENT.actions.requestSample}
-          </Button>
-          <Button variant="primary" className="w-full sm:w-auto justify-center">
-            {PRODUCT_MODAL_CONTENT.actions.getQuotation}
-            <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
-          </Button>
+          <Link
+            href={`/contact?subject=Sample+Request&product=${encodeURIComponent(product.name)}#contact-form`}
+          >
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+            >
+              <FileText className="w-4 h-4 mr-2" strokeWidth={2} />
+              {PRODUCT_MODAL_CONTENT.actions.requestSample}
+            </Button>
+          </Link>
+          <Link
+            href={`/contact?subject=${encodeURIComponent("Quotation / Pricing")}&product=${encodeURIComponent(product.name)}#contact-form`}
+          >
+            <Button
+              variant="primary"
+              className="w-full sm:w-auto justify-center cursor-pointer shadow-sm hover:shadow transition-all"
+            >
+              {PRODUCT_MODAL_CONTENT.actions.getQuotation}
+              <ArrowRight className="w-4 h-4 ml-2" strokeWidth={2} />
+            </Button>
+          </Link>
         </div>
       </div>
     </main>

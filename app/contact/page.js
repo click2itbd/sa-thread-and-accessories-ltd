@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
 import { CONTACT_PAGE_CONTENT, CONTACT_FORM_CONTENT } from "@/data/siteContent";
 import {
   ArrowRight,
@@ -17,8 +19,33 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
-import { useState } from "react";
 import Button from "@/app/components/Button";
+
+function ContactSearchParamsHandler({ setFormData }) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const subjectParam = searchParams.get("subject");
+    const productParam = searchParams.get("product");
+
+    if (subjectParam || productParam) {
+      setFormData((prev) => ({
+        ...prev,
+        subject: subjectParam || prev.subject || "Product Inquiry",
+        message: productParam
+          ? `Hello, I am inquiring about "${productParam}". Please provide details regarding availability, specifications, and ${subjectParam ? subjectParam.toLowerCase() : "inquiry"}.`
+          : prev.message,
+      }));
+
+      const el = document.getElementById("contact-form");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [searchParams, setFormData]);
+
+  return null;
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -95,6 +122,9 @@ export default function ContactPage() {
 
   return (
     <main className="bg-white">
+      <Suspense fallback={null}>
+        <ContactSearchParamsHandler setFormData={setFormData} />
+      </Suspense>
       {/* Hero */}
       <section className="relative overflow-visible bg-[#f7f9fc]">
         {/* Subtle wavy pattern — right */}
@@ -207,7 +237,7 @@ export default function ContactPage() {
 
       <div className="container mx-auto px-6 w-full pb-12 pt-16 md:pt-20 lg:pt-24">
         {/* Map and Form */}
-        <section className="flex flex-col lg:flex-row gap-6 mb-12">
+        <section id="contact-form" className="flex flex-col lg:flex-row gap-6 mb-12 scroll-mt-28">
           {/* Map Area */}
           <div className="flex-1 rounded-xl overflow-hidden relative min-h-[450px] border border-gray-200">
             {/* Real Google Maps embed – Gazipur Chowrasta, Bangladesh */}

@@ -335,6 +335,7 @@ export const CONTACT_FORM_CONTENT = {
     subjects: [
       "General Inquiry",
       "Product Inquiry",
+      "Sample Request",
       "Quotation / Pricing",
       "Order & Shipping",
       "Technical Support",
