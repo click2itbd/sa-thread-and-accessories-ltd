@@ -41,23 +41,25 @@ const INITIAL_BANKS = [
 export async function GET() {
   try {
     await connectToDatabase();
-    let banks = await BankPartner.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 });
+    let banks = await BankPartner.find({ isActive: true })
+      .sort({ displayOrder: 1, createdAt: 1 })
+      .lean();
 
     if (!banks || banks.length === 0) {
       await BankPartner.insertMany(INITIAL_BANKS);
-      banks = await BankPartner.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 });
-    } else {
-      // Sync default logos if missing on existing initial records
-      for (const initial of INITIAL_BANKS) {
-        const found = banks.find((b) => b.name === initial.name);
-        if (found && !found.logo && !found.image && initial.logo) {
-          await BankPartner.updateOne({ _id: found._id }, { $set: { logo: initial.logo } });
-        }
-      }
-      banks = await BankPartner.find({ isActive: true }).sort({ displayOrder: 1, createdAt: 1 });
+      banks = await BankPartner.find({ isActive: true })
+        .sort({ displayOrder: 1, createdAt: 1 })
+        .lean();
     }
 
-    return NextResponse.json({ banks });
+    return NextResponse.json(
+      { banks },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

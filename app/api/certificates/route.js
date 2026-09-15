@@ -8,14 +8,21 @@ export async function GET() {
   try {
     await connectToDatabase();
 
-    // Ensure only actual certification accreditations are fetched for the website
-    // (excluding any Company Profile doc)
     const certificates = await Certificate.find({
       isActive: true,
       title: { $not: /Company Profile/i },
-    }).sort({ displayOrder: 1, createdAt: -1 });
+    })
+      .sort({ displayOrder: 1, createdAt: -1 })
+      .lean();
 
-    return NextResponse.json({ certificates });
+    return NextResponse.json(
+      { certificates },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
