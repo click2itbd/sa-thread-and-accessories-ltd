@@ -1,10 +1,10 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/click2it/sa-thread.com.bd/
+    - export DEPLOYPATH=/home/sathread/sathread.com.bd/
+    - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R .next $DEPLOYPATH
     - /bin/cp -R public $DEPLOYPATH
-    - /bin/cp -R node_modules $DEPLOYPATH
     - /bin/cp package.json $DEPLOYPATH
     - /bin/cp server.js $DEPLOYPATH
     - /bin/cp next.config.mjs $DEPLOYPATH
