@@ -19,11 +19,13 @@ import AboutWhoWeAre from "./components/AboutWhoWeAre";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "About Us",
-  description:
-    "Learn about SA Thread & Accessories Ltd. — our 23-year history, our factory in Gazipur, and our dedicated team of professionals serving the garments industry.",
-};
+export async function generateMetadata() {
+  const years = new Date().getFullYear() - 2003;
+  return {
+    title: "About Us",
+    description: `Learn about SA Thread & Accessories Ltd. — our ${years}-year history, our factory in Gazipur, and our dedicated team of professionals serving the garments industry.`,
+  };
+}
 
 async function getAboutData() {
   try {

@@ -28,7 +28,7 @@ const DEPARTMENTS = [
 const EXPERIENCE_LEVELS = ["Fresher", "1-2 Years", "3-5 Years", "5+ Years"];
 
 const WHY_JOIN = [
-  "23+ years of stability in the garments accessories industry",
+  `${new Date().getFullYear() - 2003}+ years of stability in the garments accessories industry`,
   "150+ strong workforce across 7 specialized sections",
   "Supplying 20+ renowned garment factories nationwide",
   "100% Oeko-Tex certified, quality-first environment",

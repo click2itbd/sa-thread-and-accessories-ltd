@@ -1,6 +1,9 @@
 import Image from "next/image";
 
+const FOUNDED_YEAR = 2003;
+
 export default function AboutHero() {
+  const yearsExperience = new Date().getFullYear() - FOUNDED_YEAR;
   return (
     <section
       id="about"
@@ -31,7 +34,7 @@ export default function AboutHero() {
         </div>
 
         <h1 className="text-[32px] md:text-[36px] font-bold text-gray-900 leading-[1.15] mb-6">
-          A 23-year foundation in
+          A {yearsExperience}-year foundation in
           <br />
           garments accessories.
         </h1>

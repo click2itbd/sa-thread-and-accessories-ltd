@@ -1,8 +1,9 @@
-import React from "react";
+const FOUNDED_YEAR = 2003;
+const YEARS_EXPERIENCE = new Date().getFullYear() - FOUNDED_YEAR;
 
 export const stats = [
   {
-    value: "23+",
+    value: `${YEARS_EXPERIENCE}+`,
     label: "Years Experience",
     icon: (
       <>
