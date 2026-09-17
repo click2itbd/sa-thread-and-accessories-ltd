@@ -134,20 +134,40 @@ export default function ProductsPage() {
         </section>
 
         {/* Categories */}
-        <div className="inline-flex gap-4 mb-10 overflow-x-auto p-2 border-2 border-gray-400 rounded-[40px] items-center hide-scrollbar max-w-full">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`px-6 py-2.5 rounded-full border text-[14px] font-medium whitespace-nowrap transition-colors ${
-                activeCategory === cat
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-gray-600 border-border hover:border-gray-300"
-              }`}
-              onClick={() => setActiveCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="mb-10">
+          {/* Mobile: scrollable row */}
+          <div className="flex sm:hidden gap-2 overflow-x-auto pb-2 hide-scrollbar">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`flex-shrink-0 px-4 py-2 rounded-full border text-[13px] font-medium whitespace-nowrap transition-colors ${
+                  activeCategory === cat
+                    ? "bg-primary text-white border-primary"
+                    : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
+                }`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Desktop: pill container */}
+          <div className="hidden sm:inline-flex gap-3 overflow-x-auto p-2 border-2 border-gray-300 rounded-[40px] items-center hide-scrollbar max-w-full flex-wrap">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                className={`px-6 py-2.5 rounded-full border text-[14px] font-medium whitespace-nowrap transition-colors ${
+                  activeCategory === cat
+                    ? "bg-primary text-white border-primary"
+                    : "bg-white text-gray-600 border-border hover:border-gray-300"
+                }`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Products Grid */}
