@@ -3,9 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/sathread/sathread.com.bd/
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R .next $DEPLOYPATH
-    - /bin/cp -R public $DEPLOYPATH
-    - /bin/cp package.json $DEPLOYPATH
-    - /bin/cp server.js $DEPLOYPATH
-    - /bin/cp next.config.mjs $DEPLOYPATH
-    - /bin/cp .env $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
+    - /bin/cp -R .env $DEPLOYPATH
