@@ -1,26 +1,25 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
+const fs = require("fs");
+const path = require("path");
 
-const dev = process.env.NODE_ENV !== "production";
-const hostname = process.env.HOSTNAME || "localhost";
-const port = parseInt(process.env.PORT, 10) || 3000;
+// If running in standalone deploy directory
+const standaloneServer = path.join(__dirname, ".next", "standalone", "server.js");
+if (fs.existsSync(standaloneServer) && __filename !== standaloneServer) {
+  require(standaloneServer);
+} else {
+  const port = parseInt(process.env.PORT || "3000", 10);
+  const dev = process.env.NODE_ENV !== "production";
+  const app = next({ dev });
+  const handle = app.getRequestHandler();
 
-const app = next({ dev, hostname, port });
-const handle = app.getRequestHandler();
-
-app.prepare().then(() => {
-  createServer(async (req, res) => {
-    try {
+  app.prepare().then(() => {
+    createServer((req, res) => {
       const parsedUrl = parse(req.url, true);
-      await handle(req, res, parsedUrl);
-    } catch (err) {
-      console.error("Error occurred handling", req.url, err);
-      res.statusCode = 500;
-      res.end("Internal server error");
-    }
-  }).listen(port, (err) => {
-    if (err) throw err;
-    console.log(`> SA Thread & Accessories Server ready on port ${port}`);
+      handle(req, res, parsedUrl);
+    }).listen(port, () => {
+      console.log(`> Server ready on port ${port}`);
+    });
   });
-});
+}

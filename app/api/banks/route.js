@@ -61,6 +61,7 @@ export async function GET() {
       }
     );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Banks API using fallback data:", error.message);
+    return NextResponse.json({ banks: INITIAL_BANKS });
   }
 }

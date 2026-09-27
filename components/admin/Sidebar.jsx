@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LogOut, Users, LayoutDashboard, Award, Settings, Briefcase, Package, Mail, FileText, Building2, BookOpen, Landmark, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 export default function AdminSidebar({ onClose }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await fetch("/api/admin/auth/logout", { method: "POST" });
-    window.location.href = "/admin/login";
+    router.push("/admin/login");
   };
 
   const links = [

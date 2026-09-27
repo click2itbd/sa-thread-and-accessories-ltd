@@ -10,6 +10,7 @@ export async function GET() {
     const blogs = await Blog.find({ isPublished: true, isActive: true }).sort({ createdAt: -1 });
     return NextResponse.json({ blogs });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Blogs API offline fallback:", error.message);
+    return NextResponse.json({ blogs: [] });
   }
 }

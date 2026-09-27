@@ -2,11 +2,15 @@ import Application from '@/lib/models/Application';
 import connectToDatabase from '@/lib/mongoose';
 import ImageKit from "imagekit";
 
-const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-});
+function getImageKit() {
+  const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+  const urlEndpoint = process.env.IMAGEKIT_URL_ENDPOINT;
+  if (!publicKey || !privateKey || !urlEndpoint) {
+    return null;
+  }
+  return new ImageKit({ publicKey, privateKey, urlEndpoint });
+}
 
 // ============================================================================
 // EMAIL PROVIDER: Resend (DISABLED)
@@ -94,13 +98,19 @@ export async function POST(request) {
       const bytes = await resume.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const uploadResult = await imagekit.upload({
-        file: buffer,
-        fileName: resume.name || `resume-${Date.now()}`,
-        folder: "sathread/applications",
-      });
-
-      cvFileUrl = uploadResult.url;
+      const imagekit = getImageKit();
+      if (imagekit) {
+        try {
+          const uploadResult = await imagekit.upload({
+            file: buffer,
+            fileName: resume.name || `resume-${Date.now()}`,
+            folder: "sathread/applications",
+          });
+          cvFileUrl = uploadResult.url;
+        } catch (uploadErr) {
+          console.warn("ImageKit upload failed:", uploadErr.message);
+        }
+      }
 
       const base64Content = Buffer.from(bytes).toString("base64");
       attachments.push({

@@ -8,17 +8,19 @@ export const dynamic = "force-dynamic";
 export default async function AdminEditProductPage({ params }) {
   const { id } = await params;
 
+  let product = null;
   try {
     await connectToDatabase();
-    const product = await Product.findById(id).lean();
-    if (!product) return notFound();
-
-    return (
-      <div className="p-8">
-        <AdminProductsClient initialEdit={JSON.parse(JSON.stringify(product))} />
-      </div>
-    );
+    product = await Product.findById(id).lean();
   } catch {
     return notFound();
   }
+
+  if (!product) return notFound();
+
+  return (
+    <div className="p-8">
+      <AdminProductsClient initialEdit={JSON.parse(JSON.stringify(product))} />
+    </div>
+  );
 }

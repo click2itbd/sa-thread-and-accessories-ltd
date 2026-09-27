@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Certificate from "@/lib/models/Certificate";
 import connectToDatabase from "@/lib/mongoose";
+import { certifications } from "@/app/about/data";
 
 export const dynamic = "force-dynamic";
 
@@ -8,7 +9,7 @@ export async function GET() {
   try {
     await connectToDatabase();
 
-    const certificates = await Certificate.find({
+    const dbCerts = await Certificate.find({
       isActive: true,
       title: { $not: /Company Profile/i },
     })
@@ -16,7 +17,7 @@ export async function GET() {
       .lean();
 
     return NextResponse.json(
-      { certificates },
+      { certificates: dbCerts?.length ? dbCerts : certifications },
       {
         headers: {
           "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
@@ -24,6 +25,7 @@ export async function GET() {
       }
     );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Certificates API using fallback data:", error.message);
+    return NextResponse.json({ certificates: certifications });
   }
 }

@@ -37,11 +37,6 @@ export default function Home() {
   const [clients, setClients] = useState(getFallbackClients);
   const [products, setProducts] = useState(getFallbackProducts);
 
-  useEffect(() => {
-    fetchClients();
-    fetchProducts();
-  }, []);
-
   const fetchClients = async () => {
     try {
       const res = await fetch("/api/clients");
@@ -51,7 +46,7 @@ export default function Home() {
       } else {
         setClients(getFallbackClients());
       }
-    } catch (error) {
+    } catch {
       setClients(getFallbackClients());
     }
   };
@@ -69,10 +64,15 @@ export default function Home() {
       } else {
         setProducts(getFallbackProducts());
       }
-    } catch (error) {
+    } catch {
       setProducts(getFallbackProducts());
     }
   };
+
+  useEffect(() => {
+    fetchClients();
+    fetchProducts();
+  }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % HOME_HERO_SLIDES.length);

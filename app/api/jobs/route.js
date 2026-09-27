@@ -10,6 +10,7 @@ export async function GET() {
     const jobs = await JobPost.find({ status: "Open", isActive: true }).sort({ createdAt: -1 });
     return NextResponse.json({ jobs });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Jobs API offline fallback:", error.message);
+    return NextResponse.json({ jobs: [] });
   }
 }

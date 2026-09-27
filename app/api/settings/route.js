@@ -43,6 +43,16 @@ export async function GET() {
     }
     return NextResponse.json({ settings });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Settings API using fallback defaults:", error.message);
+    return NextResponse.json({
+      settings: {
+        companyName: "SA THREAD & ACCESSORIES LTD.",
+        tagline: "Garments Accessories Manufacturer & Supplier.",
+        email: "sathread@gmail.com",
+        phoneNumber: "+8801971170961",
+        address: "271/1, Gacha Road, Gacha, Gazipur-1704, Bangladesh",
+        ...DEFAULTS,
+      },
+    });
   }
 }

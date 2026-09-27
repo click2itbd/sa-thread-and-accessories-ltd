@@ -54,10 +54,6 @@ export default function CareersPage() {
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
 
-  useEffect(() => {
-    fetchJobs();
-  }, []);
-
   const fetchJobs = async () => {
     try {
       const res = await fetch("/api/jobs");
@@ -71,6 +67,10 @@ export default function CareersPage() {
       setLoadingJobs(false);
     }
   };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   const handleJobSelect = (job) => {
     setSelectedJob(job);

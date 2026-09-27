@@ -2,11 +2,15 @@ import { NextResponse } from "next/server";
 import ImageKit from "imagekit";
 import { getAdminFromRequest } from "@/lib/adminAuth";
 
-const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-});
+function getImageKit() {
+  const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+  const urlEndpoint = process.env.IMAGEKIT_URL_ENDPOINT;
+  if (!publicKey || !privateKey || !urlEndpoint) {
+    return null;
+  }
+  return new ImageKit({ publicKey, privateKey, urlEndpoint });
+}
 
 export async function POST(request) {
   try {
@@ -20,6 +24,14 @@ export async function POST(request) {
 
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const imagekit = getImageKit();
+    if (!imagekit) {
+      return NextResponse.json(
+        { error: "ImageKit credentials not configured in environment" },
+        { status: 500 }
+      );
     }
 
     const bytes = await file.arrayBuffer();

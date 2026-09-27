@@ -40,10 +40,6 @@ const nextConfig = {
         source: "/(.*)",
         headers: [
           {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
@@ -71,7 +67,6 @@ const nextConfig = {
               "img-src 'self' data: blob: https://*.openstreetmap.org https://*.tile.openstreetmap.org https://ik.imagekit.io",
               "connect-src 'self' https://api.imagekit.io https://upload.imagekit.io",
               "frame-src https://www.openstreetmap.org https://maps.google.com https://www.google.com",
-              "frame-ancestors 'self'",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

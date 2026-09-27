@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import TeamMember from "@/lib/models/TeamMember";
 import connectToDatabase from "@/lib/mongoose";
+import { teamMembers } from "@/app/about/data";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ export async function GET() {
       .lean();
 
     return NextResponse.json(
-      { members },
+      { members: members?.length ? members : teamMembers },
       {
         headers: {
           "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
@@ -20,6 +21,7 @@ export async function GET() {
       }
     );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.warn("Team API using fallback data:", error.message);
+    return NextResponse.json({ members: teamMembers });
   }
 }
