@@ -1,7 +1,13 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/sathread/sathread.com.bd/
-    - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp -R .env $DEPLOYPATH
+    - export PATH=/opt/alt/alt-nodejs22/root/usr/bin:$PATH
+    - npm ci
+    - npx cross-env NEXT_PRIVATE_STANDALONE=true next build
+    - mkdir -p /home/sathread/sa-thread-app
+    - /bin/cp -a .next/standalone/. /home/sathread/sa-thread-app/
+    - /bin/cp -a public /home/sathread/sa-thread-app/
+    - mkdir -p /home/sathread/sa-thread-app/.next
+    - /bin/cp -a .next/static /home/sathread/sa-thread-app/.next/
+    - mkdir -p /home/sathread/sa-thread-app/tmp
+    - touch /home/sathread/sa-thread-app/tmp/restart.txt

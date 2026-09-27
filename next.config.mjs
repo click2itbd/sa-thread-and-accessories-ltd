@@ -5,6 +5,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
 
+  serverExternalPackages: ["mongoose"],
   experimental: {
     optimizePackageImports: ["lucide-react", "react-icons"],
   },
