@@ -1,17 +1,23 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  output: 'standalone',
+  output: "standalone",
+
   reactCompiler: true,
+
   compress: true,
+
   poweredByHeader: false,
 
   serverExternalPackages: ["mongoose"],
+
   experimental: {
     optimizePackageImports: ["lucide-react", "react-icons"],
   },
 
   images: {
     formats: ["image/avif", "image/webp"],
+
     remotePatterns: [
       {
         protocol: "https",
@@ -28,11 +34,9 @@ const nextConfig = {
     ],
   },
 
-  // ── HTTP Security & Caching Headers ─────────────────────────────────────────
   async headers() {
     return [
       {
-        // Global security headers
         source: "/(.*)",
         headers: [
           {
@@ -49,11 +53,13 @@ const nextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), payment=()",
+            value:
+              "camera=(), microphone=(), geolocation=(), payment=()",
           },
           {
             key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
+            value:
+              "max-age=63072000; includeSubDomains; preload",
           },
           {
             key: "Content-Security-Policy",
@@ -73,13 +79,15 @@ const nextConfig = {
           },
         ],
       },
+
       {
-        // Public images & documents caching
-        source: "/(images|Bank|Clients|Certificates|Employee Photograph|Products)/(.*)",
+        source:
+          "/(images|Bank|Clients|Certificates|Employee Photograph|Products)/(.*)",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=86400, stale-while-revalidate=604800",
+            value:
+              "public, max-age=86400, stale-while-revalidate=604800",
           },
         ],
       },
@@ -88,4 +96,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
