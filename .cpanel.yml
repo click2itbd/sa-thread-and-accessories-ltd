@@ -1,6 +1,9 @@
 ---
 deployment:
   tasks:
+    - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
+    - npm ci
+    - npx cross-env NEXT_PRIVATE_STANDALONE=true npm run build
     - mkdir -p /home/sathread/sa-thread-app
     - /bin/cp -a .next/standalone/. /home/sathread/sa-thread-app/
     - /bin/cp -a public /home/sathread/sa-thread-app/

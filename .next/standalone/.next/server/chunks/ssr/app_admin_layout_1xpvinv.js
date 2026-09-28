@@ -1,3 +1,0 @@
-module.exports=[65258,a=>{"use strict";a.s(["default",()=>b]);let b=(0,a.i(11857).registerClientReference)(function(){throw Error("Attempted to call the default export of [project]/app/admin/layout.js from the server, but it's on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.")},"[project]/app/admin/layout.js","default")},35852,a=>{"use strict";var b=a.i(65258);a.n(b)},72966,function(a){a.n(a.i(35852))}];
-
-//# sourceMappingURL=app_admin_layout_1xpvinv.js.map
