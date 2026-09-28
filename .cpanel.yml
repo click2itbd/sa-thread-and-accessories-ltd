@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
-    - npm ci
+    - npm install
     - npm run build
 
     - /bin/mkdir -p /home/sathread/sa-thread-app
