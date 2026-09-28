@@ -1,0 +1,3 @@
+module.exports=[62726,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)(b.Fragment,{children:a})},"metadata",0,{title:"Career Opportunities",description:"Join the team at SA Thread & Accessories Ltd. Explore current job openings in factory management, sewing thread, elastic production, and corporate departments.",keywords:["SA Thread careers","garments accessories jobs Bangladesh","textile factory jobs Gazipur"],openGraph:{title:"Careers | SA Thread & Accessories Ltd.",description:"Build your career with a leading garments accessories manufacturer in Bangladesh.",url:"https://www.sathread.com.bd/careers"}}])},35348,function(a){a.n(a.i(62726))}];
+
+//# sourceMappingURL=app_careers_layout_0tpftq3.js.map

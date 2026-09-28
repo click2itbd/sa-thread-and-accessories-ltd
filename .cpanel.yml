@@ -1,32 +1,10 @@
 ---
 deployment:
   tasks:
-    # Node.js 22
-    - export PATH=/opt/alt/alt-nodejs22/root/usr/bin:$PATH
-
-    # Install production dependencies from package-lock.json
-    - npm ci
-
-    # Build Next.js using Webpack
-    - npm run build
-
-    # Production application directory
-    - export DEPLOYPATH=/home/sathread/sa-thread-app
-
-    # Create production directory
-    - /bin/mkdir -p $DEPLOYPATH
-
-    # Copy Next.js standalone output
-    - /bin/cp -a .next/standalone/. $DEPLOYPATH/
-
-    # Copy public assets
-    - /bin/mkdir -p $DEPLOYPATH/public
-    - /bin/cp -a public/. $DEPLOYPATH/public/
-
-    # Copy Next.js static assets
-    - /bin/mkdir -p $DEPLOYPATH/.next/static
-    - /bin/cp -a .next/static/. $DEPLOYPATH/.next/static/
-
-    # Passenger restart
-    - /bin/mkdir -p $DEPLOYPATH/tmp
-    - /bin/touch $DEPLOYPATH/tmp/restart.txt
+    - mkdir -p /home/sathread/sa-thread-app
+    - /bin/cp -a .next/standalone/. /home/sathread/sa-thread-app/
+    - /bin/cp -a public /home/sathread/sa-thread-app/
+    - mkdir -p /home/sathread/sa-thread-app/.next
+    - /bin/cp -a .next/static /home/sathread/sa-thread-app/.next/
+    - mkdir -p /home/sathread/sa-thread-app/tmp
+    - touch /home/sathread/sa-thread-app/tmp/restart.txt
