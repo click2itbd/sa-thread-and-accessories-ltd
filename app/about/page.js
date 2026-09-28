@@ -31,7 +31,7 @@ async function getAboutData() {
   try {
     await connectToDatabase();
     const [teamMembers, certificates, settings, banks] = await Promise.all([
-      TeamMember.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: 1 }).lean(),
+      TeamMember.find({ isActive: { $ne: false } }).sort({ displayOrder: 1, createdAt: 1 }).lean(),
       Certificate.find({ isActive: { $ne: false } }).sort({ order: 1, createdAt: -1 }).lean(),
       CompanySettings.findOne({}).lean(),
       BankPartner.find({ isActive: { $ne: false } }).sort({ displayOrder: 1, createdAt: 1 }).lean(),

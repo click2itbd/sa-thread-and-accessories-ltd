@@ -9,7 +9,7 @@ export async function GET() {
   try {
     await connectToDatabase();
     const members = await TeamMember.find({ isActive: { $ne: false } })
-      .sort({ order: 1, createdAt: 1 })
+      .sort({ displayOrder: 1, createdAt: 1 })
       .lean();
 
     return NextResponse.json(
