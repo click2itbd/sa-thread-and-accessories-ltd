@@ -36,18 +36,18 @@ export const HOME_HERO_SLIDES = [
 
 // Real clients as listed in the Company Profile (About Us section)
 export const TRUSTED_BRANDS = [
-  { name: "TRZ Group", src: "/Clients/trz-group.jpg" },
-  { name: "Eurozone Group", src: "/Clients/Eurozone.jpg" },
+  { name: "TRZ Group", src: "./clients/trz-group.jpg" },
+  { name: "Eurozone Group", src: "./clients/eurozone.jpg" },
   {
     name: "Sinha Knit & Denims Ltd.",
-    src: "/Clients/Sinha-Knit-&-Denims-ltd.png",
+    src: "./clients/sinha-knit-&-denims-ltd.png",
   },
-  { name: "M.M Knitwear", src: "/Clients/m_m_knitwear_ltd_logo.jpg" },
-  { name: "AZ Composite Ltd.", src: "/Clients/AZ-Composite.png" },
-  { name: "Aba Group", src: "/Clients/ABA-Fashion.png" },
-  { name: "Day Group", src: "/Clients/Day-Group.jpg" },
-  { name: "Saturn Textile Ltd", src: "/Clients/Saturn.png" },
-  { name: "Alfa Patterns ltd", src: "/Clients/alpha_dies_and_pattern_logo.jpg" },
+  { name: "M.M Knitwear", src: "./clients/m_m_knitwear_ltd_logo.jpg" },
+  { name: "AZ Composite Ltd.", src: "/clients/az-composite.png" },
+  { name: "Aba Group", src: "./clients/aba-fashion.png" },
+  { name: "Day Group", src: "/clients/day-group.jpg" },
+  { name: "Saturn Textile Ltd", src: "./clients/saturn.png" },
+  { name: "Alfa Patterns ltd", src: "./clients/alpha_dies_and_pattern_logo.jpg" },
 ];
 
 // categories with the company's real product lines (see "Our Products" slide in PDF).
