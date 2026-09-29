@@ -42,3 +42,7 @@ next-env.d.ts
 
 # cpanel deployment artifacts
 cpanel-deploy.zip
+
+# Allow Next.js standalone build for cPanel deployment
+!.next/standalone
+!.next/static

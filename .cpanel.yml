@@ -3,7 +3,6 @@ deployment:
   tasks:
     - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
     - npm install --production
-    - npm run build
 
     - /bin/mkdir -p /home/sathread/sathread.com.bd
 
