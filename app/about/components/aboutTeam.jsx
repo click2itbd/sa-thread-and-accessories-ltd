@@ -89,16 +89,20 @@ export default function AboutTeam({ members: propMembers }) {
         </div>
 
         {/* Tab Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-          <div className="flex flex-wrap gap-2 bg-white p-1 rounded-xl shadow-sm border border-gray-100">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 overflow-hidden">
+          <style dangerouslySetInnerHTML={{__html: `
+            .hide-scrollbar::-webkit-scrollbar { display: none; }
+            .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+          `}} />
+          <div className="flex overflow-x-auto hide-scrollbar gap-1 bg-white p-1 rounded-xl shadow-sm border border-gray-100 w-full md:w-auto">
             {["All Members", ...teamTabs].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 rounded-lg text-[13px] font-semibold transition-all duration-200 ${
+                className={`whitespace-nowrap shrink-0 px-5 py-2 rounded-lg text-[13px] font-semibold transition-all duration-200 ${
                   activeTab === tab
                     ? "bg-primary text-white shadow-md"
-                    : "bg-transparent text-gray-500 hover:text-gray-800"
+                    : "bg-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-50"
                 }`}
               >
                 {tab}
