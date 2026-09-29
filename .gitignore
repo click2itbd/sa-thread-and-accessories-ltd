@@ -14,7 +14,9 @@
 /coverage
 
 # next.js
-/.next/
+/.next/*
+!/.next/standalone
+!/.next/static
 /out/
 
 # production
@@ -42,10 +44,3 @@ next-env.d.ts
 
 # cpanel deployment artifacts
 cpanel-deploy.zip
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
