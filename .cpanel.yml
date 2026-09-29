@@ -10,9 +10,13 @@ deployment:
     - /bin/mkdir -p /home/sathread/sathread.com.bd/public
     - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
 
-    # Next static files
+    # Next static files (For Node.js internal routing)
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
     - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
+
+    # Next static files (For Apache direct serving - FIXES 404 ERRORS)
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/_next/static
+    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/_next/static/
 
     # Fix image cache directory permissions
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/cache/images
