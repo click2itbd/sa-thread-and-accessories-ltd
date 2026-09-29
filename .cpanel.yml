@@ -7,5 +7,7 @@ deployment:
     - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
     - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/_next/static
+    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/_next/static/
     - /bin/mkdir -p /home/sathread/sathread.com.bd/tmp
     - /bin/touch /home/sathread/sathread.com.bd/tmp/restart.txt
