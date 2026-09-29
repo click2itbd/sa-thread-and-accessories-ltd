@@ -1,24 +1,11 @@
 ---
 deployment:
   tasks:
-    # 1. Next.js standalone mode requires the 'public' and '.next/static' folders to be 
-    # placed INSIDE the '.next/standalone' folder for the server.js to find them.
-    - /bin/mkdir -p .next/standalone/public
-    - /bin/cp -a public/. .next/standalone/public/
-    
-    - /bin/mkdir -p .next/standalone/.next/static
-    - /bin/cp -a .next/static/. .next/standalone/.next/static/
-
-    # 2. To allow Apache to serve files directly (fixes cPanel 404/MIME bugs), 
-    # we also copy the static folder to the root '_next/static' folder.
-    - /bin/mkdir -p _next/static
-    - /bin/cp -a .next/static/. _next/static/
-    
-    # 3. Create cache folder for images
-    - /bin/mkdir -p .next/standalone/.next/cache/images
-    - /bin/chmod -R 755 .next/standalone/.next/cache
-    - /bin/chmod -R 755 .next/cache
-
-    # 4. Restart Passenger Node.js app
-    - /bin/mkdir -p tmp
-    - /bin/touch tmp/restart.txt
+    - /bin/mkdir -p /home/sathread/sathread.com.bd
+    - /bin/cp -a .next/standalone/. /home/sathread/sathread.com.bd/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/public
+    - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
+    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/tmp
+    - /bin/touch /home/sathread/sathread.com.bd/tmp/restart.txt
