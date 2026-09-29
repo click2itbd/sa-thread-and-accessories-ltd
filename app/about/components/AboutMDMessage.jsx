@@ -9,7 +9,7 @@ export default function AboutMDMessage() {
       {/* Illustration — fills the right side and bleeds off the edge, as in the design */}
       <div className="hidden lg:block absolute inset-y-0 right-0 w-[52%] pointer-events-none">
         <Image
-          src="/mdmessage.png"
+          src="https://ik.imagekit.io/munTasIr/SAThread/mdmessage.png?updatedAt=1790675594550"
           alt="Team collaborating around a table"
           fill
           sizes="52vw"
@@ -41,7 +41,7 @@ export default function AboutMDMessage() {
         <div className="lg:hidden mt-12 flex justify-center">
           <div className="relative w-full max-w-[420px] aspect-square">
             <Image
-              src="/mdmessage.png"
+              src="https://ik.imagekit.io/munTasIr/SAThread/mdmessage.png?updatedAt=1790675594550"
               alt="Team collaborating around a table"
               fill
               sizes="(max-width: 768px) 100vw, 420px"
