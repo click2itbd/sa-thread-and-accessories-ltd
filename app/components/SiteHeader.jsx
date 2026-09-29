@@ -7,7 +7,7 @@ import PageTransition from "./PageTransition";
 
 export default function SiteHeader({ children }) {
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith("/admin");
+  const isAdmin = pathname?.startsWith("/admin");
 
   return (
     <>

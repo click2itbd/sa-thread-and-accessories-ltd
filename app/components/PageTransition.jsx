@@ -19,11 +19,13 @@ export default function PageTransition({ children }) {
     }, []);
 
     return (
-        <div style={{
+        <div 
+          className="flex-1 flex flex-col"
+          style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(16px)",
             transition: "opacity 0.35s ease, transform 0.35s ease",
-            }}>
+          }}>
         {children}</div>
     );
 }
