@@ -1,13 +1,32 @@
 ---
 deployment:
   tasks:
+    # cPanel Node.js 22
+    - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
+
+    # Install dependencies
+    - npm ci
+
+    # Fresh production build
+    - npm run build
+
+    # Remove previous deployment files
+    - /bin/rm -rf /home/sathread/sathread.com.bd/.next
+    - /bin/rm -rf /home/sathread/sathread.com.bd/node_modules
+    - /bin/rm -rf /home/sathread/sathread.com.bd/public
+
+    # Deploy Next.js standalone
     - /bin/mkdir -p /home/sathread/sathread.com.bd
     - /bin/cp -a .next/standalone/. /home/sathread/sathread.com.bd/
-    - /bin/mkdir -p /home/sathread/sathread.com.bd/public
-    - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
+
+    # Deploy Next.js static assets
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
     - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
-    - /bin/mkdir -p /home/sathread/sathread.com.bd/_next/static
-    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/_next/static/
+
+    # Deploy public assets
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/public
+    - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
+
+    # Restart Passenger
     - /bin/mkdir -p /home/sathread/sathread.com.bd/tmp
     - /bin/touch /home/sathread/sathread.com.bd/tmp/restart.txt
