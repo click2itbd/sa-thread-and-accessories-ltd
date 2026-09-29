@@ -1,9 +1,6 @@
 ---
 deployment:
   tasks:
-    - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
-    - npm install --production
-
     - /bin/mkdir -p /home/sathread/sathread.com.bd
 
     # Next.js standalone application
