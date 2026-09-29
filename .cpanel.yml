@@ -2,24 +2,22 @@
 deployment:
   tasks:
     - export PATH=/opt/cpanel/ea-nodejs22/bin:$PATH
-    - npm install
+    - npm install --production
     - npm run build
 
-    - /bin/mkdir -p /home/sathread/sa-thread-app
+    - /bin/mkdir -p /home/sathread/sathread.com.bd
 
     # Next.js standalone application
-    - /bin/cp -a .next/standalone/. /home/sathread/sa-thread-app/
+    - /bin/cp -a .next/standalone/. /home/sathread/sathread.com.bd/
 
     # Public files
-    - /bin/mkdir -p /home/sathread/sa-thread-app/public
-    - /bin/cp -a public/. /home/sathread/sa-thread-app/public/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/public
+    - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
 
     # Next static files
-    - /bin/mkdir -p /home/sathread/sa-thread-app/.next/static
-    - /bin/cp -a .next/static/. /home/sathread/sa-thread-app/.next/static/
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
+    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
 
     # Passenger restart
-    - /bin/mkdir -p /home/sathread/sa-thread-app/tmp
-    - /bin/touch /home/sathread/sa-thread-app/tmp/restart.txt
-
-    
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/tmp
+    - /bin/touch /home/sathread/sathread.com.bd/tmp/restart.txt
