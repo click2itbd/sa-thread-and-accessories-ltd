@@ -10,11 +10,14 @@ deployment:
     - /bin/mkdir -p /home/sathread/sathread.com.bd/public
     - /bin/cp -a public/. /home/sathread/sathread.com.bd/public/
 
-    # Next static files
-    - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
-    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
+    # Next static files (renamed to next_static to bypass Apache hidden file rules)
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/next_static
+    - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/next_static/
 
-    # Fix image cache directory permissions (prevents EACCES errors)
+    # Copy .htaccess to route static files correctly
+    - /bin/cp -a .htaccess /home/sathread/sathread.com.bd/.htaccess
+
+    # Fix image cache directory permissions
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/cache/images
     - /bin/chmod -R 755 /home/sathread/sathread.com.bd/.next/cache
 
