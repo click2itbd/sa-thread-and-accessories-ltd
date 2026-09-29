@@ -18,6 +18,10 @@ deployment:
     - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/static
     - /bin/cp -a .next/static/. /home/sathread/sathread.com.bd/.next/static/
 
+    # Fix image cache directory permissions (prevents EACCES errors)
+    - /bin/mkdir -p /home/sathread/sathread.com.bd/.next/cache/images
+    - /bin/chmod -R 755 /home/sathread/sathread.com.bd/.next/cache
+
     # Passenger restart
     - /bin/mkdir -p /home/sathread/sathread.com.bd/tmp
     - /bin/touch /home/sathread/sathread.com.bd/tmp/restart.txt

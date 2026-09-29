@@ -17,7 +17,7 @@ import AboutTeam from "./components/aboutTeam";
 import AboutValues from "./components/AboutValues";
 import AboutWhoWeAre from "./components/AboutWhoWeAre";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata() {
   const years = new Date().getFullYear() - 2003;

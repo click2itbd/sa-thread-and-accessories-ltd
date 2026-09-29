@@ -61,17 +61,17 @@ export const directors = [
     name: "Mohammed Shahidul Islam",
     role: "Managing Director",
     image:
-      "/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg",
+      "https://ik.imagekit.io/munTasIr/sathread/admin/Mohammed_Shahidul_Islam-_Managing_Director_FVRvB_PY6K.jpg?updatedAt=1790676768507",
   },
   {
     name: "Sultana Parvin",
     role: "Chairman",
-    image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
+    image: "https://ik.imagekit.io/munTasIr/sathread/admin/Sultana_Parvin_-_Chairman_bqcYf4r7D.jpg?updatedAt=1790675761368",
   },
   {
     name: "Asif Abdullah",
     role: "Executive Director",
-    image: "/Employee Photograph/Asif Abdullah- Executive Director.jpg",
+    image: "https://ik.imagekit.io/munTasIr/sathread/admin/Asif_Abdullah-_Executive_Director_BSWrvEAOA.jpg?updatedAt=1790676781505",
   },
 ];
 
@@ -116,12 +116,12 @@ export const certifications = [
   {
     abbr: "OEKO-TEX",
     sub: "STANDARD\n100",
-    image: "/Certificates/Oeko_Tex.webp",
+    image: "https://ik.imagekit.io/munTasIr/SAThread/Certificates/Oeko_Tex.webp?updatedAt=1790675560531",
   },
   {
     abbr: "BGAPMEA",
     sub: "Membership\n#593",
-    image: "/Certificates/BGAPMEA-logo-.webp",
+    image: "https://ik.imagekit.io/munTasIr/SAThread/Certificates/BGAPMEA-logo-.webp?updatedAt=1790675559026",
     scale: 1.5,
   },
 ];
@@ -138,7 +138,7 @@ export const teamMembers = [
     name: "Sultana Parvin",
     role: "Chairman",
     dept: "Management",
-    image: "/Employee Photograph/Sultana Parvin - Chairman.jpg",
+    image: "https://ik.imagekit.io/munTasIr/sathread/admin/Sultana_Parvin-_Chairman_8V9Xz_PY6K.jpg?updatedAt=1790676768507",
     location: "Gazipur, Bangladesh",
     about:
       "As Chairman of SA Thread & Accessories Ltd., Sultana Parvin provides strategic oversight and guidance, helping steer the company's long-term vision since its founding in 2003.",
@@ -160,7 +160,7 @@ export const teamMembers = [
     role: "Managing Director",
     dept: "Management",
     image:
-      "/Employee Photograph/Mohammed Shahidul Islam- Managing Director.jpg",
+      "https://ik.imagekit.io/munTasIr/sathread/admin/Mohammed_Shahidul_Islam-_Managing_Director_FVRvB_PY6K.jpg?updatedAt=1790676768507",
     email: "sathread@gmail.com",
     phone: "+8801755504035",
     location: "Gazipur, Bangladesh",

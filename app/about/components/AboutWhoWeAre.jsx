@@ -7,7 +7,7 @@ export default function AboutWhoWeAre() {
       {/* Background photo — spans the FULL section, including behind the text */}
       <div className="absolute inset-0">
         <Image
-          src="/sewing-section2.jpg"
+          src="https://ik.imagekit.io/munTasIr/SAThread/sewing-section2.jpg?updatedAt=1790675608338"
           alt="SA Thread Factory Interior"
           fill
           sizes="100vw"

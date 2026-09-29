@@ -50,7 +50,7 @@ const stats = [
 import connectToDatabase from "@/lib/mongoose";
 import Blog from "@/lib/models/Blog";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 async function getBlogs() {
   try {
@@ -90,7 +90,7 @@ export default async function CSRPage() {
             <div className="relative flex justify-center lg:justify-end">
               <div className="w-[260px] h-[260px] md:w-[340px] md:h-[340px] rounded-full overflow-hidden border-4 border-primary/20 shadow-xl relative">
                 <Image
-                  src="/CSR.jpeg"
+                  src="https://ik.imagekit.io/munTasIr/SAThread/CSR.jpeg?updatedAt=1790675577104"
                   alt="Woven with purpose - sustainable thread manufacturing"
                   fill
                   sizes="(max-width: 768px) 260px, 340px"

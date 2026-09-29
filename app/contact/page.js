@@ -237,7 +237,10 @@ export default function ContactPage() {
 
       <div className="container mx-auto px-6 w-full pb-12 pt-16 md:pt-20 lg:pt-24">
         {/* Map and Form */}
-        <section id="contact-form" className="flex flex-col lg:flex-row gap-6 mb-12 scroll-mt-28">
+        <section
+          id="contact-form"
+          className="flex flex-col lg:flex-row gap-6 mb-12 scroll-mt-28"
+        >
           {/* Map Area */}
           <div className="flex-1 rounded-xl overflow-hidden relative min-h-[450px] border border-gray-200">
             {/* Real Google Maps embed – Gazipur Chowrasta, Bangladesh */}

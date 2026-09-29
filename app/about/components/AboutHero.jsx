@@ -11,7 +11,7 @@ export default function AboutHero() {
     >
       <div className="absolute inset-0">
         <Image
-          src="/elastic-section.jpg"
+          src="https://ik.imagekit.io/munTasIr/SAThread/elastic-section.jpg?updatedAt=1790675582394"
           alt="S A Thread & Accessories Ltd. building"
           fill
           sizes="100vw"

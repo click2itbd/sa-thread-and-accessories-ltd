@@ -6,7 +6,7 @@ export const HOME_HERO_SLIDES = [
     title2: "Partner Since 2003",
     description:
       "Supplying premium sewing thread, elastic, twill tape and drawstring solutions to Bangladesh's leading garment manufacturers since 2003.",
-    image: "/yarn.png", // Premium product showcase
+    image: "https://ik.imagekit.io/munTasIr/SAThread/yarn.jpg?updatedAt=1790675609813", 
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ export const HOME_HERO_SLIDES = [
     title2: "We've Got It Covered.",
     description:
       "Specialized in Sewing Thread, Elastic, Twill Tape, Drawstring and Elastic Cord with consistent quality and reliable supply.",
-    image: "/drawsting.png", // All product categories displayed together
+    image: "https://ik.imagekit.io/munTasIr/SAThread/drawsting.png?updatedAt=1790675579758", 
   },
   {
     id: 3,
@@ -22,7 +22,7 @@ export const HOME_HERO_SLIDES = [
     title2: "Manufacturing",
     description:
       "Monthly production capacity of 468,000 sewing thread cones, 3.8 million yards of elastic, and millions of yards of garment accessories.",
-    image: "/sathread.webp", // Factory + machinery + production line
+    image: "https://ik.imagekit.io/munTasIr/SAThread/sathread.webp?updatedAt=1790675605097", // Factory + machinery + production line
   },
   {
     id: 4,
@@ -30,7 +30,7 @@ export const HOME_HERO_SLIDES = [
     title2: "Certified Quality",
     description:
       "Serving 20+ renowned garment factories with internationally certified products and sustainable manufacturing practices.",
-    image: "/Certificates/Oeko_Tex.webp", // OEKO-TEX certificate, quality inspection, client trust imagery
+    image: "https://ik.imagekit.io/munTasIr/SAThread/Certificates/Oeko_Tex.webp?updatedAt=1790675560531", // OEKO-TEX certificate, quality inspection, client trust imagery
   },
 ];
 
@@ -92,7 +92,7 @@ export const CONTACT_PAGE_CONTENT = {
     title: "We'd Love to\nHear From You",
     description:
       "Have questions about our products? Our team is ready to help you.",
-    image: "/yarn.png",
+    image: "https://ik.imagekit.io/munTasIr/SAThread/yarn.jpg?updatedAt=1790675609813",
   },
   cards: [
     {
@@ -261,7 +261,7 @@ export const PRODUCTS_PAGE_CONTENT = {
     titleHighlight: "Every Textile Need",
     description:
       "Premium quality garments accessories crafted for strength, consistency and performance in every stitch.",
-    image: "/yarn.png",
+    image: "https://ik.imagekit.io/munTasIr/SAThread/yarn.jpg?updatedAt=1790675609813",
   },
   features: [
     {

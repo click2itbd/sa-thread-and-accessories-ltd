@@ -40,12 +40,11 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <div className="relative w-12 h-12 md:w-[60px] md:h-[60px] rounded-lg overflow-hidden shrink-0">
               <Image
-                src="/logo.jpg"
+                src="https://ik.imagekit.io/munTasIr/SAThread/logo.jpg"
                 alt="SA Thread & Accessories Ltd. Logo"
-                fill
-                sizes="(max-width: 768px) 48px, 60px"
-                className="object-contain"
-                priority
+                width={60}
+                height={60}
+                className="object-contain w-full h-full"
               />
             </div>
             <div className="flex flex-col leading-none">
