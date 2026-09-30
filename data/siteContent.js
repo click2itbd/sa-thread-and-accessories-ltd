@@ -342,10 +342,9 @@ export const CONTACT_FORM_CONTENT = {
     ],
   },
   map: {
-    src: "https://www.openstreetmap.org/export/embed.html?bbox=90.3581%2C23.9376%2C90.3981%2C23.9576&layer=mapnik&marker=23.9476%2C90.3781",
-    title: "SA Thread & Accessories Ltd. - Gacha Road, Gazipur, Bangladesh",
-    directionHref:
-      "https://maps.google.com/?q=271/1+Gacha+Road,+Gacha,+Gazipur-1704,+Bangladesh",
+    src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d812.2102057839851!2d90.3677150110569!3d23.9356547097556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c35957916919%3A0xb3a6b0844589a200!2sS.A.%20THREAD%20%26%20ACCESSORIES%20LTD.!5e0!3m2!1sen!2sbd!4v1790745067467!5m2!1sen!2sbd",
+    title: "SA Thread & Accessories Ltd. - Factory Location",
+    directionHref: "https://maps.app.goo.gl/rP7biZK48PWysjjE9",
   },
 };
 
