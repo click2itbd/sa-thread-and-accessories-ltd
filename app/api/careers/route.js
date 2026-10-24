@@ -70,6 +70,7 @@ export async function POST(request) {
     const email = formData.get("email")?.toString() || "";
     const phone = formData.get("phone")?.toString() || "";
     const department = formData.get("department")?.toString() || "";
+    const jobTitle = formData.get("jobTitle")?.toString() || "";
     const experience = formData.get("experience")?.toString() || "";
     const education = formData.get("education")?.toString() || "";
     const expectedSalary = formData.get("expectedSalary")?.toString() || "";
@@ -84,6 +85,8 @@ export async function POST(request) {
     if (!name || !email || !phone || !department || !experience || !message) {
       return Response.json({ success: false, error: "Missing required fields." }, { status: 400 });
     }
+
+    const appliedPosition = jobTitle ? `${jobTitle} (${department})` : department;
 
     let cvFileUrl = "";
     let attachments = [];
@@ -126,7 +129,7 @@ export async function POST(request) {
       fullName: name,
       email,
       phone,
-      appliedPosition: department,
+      appliedPosition,
       cvFile: cvFileUrl,
       coverLetter: message,
     });
@@ -161,10 +164,10 @@ export async function POST(request) {
           from: process.env.RESEND_FROM || 'SA Thread & Accessories <onboarding@resend.dev>',
           to: [process.env.SMTP_TO || 'asif.sathread@gmail.com'],
           reply_to: email,
-          subject: `New Job Application: ${name} - ${department}`,
+          subject: `New Job Application: ${name} - ${appliedPosition}`,
           attachments,
-          text: `New Job Application\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDepartment: ${department}\nExperience: ${experience}\nEducation: ${education || "N/A"}\nExpected Salary: ${expectedSalary || "N/A"}\n\nCover Letter/Message:\n${message}\n\n[Resume attached as file: ${resume.name}]\n\n--\nThis email was automatically generated from your website careers form.`,
-          html: `<!DOCTYPE html><html><body><h1>New Job Application</h1><p>Name: ${name}</p><p>Email: ${email}</p><p>Phone: ${phone}</p><p>Department: ${department}</p><p>Experience: ${experience}</p><p>Message:</p><p>${message}</p></body></html>`
+          text: `New Job Application\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPosition / Department: ${appliedPosition}\nExperience: ${experience}\nEducation: ${education || "N/A"}\nExpected Salary: ${expectedSalary || "N/A"}\n\nCover Letter/Message:\n${message}\n\n[Resume attached as file: ${resume.name}]\n\n--\nThis email was automatically generated from your website careers form.`,
+          html: `<!DOCTYPE html><html><body><h1>New Job Application</h1><p>Name: ${name}</p><p>Email: ${email}</p><p>Phone: ${phone}</p><p>Position / Department: ${appliedPosition}</p><p>Experience: ${experience}</p><p>Message:</p><p>${message}</p></body></html>`
         });
         
         if (error) {

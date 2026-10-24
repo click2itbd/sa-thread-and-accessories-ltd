@@ -7,17 +7,39 @@ import Link from "next/link";
 const EMPTY_JOB = {
   title: "",
   department: "",
-  location: "",
+  location: "271/1, Gacha Road, Gacha, Gazipur-1704, Bangladesh",
   employmentType: "Full-time",
+  workplace: "On-site",
   experience: "",
+  education: "",
+  salary: "Negotiable",
   vacancy: 1,
   deadline: "",
   description: "",
+  responsibilities: "",
+  requirements: "",
+  benefits: "",
   status: "Open",
   isActive: true,
 };
 
 const EMPLOYMENT_TYPES = ["Full-time", "Part-time", "Contract", "Internship"];
+const WORKPLACE_TYPES = ["On-site", "Factory (Gazipur)", "Head Office", "Hybrid"];
+const DEPARTMENT_SUGGESTIONS = [
+  "Accounts & Finance",
+  "Commercial & Export-Import",
+  "Marketing & Merchandising",
+  "Factory Management",
+  "Sewing Thread Section",
+  "Elastic Section",
+  "Twill Tape / Non-Elastic Tape Section",
+  "Drawstring / Elastic Cord Section",
+  "Quality Assurance (QA / QC)",
+  "HR & Admin",
+  "Store & Inventory",
+  "Maintenance & Engineering",
+  "Security",
+];
 
 export default function AdminJobsPage() {
   const [jobs, setJobs] = useState([]);
@@ -65,10 +87,16 @@ export default function AdminJobsPage() {
         department: job.department || "",
         location: job.location || "",
         employmentType: job.employmentType || "Full-time",
+        workplace: job.workplace || "On-site",
         experience: job.experience || "",
+        education: job.education || "",
+        salary: job.salary || "Negotiable",
         vacancy: job.vacancy || 1,
         deadline: job.deadline ? new Date(job.deadline).toISOString().split("T")[0] : "",
         description: job.description || "",
+        responsibilities: job.responsibilities || "",
+        requirements: job.requirements || "",
+        benefits: job.benefits || "",
         status: job.status || "Open",
         isActive: job.isActive ?? true,
       });
@@ -271,6 +299,7 @@ export default function AdminJobsPage() {
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                  placeholder="e.g. Manager (Accounts & Commercial)"
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                   required
                 />
@@ -281,11 +310,18 @@ export default function AdminJobsPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Department *</label>
                   <input
                     type="text"
+                    list="department-suggestions"
                     value={formData.department}
                     onChange={(e) => setFormData((prev) => ({ ...prev, department: e.target.value }))}
+                    placeholder="Select or type department"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                     required
                   />
+                  <datalist id="department-suggestions">
+                    {DEPARTMENT_SUGGESTIONS.map((dept) => (
+                      <option key={dept} value={dept} />
+                    ))}
+                  </datalist>
                 </div>
 
                 <div>
@@ -294,6 +330,7 @@ export default function AdminJobsPage() {
                     type="text"
                     value={formData.location}
                     onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+                    placeholder="e.g. 271/1, Gacha Road, Gazipur-1704"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                     required
                   />
@@ -313,47 +350,124 @@ export default function AdminJobsPage() {
                 </div>
 
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Workplace</label>
+                  <select
+                    value={formData.workplace}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, workplace: e.target.value }))}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors bg-white"
+                  >
+                    {WORKPLACE_TYPES.map((wp) => (
+                      <option key={wp} value={wp}>{wp}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Experience *</label>
                   <input
                     type="text"
                     value={formData.experience}
                     onChange={(e) => setFormData((prev) => ({ ...prev, experience: e.target.value }))}
-                    placeholder="e.g. 2-3 Years"
+                    placeholder="e.g. 3-5 Years"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Vacancy</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Education Qualification</label>
                   <input
-                    type="number"
-                    value={formData.vacancy}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, vacancy: parseInt(e.target.value) || 1 }))}
-                    min="1"
+                    type="text"
+                    value={formData.education}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, education: e.target.value }))}
+                    placeholder="e.g. BBA / MBA in Accounting, Bachelor's Degree"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Salary / Compensation</label>
                   <input
-                    type="date"
-                    value={formData.deadline}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, deadline: e.target.value }))}
+                    type="text"
+                    value={formData.salary}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, salary: e.target.value }))}
+                    placeholder="e.g. Negotiable or 35,000 - 50,000 BDT"
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
                   />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Vacancy</label>
+                    <input
+                      type="number"
+                      value={formData.vacancy}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, vacancy: parseInt(e.target.value) || 1 }))}
+                      min="1"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Deadline</label>
+                    <input
+                      type="date"
+                      value={formData.deadline}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, deadline: e.target.value }))}
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Job Context / Description *</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                  rows={4}
+                  rows={3}
+                  placeholder="Brief overview about the role and department..."
                   className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors resize-none"
                   required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Key Responsibilities <span className="text-xs font-normal text-gray-400">(Optional — write one per line)</span>
+                </label>
+                <textarea
+                  value={formData.responsibilities}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, responsibilities: e.target.value }))}
+                  rows={3}
+                  placeholder={"• Oversee daily accounts & commercial operations\n• Manage L/C, banking, and audit documentation"}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Additional Requirements / Skills <span className="text-xs font-normal text-gray-400">(Optional — write one per line)</span>
+                </label>
+                <textarea
+                  value={formData.requirements}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, requirements: e.target.value }))}
+                  rows={3}
+                  placeholder={"• Experience in garments accessories / textile sector\n• Strong knowledge of Tally/ERP & MS Excel"}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Compensation &amp; Other Benefits <span className="text-xs font-normal text-gray-400">(Optional)</span>
+                </label>
+                <textarea
+                  value={formData.benefits}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, benefits: e.target.value }))}
+                  rows={2}
+                  placeholder="e.g. Festival Bonus (2), Yearly Increment, Mobile Bill, Attendance Bonus"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-[#1F4D2C] focus:ring-1 focus:ring-[#1F4D2C] transition-colors resize-none"
                 />
               </div>
 

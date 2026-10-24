@@ -37,7 +37,11 @@ export default function FileUpload({
     onUpload(null);
   };
 
-  const isPdf = file?.type === "application/pdf" || (currentUrl && !preview && !file?.type?.startsWith("image/"));
+  const isPdf =
+    file?.type === "application/pdf" ||
+    accept?.includes("pdf") ||
+    /\.pdf(\?.*)?$/i.test(currentUrl || "") ||
+    (currentUrl && !preview && !file?.type?.startsWith("image/"));
 
   return (
     <div>

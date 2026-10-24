@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   Phone,
@@ -9,6 +10,13 @@ import {
   ArrowLeft,
   CheckCircle2,
   Briefcase,
+  Calendar,
+  Users,
+  Clock,
+  Eye,
+  GraduationCap,
+  Banknote,
+  Building2,
   X,
 } from "lucide-react";
 
@@ -53,6 +61,8 @@ export default function CareersPage() {
   const [jobs, setJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
+  const [viewingJob, setViewingJob] = useState(null);
+  const formSectionRef = useRef(null);
 
   const fetchJobs = async () => {
     try {
@@ -72,10 +82,46 @@ export default function CareersPage() {
     fetchJobs();
   }, []);
 
-  const handleJobSelect = (job) => {
+  useEffect(() => {
+    if (viewingJob) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [viewingJob]);
+
+  const handleApplyForJob = (job, e) => {
+    if (e) e.stopPropagation();
     setSelectedJob(job);
-    setFormData((prev) => ({ ...prev, department: job.department }));
+    setViewingJob(null);
+    setFormData((prev) => ({
+      ...prev,
+      department: job.department || prev.department,
+      subject: `Job Application - ${job.title}`,
+    }));
+    setTimeout(() => {
+      formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
   };
+
+  const departmentOptions = Array.from(
+    new Set([
+      ...DEPARTMENTS,
+      ...jobs.map((j) => j.department).filter(Boolean),
+      ...(selectedJob?.department ? [selectedJob.department] : []),
+    ])
+  );
+
+  const experienceOptions = Array.from(
+    new Set([
+      ...EXPERIENCE_LEVELS,
+      ...jobs.map((j) => j.experience).filter(Boolean),
+      ...(selectedJob?.experience ? [selectedJob.experience] : []),
+    ])
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,6 +171,9 @@ export default function CareersPage() {
       Object.entries(formData).forEach(([key, value]) =>
         payload.append(key, value),
       );
+      if (selectedJob?.title) {
+        payload.append("jobTitle", selectedJob.title);
+      }
       payload.append("resume", resumeFile);
 
       const res = await fetch("/api/careers", {
@@ -204,34 +253,91 @@ export default function CareersPage() {
               {jobs.map((job) => (
                 <div
                   key={job._id}
-                  className={`bg-white rounded-xl border p-6 cursor-pointer transition-all hover:shadow-md ${
+                  className={`bg-white rounded-2xl border p-6 cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group ${
                     selectedJob?._id === job._id
-                      ? "border-primary ring-1 ring-primary"
-                      : "border-gray-200"
+                      ? "border-primary ring-2 ring-primary/15"
+                      : "border-gray-200/80 hover:border-primary/40"
                   }`}
-                  onClick={() => handleJobSelect(job)}
+                  onClick={() => setViewingJob(job)}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-[16px] font-semibold text-gray-900">
-                      {job.title}
-                    </h3>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">
-                      {job.status}
-                    </span>
+                  <div>
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div>
+                        <span className="inline-block text-[11px] font-semibold uppercase tracking-wider text-primary mb-1">
+                          {job.department}
+                        </span>
+                        <h3 className="text-[17px] font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors">
+                          {job.title}
+                        </h3>
+                      </div>
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200/60 shrink-0">
+                        {job.status}
+                      </span>
+                    </div>
+
+                    <p className="text-[13px] text-gray-500 mt-2 mb-4 line-clamp-2 leading-relaxed">
+                      {job.description}
+                    </p>
+
+                    <div className="space-y-1.5 text-[12px] text-gray-600 mb-5">
+                      {job.location && (
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                          <span className="truncate">{job.location}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center flex-wrap gap-x-4 gap-y-1">
+                        {job.employmentType && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <Briefcase className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                            {job.employmentType}
+                          </span>
+                        )}
+                        {job.experience && (
+                          <span className="inline-flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                            Exp: {job.experience}
+                          </span>
+                        )}
+                      </div>
+                      {job.deadline && (
+                        <div className="flex items-center gap-2 text-amber-700 font-medium pt-0.5">
+                          <Calendar className="w-3.5 h-3.5 shrink-0" />
+                          <span>
+                            Deadline:{" "}
+                            {new Date(job.deadline).toLocaleDateString(
+                              "en-GB",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-[13px] text-gray-500 mb-4 line-clamp-2">
-                    {job.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 text-[11px] text-gray-500">
-                    <span className="bg-gray-50 px-2 py-1 rounded">
-                      {job.department}
-                    </span>
-                    <span className="bg-gray-50 px-2 py-1 rounded">
-                      {job.location}
-                    </span>
-                    <span className="bg-gray-50 px-2 py-1 rounded">
-                      {job.employmentType}
-                    </span>
+
+                  <div className="pt-4 border-t border-gray-100 flex items-center gap-2.5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setViewingJob(job);
+                      }}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      View Details
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => handleApplyForJob(job, e)}
+                      className="flex-1 inline-flex items-center justify-center px-3 py-2.5 rounded-xl text-xs font-semibold text-white bg-primary hover:bg-blue-700 transition-colors"
+                    >
+                      Apply Now
+                    </button>
                   </div>
                 </div>
               ))}
@@ -300,7 +406,7 @@ export default function CareersPage() {
           </div>
 
           {/* Right: Application Form */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3" ref={formSectionRef}>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-10">
               <h2 className="text-[20px] font-bold text-gray-900 mb-1">
                 Job Application Form
@@ -311,20 +417,32 @@ export default function CareersPage() {
               </p>
 
               {selectedJob && (
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg flex items-start justify-between">
+                <div className="mb-6 p-4 bg-blue-50/70 border border-blue-200 rounded-xl flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-semibold text-gray-900">
                       Applying for:{" "}
                       <span className="text-primary">{selectedJob.title}</span>
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       {selectedJob.department} · {selectedJob.location} ·{" "}
                       {selectedJob.employmentType}
+                      {selectedJob.experience
+                        ? ` · Exp: ${selectedJob.experience}`
+                        : ""}
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => setViewingJob(selectedJob)}
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                    >
+                      <Eye className="w-3.5 h-3.5" /> View Full Job Details
+                    </button>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setSelectedJob(null)}
-                    className="p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="p-1.5 rounded-full text-gray-400 hover:text-gray-600 hover:bg-blue-100 transition-colors shrink-0"
+                    title="Clear selected job"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -382,7 +500,7 @@ export default function CareersPage() {
                       className="w-full border border-gray-200 rounded-lg px-4 py-3 text-[14px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-white text-gray-700"
                     >
                       <option value="">Select Department / Section *</option>
-                      {DEPARTMENTS.map((dept) => (
+                      {departmentOptions.map((dept) => (
                         <option key={dept} value={dept}>
                           {dept}
                         </option>
@@ -397,7 +515,7 @@ export default function CareersPage() {
                       className="w-full border border-gray-200 rounded-lg px-4 py-3 text-[14px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all bg-white text-gray-700"
                     >
                       <option value="">Experience Level *</option>
-                      {EXPERIENCE_LEVELS.map((exp) => (
+                      {experienceOptions.map((exp) => (
                         <option key={exp} value={exp}>
                           {exp}
                         </option>
@@ -509,6 +627,208 @@ export default function CareersPage() {
           </div>
         </div>
       </div>
+
+      {/* Job Details Modal rendered via Portal to document.body */}
+      {viewingJob &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
+            onClick={() => setViewingJob(null)}
+          >
+            <div
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[88vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Branded Modal Header */}
+              <div className="bg-primary px-6 py-5 text-white flex items-start justify-between gap-4 shrink-0">
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#5cc93f] text-white">
+                      {viewingJob.status}
+                    </span>
+                    <span className="text-xs font-medium text-white/80">
+                      {viewingJob.department}
+                    </span>
+                  </div>
+                  <h2 className="text-lg sm:text-xl font-bold text-white leading-snug">
+                    {viewingJob.title}
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setViewingJob(null)}
+                  className="p-2 rounded-full bg-white/10 text-white/80 hover:text-white hover:bg-white/20 transition-colors shrink-0"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-5 sm:p-6 overflow-y-auto space-y-6">
+                {/* Job Meta Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[11px] mb-1">
+                      <Briefcase className="w-3.5 h-3.5 text-primary" />
+                      <span>Job Type</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                      {viewingJob.employmentType || "Full-time"}
+                      {viewingJob.workplace ? ` · ${viewingJob.workplace}` : ""}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[11px] mb-1">
+                      <Clock className="w-3.5 h-3.5 text-primary" />
+                      <span>Experience</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                      {viewingJob.experience || "N/A"}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[11px] mb-1">
+                      <Banknote className="w-3.5 h-3.5 text-green-600" />
+                      <span>Salary</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-green-700">
+                      {viewingJob.salary || "Negotiable"}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[11px] mb-1">
+                      <Users className="w-3.5 h-3.5 text-primary" />
+                      <span>Vacancy</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                      {viewingJob.vacancy || 1}{" "}
+                      {Number(viewingJob.vacancy) > 1 ? "Positions" : "Position"}
+                    </p>
+                  </div>
+
+                  <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 col-span-2 sm:col-span-2">
+                    <div className="flex items-center gap-1.5 text-gray-400 text-[11px] mb-1">
+                      <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                      <span>Application Deadline</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                      {viewingJob.deadline
+                        ? new Date(viewingJob.deadline).toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "numeric",
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )
+                        : "Open until filled"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Location & Education Bar */}
+                <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-4 space-y-2.5 text-xs sm:text-[13px]">
+                  {viewingJob.education && (
+                    <div className="flex items-start gap-2.5">
+                      <GraduationCap className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-gray-800">
+                          Education:{" "}
+                        </span>
+                        <span className="text-gray-600">
+                          {viewingJob.education}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {viewingJob.location && (
+                    <div className="flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-gray-800">
+                          Work Location:{" "}
+                        </span>
+                        <span className="text-gray-600">
+                          {viewingJob.location}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Job Overview / Description */}
+                <div>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+                    Job Description
+                  </h3>
+                  <div className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-line">
+                    {viewingJob.description}
+                  </div>
+                </div>
+
+                {/* Key Responsibilities */}
+                {viewingJob.responsibilities && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+                      Key Responsibilities
+                    </h3>
+                    <div className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-line">
+                      {viewingJob.responsibilities}
+                    </div>
+                  </div>
+                )}
+
+                {/* Additional Requirements */}
+                {viewingJob.requirements && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+                      Requirements &amp; Skills
+                    </h3>
+                    <div className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-line">
+                      {viewingJob.requirements}
+                    </div>
+                  </div>
+                )}
+
+                {/* Benefits */}
+                {viewingJob.benefits && (
+                  <div>
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+                      Compensation &amp; Other Benefits
+                    </h3>
+                    <div className="text-[14px] text-gray-700 leading-relaxed whitespace-pre-line">
+                      {viewingJob.benefits}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setViewingJob(null)}
+                  className="px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-200/70 transition-colors"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => handleApplyForJob(viewingJob, e)}
+                  className="px-6 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-blue-700 shadow-sm transition-colors"
+                >
+                  Apply for this Position
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }

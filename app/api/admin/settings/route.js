@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import CompanySettings from "@/lib/models/CompanySettings";
 import connectToDatabase from "@/lib/mongoose";
 import { getAdminFromRequest } from "@/lib/adminAuth";
@@ -67,12 +68,21 @@ export async function PUT(request) {
       return NextResponse.json({ error: "Company name is required" }, { status: 400 });
     }
 
+    const { _id, createdAt, updatedAt, __v, ...updateData } = body;
+
     let settings = await CompanySettings.findOne({});
     if (!settings) {
-      settings = await CompanySettings.create(body);
+      settings = await CompanySettings.create(updateData);
     } else {
-      settings = await CompanySettings.findByIdAndUpdate(settings._id, body, { new: true });
+      settings = await CompanySettings.findByIdAndUpdate(
+        settings._id,
+        { $set: updateData },
+        { new: true }
+      );
     }
+
+    revalidatePath("/about");
+    revalidatePath("/");
 
     return NextResponse.json({ settings });
   } catch (error) {

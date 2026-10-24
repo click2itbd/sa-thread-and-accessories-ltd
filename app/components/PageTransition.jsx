@@ -8,24 +8,31 @@ import { useEffect, useState } from "react";
 
 export default function PageTransition({ children }) {
     const [visible, setVisible] = useState(false);
+    const [done, setDone] = useState(false);
 
     useEffect(() => {
-        // Small delay ensures the class swap is painted after mount
         const raf = requestAnimationFrame(() => setVisible(true));
+        const timer = setTimeout(() => setDone(true), 360);
         return () => {
             cancelAnimationFrame(raf);
+            clearTimeout(timer);
             setVisible(false);
+            setDone(false);
         };
     }, []);
 
     return (
         <div 
           className="flex-1 flex flex-col"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity 0.35s ease, transform 0.35s ease",
-          }}>
+          style={
+            done
+              ? undefined
+              : {
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(16px)",
+                  transition: "opacity 0.35s ease, transform 0.35s ease",
+                }
+          }>
         {children}</div>
     );
 }
